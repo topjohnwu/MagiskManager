@@ -13,6 +13,9 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+
+                <action android:name="com.topjohnwu.magisk.ENABLE"/>
+                <action android:name="com.topjohnwu.magisk.DISABLE"/>
             </intent-filter>
         </activity>
     </application>

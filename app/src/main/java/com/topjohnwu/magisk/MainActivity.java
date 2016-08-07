@@ -1,12 +1,18 @@
 package com.topjohnwu.magisk;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -14,6 +20,8 @@ import java.io.File;
 import java.io.IOException;
 
 public class MainActivity extends Activity {
+
+    public static final String TAG = "Magisk";
 
     private String suPATH;
     private String xbinPATH;
@@ -79,6 +87,13 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        IntentFilter ReceiverEnableFilter = new IntentFilter("com.topjohnwu.magisk.ENABLE");
+        IntentFilter ReceiverDisableFilter = new IntentFilter("com.topjohnwu.magisk.DISABLE");
+
+        registerReceiver(ReceiverEnable, ReceiverEnableFilter);
+        registerReceiver(ReceiverDisable, ReceiverDisableFilter);
+
         super.onCreate(savedInstanceState);
 
         boolean rooted = true;
@@ -135,6 +150,55 @@ public class MainActivity extends Activity {
                     }
                 }
             });
+        }
+    }
+
+    BroadcastReceiver ReceiverDisable = new BroadcastReceiver() {//disable
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.i(TAG,"Root DISABLED!");
+            setRoot(false);
+        }
+    };
+
+    BroadcastReceiver ReceiverEnable = new BroadcastReceiver() {//enable
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.i(TAG,"Root ENABLED!");
+            setRoot(true);
+        }
+    };
+
+    private void setRoot(boolean root)
+    {
+        boolean rooted = true;
+
+        File phh = new File("/magisk/phh/su");
+        File supersu = new File("/su/bin/su");
+
+        if(!supersu.exists()) {
+            if(!phh.exists()) {
+                rooted = false;
+            } else {
+                suPATH = "/magisk/phh/su";
+                xbinPATH = "/magisk/phh/xbin";
+            }
+        } else {
+            suPATH = "/su/bin/su";
+            xbinPATH = "/su/xbin";
+        }
+
+        if(rooted) {
+            (new callSU()).execute();
+
+            if(root) {
+                (new callSU()).execute("mount -o bind " + xbinPATH + " /system/xbin");
+                Toast.makeText(getApplicationContext(), "Root Enabled", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                (new callSU()).execute("umount /system/xbin");
+                Toast.makeText(getApplicationContext(), "Root Disabled", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }
