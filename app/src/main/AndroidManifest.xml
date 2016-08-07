@@ -14,10 +14,19 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
 
-                <action android:name="com.topjohnwu.magisk.ENABLE"/>
-                <action android:name="com.topjohnwu.magisk.DISABLE"/>
+                <!--<action android:name="com.topjohnwu.magisk.ENABLE"/>-->
+                <!--<action android:name="com.topjohnwu.magisk.DISABLE"/>-->
             </intent-filter>
         </activity>
+
+        <receiver android:name=".BR">
+            <intent-filter >
+                <action android:name="com.topjohnwu.magisk.ENABLE"/>
+                <action android:name="com.topjohnwu.magisk.DISABLE"/>
+
+            </intent-filter>
+
+        </receiver>
     </application>
 
 </manifest>
