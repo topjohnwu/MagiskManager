@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Magisk Manager</string>
+    <string name="root_status_mounted">Προσαρτήθηκε</string>
+    <string name="root_status_mounted_info">Ο λογαριασμός Υπερχρήστη προσαρτήθηκε και ενεργοποιήθηκε. Ασφαλής δικτύωση (Android Pay) ΔΕ λειτουργεί</string>
+    <string name="root_status_unmounted">Αποπροσαρτήθηκε</string>
+    <string name="root_status_unmounted_info">Ασφαλής δικτύωση (Android Pay) πρέπει να λειτουργεί, αλλά ο υπερχρήστης είναι προσωρινά ανενεργός</string>
+    <string name="selinux_enforced">Επιβολή SELinux</string>
+    <string name="selinux_not_enforced">Απενεργοποιείστε το SELinux μόνο αν είναι αναγκαίο!</string>
 </resources>
