@@ -51,36 +51,29 @@ public class MainActivity extends Activity {
         String selinux = execute("getenforce");
 
         if((new File("/system/xbin/su").exists())) {
-            rootStatus.setText(getApplicationContext(),
-							getResources().getString(R.string.root_status_mounted);
+            rootStatus.setText(getResources().getString(R.string.root_status_mounted));
             rootStatus.setTextColor(Color.RED);
-            safetyNet.setText(getApplicationContext(),
-							getResources().getString(R.string.root_status_mounted_info);
+            safetyNet.setText(getApplicationContext().getString(R.string.root_status_mounted_info));
             safetyNet.setTextColor(Color.RED);
             rootButton.setEnabled(true);
         } else {
-            rootStatus.setText("getApplicationContext(),
-							getResources().getString(R.string.root_status_unmounted");
-            rootStatus.setTextColor(getResources().getColor(R.color.darkGreen);
-            safetyNet.setText(getApplicationContext(),
-							getResources().getString(R.string.root_status_unmounted_info);
-            safetyNet.setTextColor(getResources().getColor(R.color.darkGreen);
+            rootStatus.setText(getResources().getString(R.string.root_status_unmounted));
+            safetyNet.setText(getResources().getString(R.string.root_status_unmounted_info));
+            safetyNet.setTextColor(getResources().getColor(R.color.darkGreen));
             rootButton.setEnabled(false);
         }
 
         selinuxStatus.setText(selinux);
 
         if(selinux.equals("Enforcing\n")) {
-            selinuxStatus.setTextColor(getResources().getColor(R.color.darkGreen);
+            selinuxStatus.setTextColor(getResources().getColor(R.color.darkGreen));
             selinuxSwitch.setChecked(true);
-            permissive.setText(getApplicationContext(),
-							getResources().getString(R.string.selinux_enforced);
-            permissive.setTextColor(getResources().getColor(R.color.darkGreen);
+            permissive.setText(getResources().getString(R.string.selinux_enforced));
+            permissive.setTextColor(getResources().getColor(R.color.darkGreen));
         } else {
             selinuxStatus.setTextColor(Color.RED);
             selinuxSwitch.setChecked(false);
-            permissive.setText(getApplicationContext(),
-							getResources().getString(R.string.selinux_not_enforced);
+            permissive.setText(getResources().getString(R.string.selinux_not_enforced));
             permissive.setTextColor(Color.RED);
         }
     }
