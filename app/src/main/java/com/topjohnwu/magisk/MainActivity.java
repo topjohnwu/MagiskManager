@@ -53,7 +53,7 @@ public class MainActivity extends Activity {
         if((new File("/system/xbin/su").exists())) {
             rootStatus.setText(getResources().getString(R.string.root_status_mounted));
             rootStatus.setTextColor(Color.RED);
-            safetyNet.setText(getApplicationContext().getString(R.string.root_status_mounted_info));
+            safetyNet.setText(getResources().getString(R.string.root_status_mounted_info));
             safetyNet.setTextColor(Color.RED);
             rootButton.setEnabled(true);
         } else {
