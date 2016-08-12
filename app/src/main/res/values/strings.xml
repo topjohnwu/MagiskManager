@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Magisk Manager</string>
+    <string name="root_status_mounted">Mounted</string>
+    <string name="root_status_mounted_info">Root mounted and enabled. Safety Net (Android Pay) will NOT work</string>
+    <string name="root_status_unmounted">Not Mounted</string>
+    <string name="root_status_unmounted_info">Safety Net (Android Pay) should work, but no root temporarily</string>
+    <string name="selinux_enforced">SELinux is enforced</string>
+    <string name="selinux_not_enforced">Only turn off SELinux if necessary!</string>
 </resources>
