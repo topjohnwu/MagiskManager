@@ -5,8 +5,12 @@
     "changelog": "<b>Version 2.0</b>!"
   },
   "magisk": {
-    "versionCode": "6",
-    "link": "http://forum.xda-developers.com/devdb/project/dl/?id=19960&task=get",
-    "changelog": "<b>Version 6</b>!"
+    "versionCode": "7",
+    "link": "https://www.dropbox.com/s/dc16jf1ifhv6ef4/Magisk-v7.zip?dl=1",
+    "changelog": "<h3><b>Magisk v7<b></h3><ul><li>Support installing with Magisk Manager</li><li>Fixed some Samsung issue</li></ul>"
+  },
+  "root": {
+    "phh": "https://www.dropbox.com/s/ytocf4hvrq345rf/phh-superuser-17-magisk.zip?dl=1",
+    "supersu": "http://forum.xda-developers.com/devdb/project/dl/?id=19960&task=get",
   }
 }
