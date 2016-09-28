@@ -1,13 +1,13 @@
 {
   "app": {
     "version": "2.0",
-    "versionCode": "4",
-    "link": "http://forum.xda-developers.com/devdb/project/dl/?id=19924&task=get",
-    "changelog": "Version 2.0!"
+    "versionCode": "5",
+    "link": "https://www.dropbox.com/s/x2rqsnb5jbbcrx9/app-debug.apk?dl=1",
+    "changelog": "- Module Management!\n- Online Repo!\n- Auto Root Unmount!\n- Material Design!\n- More info in release thread"
   },
   "magisk": {
     "versionCode": "7",
-    "link": "https://www.dropbox.com/s/dc16jf1ifhv6ef4/Magisk-v7.zip?dl=1",
-    "changelog": "<h3><b>Magisk v7<b></h3><ul><li>Support installing with Magisk Manager</li><li>Fixed some Samsung issue</li></ul>"
+    "link": "https://www.dropbox.com/s/isw7ittdiajhnzd/Magisk-v7-RC6.zip?dl=1",
+    "changelog": "- Support Repo system\n- Fixed selinux issues\n- Fully open sourced!\n- More info in release thread"
   }
 }
