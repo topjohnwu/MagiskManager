@@ -7,7 +7,7 @@
   },
   "magisk": {
     "versionCode": "7",
-    "link": "https://www.dropbox.com/s/6jkmols15rjytm0/Magisk-v7.zip?dl=1",
+    "link": "https://www.dropbox.com/s/htbsz3bci6w1od6/Magisk-v7.zip?dl=1",
     "changelog": "- Support Repo system\n- Fixed selinux issues\n- Fully open sourced!\n- More info in release thread"
   }
 }
