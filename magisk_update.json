@@ -8,6 +8,6 @@
   "magisk": {
     "versionCode": "7",
     "link": "http://forum.xda-developers.com/attachment.php?attachmentid=3893659&d=1475527472",
-    "changelog": "- Fully open source\n- Should fix all selinux issues\n- Add support to install Magisk in Magisk Manager\n- Add support for image merging for module flashing in Magisk Manager\n- Add root helpers for SuperSU auto module-ize and auto upgrading legacy phh superuser\n- More info in release thread"
+    "changelog": "- Fully open source\n- Should fix all selinux issues\n- Add support to install Magisk in Magisk Manager\n- Add support for module flashing in Magisk Manager\n- Add root helpers for SuperSU phh superuser\n- More info in release thread"
   }
 }
