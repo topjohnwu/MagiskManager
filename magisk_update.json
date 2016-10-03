@@ -2,12 +2,12 @@
   "app": {
     "version": "2.0",
     "versionCode": "5",
-    "link": "https://www.dropbox.com/s/x2rqsnb5jbbcrx9/app-debug.apk?dl=1",
-    "changelog": "- Module Management!\n- Online Repo!\n- Auto Root Unmount!\n- Material Design!\n- More info in release thread"
+    "link": "http://forum.xda-developers.com/attachment.php?attachmentid=3893660&d=1475527472",
+    "changelog": "- Module Management!\n- Online Repo!\n- Material Design!"
   },
   "magisk": {
     "versionCode": "7",
-    "link": "https://www.dropbox.com/s/md3ht1vsmn7kh6w/Magisk-v7.zip?dl=1",
-    "changelog": "- Support Repo system\n- Fixed selinux issues\n- Fully open sourced!\n- More info in release thread"
+    "link": "http://forum.xda-developers.com/attachment.php?attachmentid=3893659&d=1475527472",
+    "changelog": "- Fully open source\n- Should fix all selinux issues\n- Add support to install Magisk in Magisk Manager\n- Add support for image merging for module flashing in Magisk Manager\n- Add root helpers for SuperSU auto module-ize and auto upgrading legacy phh superuser\n- More info in release thread"
   }
 }
