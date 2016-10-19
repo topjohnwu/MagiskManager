@@ -1,13 +1,21 @@
 {
   "app": {
-    "version": "2.0",
-    "versionCode": "5",
-    "link": "http://forum.xda-developers.com/attachment.php?attachmentid=3893660&d=1475527472",
-    "changelog": "- Module Management!\n- Online Repo!\n- Material Design!"
+    "version": "2.1",
+    "versionCode": "6",
+    "link": "http://tiny.cc/latestmanager",
+    "changelog": "- Add Magisk Hide settings\n- Add search bar in Downloads Sections\n- Fix various crashes\n- Fix trash can icon not updated when removing module"
   },
   "magisk": {
-    "versionCode": "7",
-    "link": "http://forum.xda-developers.com/attachment.php?attachmentid=3893659&d=1475527472",
-    "changelog": "- Fully open source\n- Should fix all selinux issues\n- Add support to install Magisk in Magisk Manager\n- Add support for module flashing in Magisk Manager\n- Add root helpers for SuperSU phh superuser\n- More info in release thread"
+    "versionCode": "8",
+    "link": "http://tiny.cc/latestmagisk",
+    "changelog": "- Add Magisk Hide to bypass SafetyNet\n- Improve SuperSU integration\n- Support non-standard rc script"
+  },
+  "uninstall": {
+    "versionCode": "1",
+    "link": "http://forum.xda-developers.com/attachment.php?attachmentid=3893658&d=1475527472"
+  },
+  "phhroot": {
+    "versionCode": "2",
+    "link": "http://forum.xda-developers.com/attachment.php?attachmentid=3893967&d=1475554052"
   }
 }
