@@ -1,21 +1,21 @@
 {
   "app": {
-    "version": "2.1",
-    "versionCode": "6",
+    "version": "2.5",
+    "versionCode": "7",
     "link": "http://tiny.cc/latestmanager",
-    "changelog": "- Add Magisk Hide settings\n- Add search bar in Downloads Sections\n- Fix various crashes\n- Fix trash can icon not updated when removing module"
+    "changelog": "  - Add Magisk Hide section, you can now manage hide list\n  - Support custom Magisk Version names\n  - Fixed modules and repos not sorted by name\n"
   },
   "magisk": {
-    "versionCode": "8",
+    "versionCode": "9",
     "link": "http://tiny.cc/latestmagisk",
-    "changelog": "- Add Magisk Hide to bypass SafetyNet\n- Improve SuperSU integration\n- Support non-standard rc script"
+    "changelog": "  - Remove cache module support\n  - Add resetprop tool\n  - MagiskHide now pass Safety Net\n  - See release page for complete changelog"
   },
   "uninstall": {
-    "versionCode": "1",
-    "link": "http://forum.xda-developers.com/attachment.php?attachmentid=3893658&d=1475527472"
+    "filename": "Magisk-uninstaller-20161115.zip",
+    "link": "http://forum.xda-developers.com/attachment.php?attachmentid=3936770&d=1479157042"
   },
   "phhroot": {
-    "versionCode": "2",
-    "link": "http://forum.xda-developers.com/attachment.php?attachmentid=3893967&d=1475554052"
+    "filename": "phh-superuser-magisk-r266-2.zip",
+    "link": "http://forum.xda-developers.com/attachment.php?attachmentid=3933310&d=1478890862"
   }
 }
