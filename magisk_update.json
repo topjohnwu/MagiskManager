@@ -1,21 +1,21 @@
 {
   "app": {
-    "version": "2.5",
-    "versionCode": "7",
-    "link": "http://tiny.cc/latestmanager",
-    "changelog": "  - Add Magisk Hide section, you can now manage hide list\n  - Support custom Magisk Version names\n  - Fixed modules and repos not sorted by name\n"
+    "version": "stub",
+    "versionCode": "10",
+    "link": "https://github.com/topjohnwu/MagiskManager/releases/download/v3.0/MagiskManager-stub.apk",
+    "changelog": "  - Upgrade on Play Store!"
   },
   "magisk": {
-    "versionCode": "9",
+    "versionCode": "10",
     "link": "http://tiny.cc/latestmagisk",
-    "changelog": "  - Remove cache module support\n  - Add resetprop tool\n  - MagiskHide now pass Safety Net\n  - See release page for complete changelog"
+    "changelog": "  - Magic Mount no limitations\n  - Magisk Hide fixes\n  - Include phh root\n  - See release thread for complete changelog"
   },
   "uninstall": {
-    "filename": "Magisk-uninstaller-20161115.zip",
-    "link": "http://forum.xda-developers.com/attachment.php?attachmentid=3936770&d=1479157042"
+    "filename": "Magisk-uninstaller-20170102.zip",
+    "link": "http://tiny.cc/latestuninstaller"
   },
   "phhroot": {
-    "filename": "phh-superuser-magisk-r266-2.zip",
-    "link": "http://forum.xda-developers.com/attachment.php?attachmentid=3933310&d=1478890862"
+    "filename": "phh-superuser-topjohnwu-r1.zip",
+    "link": "https://forum.xda-developers.com/attachment.php?attachmentid=3988205&d=1483382640"
   }
 }
