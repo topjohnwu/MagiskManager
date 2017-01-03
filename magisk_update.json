@@ -6,9 +6,9 @@
     "changelog": "  - Upgrade on Play Store!"
   },
   "magisk": {
-    "versionCode": "10",
+    "versionCode": "10.1",
     "link": "http://tiny.cc/latestmagisk",
-    "changelog": "  - Magic Mount no limitations\n  - Magisk Hide fixes\n  - Include phh root\n  - See release thread for complete changelog"
+    "changelog": "  - Hotfix crashes\n  - Fix phh binary out-of-date issue"
   },
   "uninstall": {
     "filename": "Magisk-uninstaller-20170102.zip",
