@@ -6,7 +6,7 @@
     "changelog": "  - Upgrade on Play Store!"
   },
   "magisk": {
-    "versionCode": "10.1",
+    "versionCode": "10.2",
     "link": "http://tiny.cc/latestmagisk",
     "changelog": "  - Hotfix crashes\n  - Fix phh binary out-of-date issue"
   },
