@@ -30,7 +30,7 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         String theme = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("theme", "");
         Logger.dev("AboutActivity: Theme is " + theme);
-        if (theme.equals("Dark")) {
+        if (Utils.isDarkTheme(theme, this)) {
             setTheme(R.style.AppTheme_dh);
         }
 
@@ -89,10 +89,10 @@ public class SettingsActivity extends AppCompatActivity {
 
             themePreference.setSummary(themePreference.getValue());
 
-            if (MagiskFragment.magiskVersion < 9) {
+            if (StatusFragment.magiskVersion < 9) {
                 hostsPreference.setEnabled(false);
                 busyboxPreference.setEnabled(false);
-            } else if (MagiskFragment.magiskVersion < 8) {
+            } else if (StatusFragment.magiskVersion < 8) {
                 magiskhidePreference.setEnabled(false);
             } else {
                 busyboxPreference.setEnabled(true);
@@ -123,7 +123,7 @@ public class SettingsActivity extends AppCompatActivity {
                     String theme = prefs.getString(key, "");
 
                     themePreference.setSummary(theme);
-                    if (theme.equals("Dark")) {
+                    if (Utils.isDarkTheme(theme, getActivity())) {
                         getActivity().getApplication().setTheme(R.style.AppTheme_dh);
                     } else {
                         getActivity().getApplication().setTheme(R.style.AppTheme);

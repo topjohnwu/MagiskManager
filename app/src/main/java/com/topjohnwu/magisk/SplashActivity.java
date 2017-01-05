@@ -12,14 +12,12 @@ import com.topjohnwu.magisk.utils.Utils;
 
 public class SplashActivity extends AppCompatActivity {
 
-    private SharedPreferences prefs;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        prefs = PreferenceManager.getDefaultSharedPreferences(getApplication());
-        if (prefs.getString("theme", "").equals("Dark")) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplication());
+        if (Utils.isDarkTheme(prefs.getString("theme", null), this)) {
             setTheme(R.style.AppTheme_dh);
         }
 
@@ -28,27 +26,26 @@ public class SplashActivity extends AppCompatActivity {
 
         // Initialize prefs
         prefs.edit()
-                .putBoolean("module_done", false)
-                .putBoolean("repo_done", false)
-                .putBoolean("update_check_done", false)
                 .putBoolean("magiskhide", Utils.itemExist(false, "/magisk/.core/magiskhide/enable"))
                 .putBoolean("busybox", Utils.commandExists("busybox"))
                 .putBoolean("hosts", Utils.itemExist(false, "/magisk/.core/hosts"))
                 .apply();
 
-        new Async.CheckUpdates(prefs).exec();
-
-        new Async.LoadModules(prefs) {
+        // Start all async tasks
+        new Async.GetBootBlocks().exec();
+        new Async.CheckUpdates().exec();
+        Async.checkSafetyNet(getApplicationContext());
+        new Async.LoadModules() {
             @Override
             protected void onPostExecute(Void v) {
                 super.onPostExecute(v);
                 new Async.LoadRepos(getApplicationContext()).exec();
-                // Start main activity
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-                finish();
             }
         }.exec();
 
+        // Start main activity
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

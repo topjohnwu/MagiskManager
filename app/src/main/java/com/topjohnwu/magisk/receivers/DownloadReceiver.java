@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.widget.Toast;
 
 import com.topjohnwu.magisk.R;
+import com.topjohnwu.magisk.utils.Utils;
 
 public abstract class DownloadReceiver extends BroadcastReceiver {
     public Context mContext;
@@ -32,7 +33,7 @@ public abstract class DownloadReceiver extends BroadcastReceiver {
                 switch (status) {
                     case DownloadManager.STATUS_SUCCESSFUL:
                         Uri uri = Uri.parse(c.getString(c.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI)));
-                        task(uri);
+                        onDownloadDone(uri);
                         break;
                     default:
                         Toast.makeText(context, R.string.download_file_error, Toast.LENGTH_LONG).show();
@@ -42,6 +43,7 @@ public abstract class DownloadReceiver extends BroadcastReceiver {
             }
             c.close();
         }
+        Utils.isDownloading = false;
     }
 
     public void setDownloadID(long id) {
@@ -52,5 +54,5 @@ public abstract class DownloadReceiver extends BroadcastReceiver {
         mFilename = filename;
     }
 
-    public abstract void task(Uri uri);
+    public abstract void onDownloadDone(Uri uri);
 }
