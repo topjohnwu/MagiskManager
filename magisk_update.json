@@ -7,8 +7,9 @@
   },
   "magisk": {
     "versionCode": "10.2",
-    "link": "http://tiny.cc/latestmagisk",
-    "changelog": "  - Hotfix crashes\n  - Fix phh binary out-of-date issue"
+    "link": "https://forum.xda-developers.com/attachment.php?attachmentid=3988535&d=1483410926",
+    "changelog": "  - Hotfix crashes\n  - Fix phh binary out-of-date issue",
+    "note": "https://forum.xda-developers.com/showpost.php?p=70363391&postcount=9"
   },
   "uninstall": {
     "filename": "Magisk-uninstaller-20170102.zip",
