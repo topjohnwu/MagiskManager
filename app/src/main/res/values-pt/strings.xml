@@ -2,7 +2,7 @@
     <!--Welcome Activity-->
     <string name="navigation_drawer_open">Abrir gaveta de notificação</string>
     <string name="navigation_drawer_close">Fechar gaveta de notificação</string>
-	<string name="magiskhide">Ocultar Magisk</string>
+	<string name="magiskhide">Magisk Hide</string>
     <string name="modules">Módulos</string>
     <string name="downloads">Baixar</string>
     <string name="log">Registro</string>
