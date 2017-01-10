@@ -3,7 +3,7 @@
 
     <!--Welcome Activity-->
     <string name="navigation_drawer_open">Navigationsleiste öffnen</string>
-    <string name="navigation_drawer_close">Navigationsleiste schliessen</string>
+    <string name="navigation_drawer_close">Navigationsleiste schließen</string>
     <string name="modules">Module</string>
     <string name="downloads">Downloads</string>
     <string name="log">Log</string>
@@ -13,8 +13,7 @@
     <string name="magisk_version">Magisk v%1$s installiert</string>
     <string name="magisk_version_error">Haben Sie Magisk installiert?</string>
 
-    <string name="app_update_available">Magisk Manager App v%1$s update!</string>
-    <string name="magisk_update_available">Magisk v%1$s update!</string>
+    <string name="magisk_update_available">Magisk v%1$.1f update!</string>
     <string name="cannot_check_updates">Kann nicht auf Aktualisierungen prüfen</string>
     <string name="up_to_date">Aktuellste Version von %1$s installiert</string>
 
@@ -50,7 +49,7 @@
     <string name="app_developers">Entwickler</string>
     <string name="app_developers_"><![CDATA[Anwendung entwickelt von <a href="https://github.com/topjohnwu">topjohnwu</a> in Zusammenarbeit mit <a href="https://github.com/d8ahazard">Digitalhigh</a> und <a href="https://github.com/dvdandroid">Dvdandroid</a>.]]></string>
     <string name="app_changelog">Anwendungs changelog</string>
-    <string name="translators" />
+    <string name="translators">skalnet</string>
     <string name="app_version">Anwendungs Version</string>
     <string name="app_source_code">Quelltext</string>
     <string name="donation">Spende</string>
@@ -59,10 +58,7 @@
 
     <!--Toasts, Dialogs-->
     <string name="permissionNotGranted">Diese Funktion wird ohne erlaubnis auf den externen Speicher zu schreiben nicht funktionieren.</string>
-    <string name="no_root_access">Kein root Zugriff, Funktion eingeschränkt</string>
     <string name="no_thanks">Nein Danke</string>
-    <string name="update_title">%1$s Aktualisierung!</string>
-    <string name="update_msg">Neue Version v%2$s von %1$s ist verfügbar!\nChangelog:\n%3$s</string>
     <string name="repo_install_title">Installiere %1$s</string>
     <string name="repo_install_msg">Wollen Sie %1$s installieren?</string>
     <string name="download_install">Herunterladen und Installieren</string>
@@ -79,14 +75,14 @@
     <string name="no_magisk_msg">Wollen Sie Magisk herunterladen und installieren?</string>
 
     <!--URL Templates-->
-    <string name="url_main">https://api.github.com/orgs/Magisk-Modules-Repo/repos?access_token=</string>
-    <string name="file_url">https://raw.githubusercontent.com/Magisk-Modules-Repo/%1$s/master/%2$s</string>
-    <string name="zip_url">https://github.com/Magisk-Modules-Repo/%1$s/archive/master.zip</string>
 
     <!--Settings Fragment -->
     <string name="settings_general_category">Allgemein</string>
     <string name="settings_theme_title">Aussehen</string>
     <string name="settings_theme_summary">Wähle ein Theme aus</string>
+    <string name="theme_default">Standard</string>
+    <string name="theme_dark">Dunkel</string>
+
     <string name="settings_busybox_title">BusyBox aktivieren</string>
     <string name="settings_busybox_summary">Magisks eingebautes BusyBox zum PATH hinzufügen</string>
 

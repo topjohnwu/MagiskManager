@@ -14,8 +14,7 @@
     <string name="magisk_version">Instalado Magisk v%1$s</string>
     <string name="magisk_version_error">¿Has instalado Magisk?</string>
 
-    <string name="app_update_available">¡Actualización aplicación Magisk Manager v%1$s!</string>
-    <string name="magisk_update_available">¡Actualización Magisk v%1$s!</string>
+    <string name="magisk_update_available">¡Actualización Magisk v%1$.1f!</string>
     <string name="cannot_check_updates">No se pueden buscar actualizaciones</string>
     <string name="up_to_date">Última versión de %1$s instalada</string>
 
@@ -52,7 +51,7 @@
     <string name="app_developers">Desarroladores principales</string>
     <string name="app_developers_"><![CDATA[App created by <a href="https://github.com/topjohnwu">topjohnwu</a> in collaboration with <a href="https://github.com/d8ahazard">Digitalhigh</a> and <a href="https://github.com/dvdandroid">Dvdandroid</a>.]]></string>
     <string name="app_changelog">Cambios en la aplicación</string>
-    <string name="translators"/>
+    <string name="translators">Gawenda, netizen</string>
     <string name="app_version">Versión de la aplicación</string>
     <string name="app_source_code">Código fuente</string>
     <string name="donation">Donar</string>
@@ -61,10 +60,7 @@
 
     <!--Toasts, Dialogs-->
     <string name="permissionNotGranted">Esta opción no funcionará sin permiso de escritura en la memoria externa</string>
-    <string name="no_root_access">No hay acceso a root, funcionalidad limitada</string>
     <string name="no_thanks">No gracias</string>
-    <string name="update_title">¡Actualización de %1$s!</string>
-    <string name="update_msg">Disponible nueva versión v%2$s de %1$s!\nCambios:\n%3$s</string>
     <string name="repo_install_title">Instalar %1$s</string>
     <string name="repo_install_msg">¿ Quieres instalar %1$s ?</string>
     <string name="download_install">Descargar e instalar</string>
@@ -81,14 +77,13 @@
     <string name="no_magisk_msg">¿Deseas descargar e instalar Magisk?</string>
 
     <!--URL Templates-->
-    <string name="url_main">https://api.github.com/orgs/Magisk-Modules-Repo/repos?access_token=</string>
-    <string name="file_url">https://raw.githubusercontent.com/Magisk-Modules-Repo/%1$s/master/%2$s</string>
-    <string name="zip_url">https://github.com/Magisk-Modules-Repo/%1$s/archive/master.zip</string>
 
     <!--Settings Activity -->
     <string name="settings_general_category">General</string>
     <string name="settings_theme_title">Tema</string>
     <string name="settings_theme_summary">Selecciona un tema</string>
+    <string name="theme_default">Por defecto</string>
+    <string name="theme_dark">Oscuro</string>
 
     <string name="settings_magiskhide_title">Habilitar Magisk Hide</string>
     <string name="settings_magiskhide_summary">Ocultar Magisk de varias detecciones</string>

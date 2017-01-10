@@ -1,6 +1,7 @@
 package com.topjohnwu.magisk.utils;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.IntentFilter;
@@ -33,8 +34,8 @@ import javax.crypto.spec.DESKeySpec;
 
 public class Utils {
 
-    private static final String cryptoPass = "MagiskRox666";
-    private static final String secret = "GTYybRBTYf5his9kQ16ZNO7qgkBJ/5MyVe4CGceAOIoXgSnnk8FTd4F1dE9p5Eus";
+    public static boolean isDownloading = false;
+    public static boolean isDarkTheme;
 
     public static boolean itemExist(String path) {
         return itemExist(true, path);
@@ -67,14 +68,10 @@ public class Utils {
         return Shell.rootAccess() && Boolean.parseBoolean(Shell.su(command).get(0));
     }
 
-    static List<String> getModList(String path) {
+    public static List<String> getModList(String path) {
         List<String> ret;
         String command = "find " + path + " -type d -maxdepth 1 ! -name \"*.core\" ! -name \"*lost+found\" ! -name \"*magisk\"";
-        if (Shell.rootAccess()) {
-            ret = Shell.su(command);
-        } else {
-            ret = Shell.sh(command);
-        }
+        ret = Shell.su(command);
         return ret;
     }
 
@@ -90,15 +87,24 @@ public class Utils {
     }
 
     public static void dlAndReceive(Context context, DownloadReceiver receiver, String link, String filename) {
-        File file = new File(Environment.getExternalStorageDirectory() + "/MagiskManager/" + filename);
+        if (isDownloading) {
+            return;
+        }
+
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             Toast.makeText(context, R.string.permissionNotGranted, Toast.LENGTH_LONG).show();
             return;
         }
 
+        File file = new File(Environment.getExternalStorageDirectory() + "/MagiskManager/" + filename);
+
         if ((!file.getParentFile().exists() && !file.getParentFile().mkdirs()) || (file.exists() && !file.delete())) {
             Toast.makeText(context, R.string.permissionNotGranted, Toast.LENGTH_LONG).show();
+            return;
         }
+
+        Toast.makeText(context, context.getString(R.string.downloading_toast, filename), Toast.LENGTH_LONG).show();
+        isDownloading = true;
 
         DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(link));
@@ -109,33 +115,33 @@ public class Utils {
         context.registerReceiver(receiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
     }
 
-    public static String getToken() {
-
-        try {
-            DESKeySpec keySpec = new DESKeySpec(cryptoPass.getBytes("UTF8"));
-            SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("DES");
-            SecretKey key = keyFactory.generateSecret(keySpec);
-
-            byte[] encrypedPwdBytes = Base64.decode(secret, Base64.DEFAULT);
-            // cipher is not thread safe
-            Cipher cipher = Cipher.getInstance("DES");
-            cipher.init(Cipher.DECRYPT_MODE, key);
-            byte[] decrypedValueBytes = (cipher.doFinal(encrypedPwdBytes));
-
-            return new String(decrypedValueBytes);
-
-        } catch (InvalidKeyException | UnsupportedEncodingException | NoSuchAlgorithmException
-                | BadPaddingException | NoSuchPaddingException | IllegalBlockSizeException
-                | InvalidKeySpecException e) {
-            e.printStackTrace();
-        }
-        return secret;
-    }
-
     public static String getLegalFilename(CharSequence filename) {
         return filename.toString().replace(" ", "_").replace("'", "").replace("\"", "")
                 .replace("$", "").replace("`", "").replace("(", "").replace(")", "")
                 .replace("#", "").replace("@", "").replace("*", "");
+    }
+
+    public static String detectBootImage() {
+        String[] commands = {
+                "for PARTITION in kern-a KERN-A android_boot ANDROID_BOOT kernel KERNEL boot BOOT lnx LNX; do",
+                "BOOTIMAGE=`readlink /dev/block/by-name/$PARTITION || readlink /dev/block/platform/*/by-name/$PARTITION || readlink /dev/block/platform/*/*/by-name/$PARTITION`",
+                "if [ ! -z \"$BOOTIMAGE\" ]; then break; fi",
+                "done",
+                "echo \"${BOOTIMAGE##*/}\""
+        };
+        List<String> ret = Shell.su(commands);
+        if (!ret.isEmpty()) {
+            return ret.get(0);
+        }
+        return null;
+    }
+
+    public static AlertDialog.Builder getAlertDialogBuilder(Context context) {
+        if (isDarkTheme) {
+            return new AlertDialog.Builder(context, R.style.AlertDialog_dh);
+        } else {
+            return new AlertDialog.Builder(context);
+        }
     }
 
     public static class ByteArrayInOutStream extends ByteArrayOutputStream {

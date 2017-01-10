@@ -30,7 +30,7 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         String theme = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("theme", "");
         Logger.dev("AboutActivity: Theme is " + theme);
-        if (theme.equals("Dark")) {
+        if (Utils.isDarkTheme) {
             setTheme(R.style.AppTheme_dh);
         }
 
@@ -69,29 +69,30 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
-    public static class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
+    public static class SettingsFragment extends PreferenceFragment
+            implements SharedPreferences.OnSharedPreferenceChangeListener {
 
         private ListPreference themePreference;
+        private SharedPreferences prefs;
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.app_settings);
             PreferenceManager.setDefaultValues(getActivity(), R.xml.app_settings, false);
+            prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
             themePreference = (ListPreference) findPreference("theme");
             CheckBoxPreference busyboxPreference = (CheckBoxPreference) findPreference("busybox");
             CheckBoxPreference magiskhidePreference = (CheckBoxPreference) findPreference("magiskhide");
             CheckBoxPreference hostsPreference = (CheckBoxPreference) findPreference("hosts");
 
-            PreferenceManager.getDefaultSharedPreferences(getActivity()).registerOnSharedPreferenceChangeListener(this);
-
             themePreference.setSummary(themePreference.getValue());
 
-            if (MagiskFragment.magiskVersion < 9) {
+            if (StatusFragment.magiskVersion < 9) {
                 hostsPreference.setEnabled(false);
                 busyboxPreference.setEnabled(false);
-            } else if (MagiskFragment.magiskVersion < 8) {
+            } else if (StatusFragment.magiskVersion < 8) {
                 magiskhidePreference.setEnabled(false);
             } else {
                 busyboxPreference.setEnabled(true);
@@ -103,26 +104,27 @@ public class SettingsActivity extends AppCompatActivity {
         @Override
         public void onResume() {
             super.onResume();
-            PreferenceManager.getDefaultSharedPreferences(getActivity()).registerOnSharedPreferenceChangeListener(this);
+            prefs.registerOnSharedPreferenceChangeListener(this);
         }
 
         @Override
         public void onDestroy() {
             super.onDestroy();
-            PreferenceManager.getDefaultSharedPreferences(getActivity()).unregisterOnSharedPreferenceChangeListener(this);
+            prefs.unregisterOnSharedPreferenceChangeListener(this);
         }
 
         @Override
-        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
             Logger.dev("Settings: Prefs change " + key);
             boolean checked;
 
             switch (key) {
                 case "theme":
-                    String theme = sharedPreferences.getString(key, "");
+                    String theme = prefs.getString("theme", getString(R.string.theme_default_value));
+                    Utils.isDarkTheme = theme.equalsIgnoreCase(getString(R.string.theme_dark_value));
 
                     themePreference.setSummary(theme);
-                    if (theme.equals("Dark")) {
+                    if (Utils.isDarkTheme) {
                         getActivity().getApplication().setTheme(R.style.AppTheme_dh);
                     } else {
                         getActivity().getApplication().setTheme(R.style.AppTheme);
@@ -133,7 +135,7 @@ public class SettingsActivity extends AppCompatActivity {
                     startActivity(intent);
                     break;
                 case "magiskhide":
-                     checked = sharedPreferences.getBoolean("magiskhide", false);
+                     checked = prefs.getBoolean("magiskhide", false);
                     if (checked) {
                         new Async.RootTask<Void, Void, Void>() {
                             @Override
@@ -151,9 +153,10 @@ public class SettingsActivity extends AppCompatActivity {
                             }
                         }.exec();
                     }
+                    Toast.makeText(getActivity(), R.string.settings_reboot_toast, Toast.LENGTH_LONG).show();
                     break;
                 case "busybox":
-                    checked = sharedPreferences.getBoolean("busybox", false);
+                    checked = prefs.getBoolean("busybox", false);
                     if (checked) {
                         new Async.RootTask<Void, Void, Void>() {
                             @Override
@@ -174,7 +177,7 @@ public class SettingsActivity extends AppCompatActivity {
                     Toast.makeText(getActivity(), R.string.settings_reboot_toast, Toast.LENGTH_LONG).show();
                     break;
                 case "hosts":
-                    checked = sharedPreferences.getBoolean("hosts", false);
+                    checked = prefs.getBoolean("hosts", false);
                     if (checked) {
                         new Async.RootTask<Void, Void, Void>() {
                             @Override
@@ -195,10 +198,10 @@ public class SettingsActivity extends AppCompatActivity {
                     Toast.makeText(getActivity(), R.string.settings_reboot_toast, Toast.LENGTH_LONG).show();
                     break;
                 case "developer_logging":
-                    Logger.devLog = sharedPreferences.getBoolean("developer_logging", false);
+                    Logger.devLog = prefs.getBoolean("developer_logging", false);
                     break;
                 case "shell_logging":
-                    Logger.logShell = sharedPreferences.getBoolean("shell_logging", false);
+                    Logger.logShell = prefs.getBoolean("shell_logging", false);
                     break;
             }
 

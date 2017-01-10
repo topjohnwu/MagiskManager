@@ -6,8 +6,6 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.preference.PreferenceManager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -25,6 +23,7 @@ import com.topjohnwu.magisk.receivers.RepoDlReceiver;
 import com.topjohnwu.magisk.utils.Utils;
 import com.topjohnwu.magisk.utils.WebWindow;
 
+import java.util.HashSet;
 import java.util.List;
 
 import butterknife.BindView;
@@ -33,9 +32,10 @@ import butterknife.ButterKnife;
 public class ReposAdapter extends RecyclerView.Adapter<ReposAdapter.ViewHolder> {
 
     private List<Repo> mUpdateRepos, mInstalledRepos, mOthersRepos;
-    private View mView;
-    private Context context;
-    private AlertDialog.Builder builder;
+    private HashSet<Repo> expandList = new HashSet<>();
+    private Context mContext;
+
+    private int expandHeight = 0;
 
     public ReposAdapter(List<Repo> update, List<Repo> installed, List<Repo> others) {
         mUpdateRepos = update;
@@ -45,18 +45,11 @@ public class ReposAdapter extends RecyclerView.Adapter<ReposAdapter.ViewHolder> 
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_repo, parent, false);
-        ButterKnife.bind(this, mView);
-        context = parent.getContext();
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_repo, parent, false);
+        ButterKnife.bind(this, v);
+        mContext = parent.getContext();
 
-        String theme = PreferenceManager.getDefaultSharedPreferences(context).getString("theme", "");
-        if (theme.equals("Dark")) {
-            builder = new AlertDialog.Builder(context, R.style.AlertDialog_dh);
-        } else {
-            builder = new AlertDialog.Builder(context);
-        }
-
-        return new ViewHolder(mView);
+        return new ViewHolder(v);
     }
 
     @Override
@@ -81,42 +74,52 @@ public class ReposAdapter extends RecyclerView.Adapter<ReposAdapter.ViewHolder> 
             holder.versionName.setText(versionName);
         }
         if (author != null) {
-            holder.author.setText(context.getString(R.string.author, author));
+            holder.author.setText(mContext.getString(R.string.author, author));
         }
         if (description != null) {
             holder.description.setText(description);
         }
 
-        View.OnClickListener listener = view -> {
-            if (view.getId() == holder.updateImage.getId()) {
-                String filename = repo.getName() + "-" + repo.getVersion() + ".zip";
-                builder
-                        .setTitle(context.getString(R.string.repo_install_title, repo.getName()))
-                        .setMessage(context.getString(R.string.repo_install_msg, filename))
-                        .setCancelable(true)
-                        .setPositiveButton(R.string.download_install, (dialogInterface, i) -> Utils.dlAndReceive(
-                                context,
-                                new RepoDlReceiver(),
-                                repo.getZipUrl(),
-                                Utils.getLegalFilename(filename)))
-                        .setNegativeButton(R.string.no_thanks, null)
-                        .show();
-            }
-            if ((view.getId() == holder.changeLog.getId()) && (!repo.getLogUrl().equals(""))) {
-                new WebWindow(context.getString(R.string.changelog), repo.getLogUrl(), context);
-            }
-            if ((view.getId() == holder.authorLink.getId()) && (!repo.getSupportUrl().equals(""))) {
-                context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(repo.getDonateUrl())));
-            }
-            if ((view.getId() == holder.supportLink.getId()) && (!repo.getSupportUrl().equals(""))) {
-                context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(repo.getSupportUrl())));
-            }
-        };
+        holder.setExpanded(expandList.contains(repo));
 
-        holder.changeLog.setOnClickListener(listener);
-        holder.updateImage.setOnClickListener(listener);
-        holder.authorLink.setOnClickListener(listener);
-        holder.supportLink.setOnClickListener(listener);
+        holder.itemView.setOnClickListener(view -> {
+            if (holder.mExpanded) {
+                holder.collapse();
+                expandList.remove(repo);
+            } else {
+                holder.expand();
+                expandList.add(repo);
+            }
+        });
+        holder.changeLog.setOnClickListener(view -> {
+            if (!repo.getLogUrl().isEmpty()) {
+                new WebWindow(mContext.getString(R.string.changelog), repo.getLogUrl(), mContext);
+            }
+        });
+        holder.updateImage.setOnClickListener(view -> {
+            String filename = repo.getName() + "-" + repo.getVersion() + ".zip";
+            Utils.getAlertDialogBuilder(mContext)
+                    .setTitle(mContext.getString(R.string.repo_install_title, repo.getName()))
+                    .setMessage(mContext.getString(R.string.repo_install_msg, filename))
+                    .setCancelable(true)
+                    .setPositiveButton(R.string.download_install, (dialogInterface, i) -> Utils.dlAndReceive(
+                            mContext,
+                            new RepoDlReceiver(),
+                            repo.getZipUrl(),
+                            Utils.getLegalFilename(filename)))
+                    .setNegativeButton(R.string.no_thanks, null)
+                    .show();
+        });
+        holder.authorLink.setOnClickListener(view -> {
+            if (!repo.getDonateUrl().isEmpty()) {
+                mContext.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(repo.getDonateUrl())));
+            }
+        });
+        holder.supportLink.setOnClickListener(view -> {
+            if (!repo.getSupportUrl().isEmpty()) {
+                mContext.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(repo.getSupportUrl())));
+            }
+        });
     }
 
     @Override
@@ -132,68 +135,70 @@ public class ReposAdapter extends RecyclerView.Adapter<ReposAdapter.ViewHolder> 
         @BindView(R.id.author) TextView author;
         @BindView(R.id.expand_layout) LinearLayout expandLayout;
         @BindView(R.id.update) ImageView updateImage;
-        @BindView(R.id.installed) ImageView installedImage;
         @BindView(R.id.changeLog) ImageView changeLog;
         @BindView(R.id.authorLink) ImageView authorLink;
         @BindView(R.id.supportLink) ImageView supportLink;
 
         private ValueAnimator mAnimator;
         private ObjectAnimator animY2;
-        private ViewHolder holder;
-
-        private boolean expanded = false;
+        private boolean mExpanded = false;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            WindowManager windowmanager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+            WindowManager windowmanager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
             ButterKnife.bind(this, itemView);
             DisplayMetrics dimension = new DisplayMetrics();
             windowmanager.getDefaultDisplay().getMetrics(dimension);
-            holder = this;
-            this.expandLayout.getViewTreeObserver().addOnPreDrawListener(
+            expandLayout.getViewTreeObserver().addOnPreDrawListener(
                     new ViewTreeObserver.OnPreDrawListener() {
 
                         @Override
                         public boolean onPreDraw() {
-                            final int widthSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
-                            final int heightSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
-                            holder.expandLayout.getViewTreeObserver().removeOnPreDrawListener(this);
-                            holder.expandLayout.setVisibility(View.GONE);
-                            holder.expandLayout.measure(widthSpec, heightSpec);
-                            final int holderHeight = holder.expandLayout.getMeasuredHeight();
-                            mAnimator = slideAnimator(0, holderHeight);
-                            animY2 = ObjectAnimator.ofFloat(holder.updateImage, "translationY", holderHeight / 2);
+                            if (expandHeight == 0) {
+                                final int widthSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+                                final int heightSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+                                expandLayout.measure(widthSpec, heightSpec);
+                                expandHeight = expandLayout.getMeasuredHeight();
+                            }
 
+                            expandLayout.getViewTreeObserver().removeOnPreDrawListener(this);
+                            expandLayout.setVisibility(View.GONE);
+                            mAnimator = slideAnimator(0, expandHeight);
+                            animY2 = ObjectAnimator.ofFloat(updateImage, "translationY", expandHeight / 2);
                             return true;
                         }
 
                     });
-
-            mView.setOnClickListener(view -> {
-                if (expanded) {
-                    collapse(holder.expandLayout);
-                } else {
-                    expand(holder.expandLayout);
-                }
-                expanded = !expanded;
-            });
-
         }
 
-        private void expand(View view) {
-            view.setVisibility(View.VISIBLE);
+        private void setExpanded(boolean expanded) {
+            mExpanded = expanded;
+            ViewGroup.LayoutParams layoutParams = expandLayout.getLayoutParams();
+            layoutParams.height = expanded ? expandHeight : 0;
+            expandLayout.setLayoutParams(layoutParams);
+            expandLayout.setVisibility(expanded ? View.VISIBLE : View.GONE);
+            if (expanded) {
+                updateImage.setTranslationY(expandHeight / 2);
+            } else {
+                updateImage.setTranslationY(0);
+            }
+        }
+
+        private void expand() {
+            expandLayout.setVisibility(View.VISIBLE);
             mAnimator.start();
             animY2.start();
-
+            mExpanded = true;
         }
 
-        private void collapse(View view) {
-            int finalHeight = view.getHeight();
+        private void collapse() {
+            if (!mExpanded) return;
+            int finalHeight = expandLayout.getHeight();
             ValueAnimator mAnimator = slideAnimator(finalHeight, 0);
             mAnimator.addListener(new Animator.AnimatorListener() {
                 @Override
                 public void onAnimationEnd(Animator animator) {
-                    view.setVisibility(View.GONE);
+                    expandLayout.setVisibility(View.GONE);
                 }
 
                 @Override
@@ -207,7 +212,7 @@ public class ReposAdapter extends RecyclerView.Adapter<ReposAdapter.ViewHolder> 
             });
             mAnimator.start();
             animY2.reverse();
-
+            mExpanded = false;
         }
 
         private ValueAnimator slideAnimator(int start, int end) {
@@ -216,8 +221,7 @@ public class ReposAdapter extends RecyclerView.Adapter<ReposAdapter.ViewHolder> 
 
             animator.addUpdateListener(valueAnimator -> {
                 int value = (Integer) valueAnimator.getAnimatedValue();
-                ViewGroup.LayoutParams layoutParams = expandLayout
-                        .getLayoutParams();
+                ViewGroup.LayoutParams layoutParams = expandLayout.getLayoutParams();
                 layoutParams.height = value;
                 expandLayout.setLayoutParams(layoutParams);
             });

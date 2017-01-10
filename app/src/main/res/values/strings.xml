@@ -11,17 +11,39 @@
     <string name="downloads">Downloads</string>
     <string name="log">Log</string>
     <string name="settings">Settings</string>
+    <string name="status">Status</string>
+    <string name="install">Install</string>
 
-    <!--Magisk Fragment-->
+    <!--Status Fragment-->
     <string name="magisk_version">Installed Magisk v%1$s</string>
-    <string name="magisk_version_error">Have you installed Magisk?</string>
+    <string name="magisk_version_error">Magisk not installed</string>
 
-    <string name="app_update_available">Magisk Manager App v%1$s update!</string>
-    <string name="magisk_update_available">Magisk v%1$s update!</string>
-    <string name="cannot_check_updates">Cannot check for updates</string>
+    <string name="checking_for_updates">Checking for updates…</string>
+    <string name="magisk_update_available">Magisk v%1$.1f available!</string>
+    <string name="cannot_check_updates">Cannot check for updates, no Internet?</string>
     <string name="up_to_date">Latest version of %1$s installed</string>
+    <string name="root_error">Rooted but no root permission, not allowed?</string>
+    <string name="not_rooted">Not rooted</string>
+    <string name="proper_root">Properly rooted</string>
+    <string name="safetyNet_check_text">Tap to start SafetyNet check</string>
+    <string name="checking_safetyNet_status">Checking SafetyNet status…</string>
+    <string name="safetyNet_connection_failed">Cannot connect to Google API</string>
+    <string name="safetyNet_connection_suspended">Connection to Google API was suspended</string>
+    <string name="safetyNet_error">Cannot check SafetyNet, no Internet?</string>
+    <string name="safetyNet_fail">SafetyNet Failed: CTS profile mismatch</string>
+    <string name="safetyNet_pass">SafetyNet Passed</string>
+    <string name="root_info_warning">Functionality greatly limited</string>
 
-    <!--Root Fragment-->
+    <!--Install Fragment-->
+    <string name="auto_detect">"(Auto) %1$s"</string>
+    <string name="boot_image_title">Boot Image Location</string>
+    <string name="detect_button">Detect</string>
+    <string name="advanced_settings_title">Advanced Settings</string>
+    <string name="keep_force_encryption">Keep force encryption</string>
+    <string name="keep_dm_verity">Keep dm-verity</string>
+    <string name="current_magisk_title">Installed Magisk Version: v%1$s</string>
+    <string name="install_magisk_title">Latest Magisk Version: v%1$.1f</string>
+    <string name="magiskify" translatable="false">Magiskify</string>
 
     <!--Module Fragment-->
     <string name="no_info_provided">(No info provided)</string>
@@ -54,7 +76,7 @@
     <string name="app_developers">Main developers</string>
     <string name="app_developers_"><![CDATA[App created by <a href="https://github.com/topjohnwu">topjohnwu</a> in collaboration with <a href="https://github.com/d8ahazard">Digitalhigh</a> and <a href="https://github.com/dvdandroid">Dvdandroid</a>.]]></string>
     <string name="app_changelog">App\'s changelog</string>
-    <string name="translators"/>
+    <string name="translators" />
     <string name="app_version">App\'s version</string>
     <string name="app_source_code">Source code</string>
     <string name="donation">Donation</string>
@@ -63,13 +85,11 @@
 
     <!--Toasts, Dialogs-->
     <string name="permissionNotGranted">This feature will not work without permission to write external storage.</string>
-    <string name="no_root_access">No root access, functionality limited</string>
     <string name="no_thanks">No thanks</string>
-    <string name="update_title">%1$s Update!</string>
-    <string name="update_msg">New version v%2$s of %1$s is available!\nChangelog:\n%3$s</string>
     <string name="repo_install_title">Install %1$s</string>
     <string name="repo_install_msg">Do you want to install %1$s ?</string>
-    <string name="download_install">Download and install</string>
+    <string name="download_install">Download &amp; install</string>
+    <string name="goto_install">Go to \"Install\" section</string>
     <string name="download_file_error">Error downloading file</string>
     <string name="install_error">Installation error!</string>
     <string name="manual_install_1">Zip file placed in %1$s</string>
@@ -78,22 +98,29 @@
     <string name="reboot_title">Installation succeeded!</string>
     <string name="reboot_msg">Do you want to reboot now?</string>
     <string name="reboot">Reboot</string>
+    <string name="copying_msg">Copying zip to temp directory</string>
     <string name="zip_install_progress_title">Installing</string>
     <string name="zip_install_unzip_zip_msg">Unzipping zip file …</string>
     <string name="zip_install_process_zip_msg">Processing zip file …</string>
     <string name="zip_install_progress_msg">"Installing %1$s …"</string>
     <string name="no_magisk_title">No Magisk Installed!</string>
     <string name="no_magisk_msg">Do you want to download and install Magisk?</string>
+    <string name="downloading_toast">Downloading %1$s</string>
+    <string name="magisk_update_title">New Magisk Update Available!</string>
+    <string name="magisk_update_message">Magisk v%1$.1f update is live, do you want to install?</string>
+    <string name="check_release_notes">Check release notes</string>
 
     <!--URL Templates-->
-    <string name="url_main">https://api.github.com/orgs/Magisk-Modules-Repo/repos?access_token=</string>
-    <string name="file_url">https://raw.githubusercontent.com/Magisk-Modules-Repo/%1$s/master/%2$s</string>
-    <string name="zip_url">https://github.com/Magisk-Modules-Repo/%1$s/archive/master.zip</string>
+    <string name="url_main" translatable="false">https://api.github.com/orgs/Magisk-Modules-Repo/repos?access_token=8f3c379fbeb80754b45b02486482584893af142a</string>
+    <string name="file_url" translatable="false">https://raw.githubusercontent.com/Magisk-Modules-Repo/%1$s/master/%2$s</string>
+    <string name="zip_url" translatable="false">https://github.com/Magisk-Modules-Repo/%1$s/archive/master.zip</string>
 
     <!--Settings Activity -->
     <string name="settings_general_category">General</string>
     <string name="settings_theme_title">Theme</string>
     <string name="settings_theme_summary">Select a theme</string>
+    <string name="theme_default">Default</string>
+    <string name="theme_dark">Dark</string>
 
     <string name="settings_magiskhide_title">Enable Magisk Hide</string>
     <string name="settings_magiskhide_summary">Hide Magisk from various detections</string>
@@ -109,5 +136,9 @@
     <string name="settings_shell_logging_summary">Check this to enable logging all shell commands and output</string>
 
     <string name="settings_reboot_toast">Reboot to apply settings</string>
+
+    <!-- Themes -->
+    <string name="theme_default_value" translatable="false">default</string>
+    <string name="theme_dark_value" translatable="false">dark</string>
 
 </resources>

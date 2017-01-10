@@ -13,8 +13,7 @@
     <string name="magisk_version">Geïnstalleerde Magisk: v%1$s</string>
     <string name="magisk_version_error">Heb jij Magisk wel geïnstalleerd?</string>
 
-    <string name="app_update_available">Magisk Manager App v%1$s update!</string>
-    <string name="magisk_update_available">Magisk v%1$s update!</string>
+    <string name="magisk_update_available">Magisk v%1$.1f update!</string>
     <string name="cannot_check_updates">Kan niet controleren op updates.</string>
     <string name="up_to_date">Nieuwste versie van %1$s geïnstalleerd</string>
 
@@ -50,7 +49,7 @@
     <string name="app_developers">Hoofddevelopers</string>
     <string name="app_developers_"><![CDATA[App gemaakt door <a href="https://github.com/topjohnwu">topjohnwu</a> in samenwerking met <a href="https://github.com/d8ahazard">Digitalhigh</a> en <a href="https://github.com/dvdandroid">Dvdandroid</a>.]]></string>
     <string name="app_changelog">App\'s changelog</string>
-    <string name="translators" />
+    <string name="translators">NaamloosDT, Klaessen</string>
     <string name="app_version">App\'s versie</string>
     <string name="app_source_code">Source code</string>
     <string name="donation">Donatie</string>
@@ -59,10 +58,7 @@
 
     <!--Toasts, Dialogs-->
     <string name="permissionNotGranted">Deze feature zal niet werken zonder permissie om op de externe opslag te schrijven.</string>
-    <string name="no_root_access">Geen root, functionaliteit beperkt</string>
     <string name="no_thanks">Nee bedankt</string>
-    <string name="update_title">%1$s Update!</string>
-    <string name="update_msg">Nieuwe versie v%2$s van %1$s is beschikbaar!\nChangelog:\n%3$s</string>
     <string name="repo_install_title">Installeer %1$s</string>
     <string name="repo_install_msg">Wilt u  %1$s installeren?</string>
     <string name="download_install">Downloaden en installeren</string>
@@ -79,14 +75,14 @@
     <string name="no_magisk_msg">Wilt u Magisk downloaden en installeren?</string>
 
     <!--URL Templates-->
-    <string name="url_main">https://api.github.com/orgs/Magisk-Modules-Repo/repos?access_token=</string>
-    <string name="file_url">https://raw.githubusercontent.com/Magisk-Modules-Repo/%1$s/master/%2$s</string>
-    <string name="zip_url">https://github.com/Magisk-Modules-Repo/%1$s/archive/master.zip</string>
 
     <!--Settings Fragment -->
     <string name="settings_general_category">Algemeen</string>
     <string name="settings_theme_title">Thema</string>
     <string name="settings_theme_summary">Selecteer een thema</string>
+    <string name="theme_default">Standaard</string>
+    <string name="theme_dark">Donker</string>
+
     <string name="settings_busybox_title">Schakel BusyBox in</string>
     <string name="settings_busybox_summary">Maakt Magisk\'s ingebouwde BusyBox zichtbaar in PATH</string>
 
