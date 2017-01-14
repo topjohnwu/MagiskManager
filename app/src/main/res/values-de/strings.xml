@@ -44,7 +44,7 @@
 
     <!--Module Fragment-->
     <string name="no_info_provided">(Nichts angegeben)</string>
-    <string name="no_modules_found">keine Module gefunden</string>
+    <string name="no_modules_found">Keine Module gefunden</string>
     <string name="update_file_created">Modul wird beim nächsten Neustart aktualisiert</string>
     <string name="remove_file_created">Modul wird beim nächsten Neustart entfernt</string>
     <string name="remove_file_deleted">Modul wird beim nächsten Neustart nicht entfernt</string>
