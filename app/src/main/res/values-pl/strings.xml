@@ -107,7 +107,7 @@
     <string name="no_magisk_msg">Chcesz pobrać i zainstalować Magisk?</string>
     <string name="downloading_toast">Pobieranie %1$s</string>
     <string name="magisk_update_title">Nowa Wersja Magisk Dostepna!</string>
-    <string name="magisk_update_message">Magisk v%1$.1f jest dostępna, chcesz zainstalować?  </string>
+    <string name="magisk_update_message">Magisk v%1$.1f jest dostępny, chcesz zainstalować?</string>
     <string name="settings_reboot_toast">Uruchom ponownie, aby zastosować ustawienia</string>
     <string name="check_release_notes">Sprawdź informacje o wydaniu</string>
     <string name="repo_cache_cleared">Cache repozytorium wyczyszczone</string>
@@ -119,7 +119,7 @@
     <string name="theme_default">Domyślny</string>
     <string name="theme_dark">Ciemny</string>
     <string name="settings_clear_cache_title">Wyczyść Cache Repozytorium</string>
-    <string name="settings_clear_cache_summary">Wyczyść cache dla repozytorium online, wymusza odświeżenie online przez aplikację</string>
+    <string name="settings_clear_cache_summary">Wyczyść cache dla repozytorium, wymusza odświeżenie online przez aplikację</string>
 
     <string name="settings_magiskhide_title">Włącz Magisk Hide</string>
     <string name="settings_magiskhide_summary">Włącz Hide Magisk dla wykrytych aplikacji</string>
@@ -128,15 +128,15 @@
     <string name="settings_hosts_title">Włącz systemless hosts</string>
     <string name="settings_hosts_summary">Wsparcie systemless dla aplikacji Adblock</string>
 
-    <string name="settings_development_category">Development</string>
+    <string name="settings_development_category">Dla Developerów</string>
     <string name="settings_developer_logging_title">Włącz zaawansowane logowanie debugowania</string>
     <string name="settings_developer_logging_summary">Zaznacz, aby umożliwić pełne rejestrowanie</string>
     <string name="settings_shell_logging_title">Włącz rejestrowanie poleceń powłoki debugowania</string>
-    <string name="settings_shell_logging_summary">Włącz, aby włączyć rejestrowanie wszystkich poleceń powłoki i jego wyjścia</string>
+    <string name="settings_shell_logging_summary">Włącz, aby rejestrować wszystkie polecenia powłoki i wyjścia</string>
 
     <!-- Themes -->
-	
-	  <!--URL Templates-->
+
+    <!--URL Templates-->
     
 
 
