@@ -13,7 +13,6 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -118,8 +117,8 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+        if (drawer.isDrawerOpen(navigationView)) {
+            drawer.closeDrawer(navigationView);
         } else {
             finish();
         }
@@ -130,7 +129,7 @@ public class MainActivity extends AppCompatActivity
         mSelectedId = menuItem.getItemId();
         mDrawerHandler.removeCallbacksAndMessages(null);
         mDrawerHandler.postDelayed(() -> navigate(menuItem.getItemId(), false), 250);
-        drawer.closeDrawer(GravityCompat.START);
+        drawer.closeDrawer(navigationView);
         return true;
     }
 
