@@ -134,6 +134,20 @@
     <string name="settings_shell_logging_title">Włącz rejestrowanie poleceń powłoki debugowania</string>
     <string name="settings_shell_logging_summary">Włącz, aby rejestrować wszystkie polecenia powłoki i wyjścia</string>
 
+     <!--Superuser-->
+    <string name="su_request_title">Prośba dostępu Superusera</string>
+    <string name="deny">Odmów</string>
+    <string name="grant">Przyznaj</string>
+    <string name="su_warning">Udziela pełnego dostępu do urządzenia.\nOdmów jeśli nie jesteś pewien!</string>
+    <string name="forever">Zawsze</string>
+    <string name="once">Raz</string>
+    <string name="tenmin">10 min</string>
+    <string name="twentymin">20 min</string>
+    <string name="thirtymin">30 min</string>
+    <string name="sixtymin">60 min</string>
+    <string name="su_allow_toast">%1$s ma przyznane uprawnienia Superusera</string>
+    <string name="su_deny_toast">%1$s ma odmówione uprawnienia Superusera</string>
+
     <!-- Themes -->
 
     <!--URL Templates-->
