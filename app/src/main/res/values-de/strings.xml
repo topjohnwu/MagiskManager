@@ -7,6 +7,7 @@
     <string name="magiskhide">Magisk Hide</string>
     <string name="modules">Module</string>
     <string name="downloads">Downloads</string>
+    <string name="superuser">Superuser</string>
     <string name="log">Log</string>
     <string name="settings">Einstellungen</string>
     <string name="status">Status</string>
@@ -148,4 +149,6 @@
     <string name="sixtymin">60 Min.</string>
     <string name="su_allow_toast">Superuser-Rechte für %1$s gewährt</string>
     <string name="su_deny_toast">Superuser-Rechte für %1$s verweigert</string>
+    <string name="no_apps_found">Keine Apps gefunden</string>
+    
 </resources>
