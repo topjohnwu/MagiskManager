@@ -114,8 +114,8 @@
     
     <!--Settings Activity -->
     <string name="settings_general_category">Ogólne</string>
-    <string name="settings_theme_title">Motyw</string>
-    <string name="settings_theme_summary">Wybierz motyw</string>
+    <string name="settings_dark_theme_title">Motyw</string>
+    <string name="settings_dark_theme_summary">Wybierz motyw</string>
     <string name="theme_default">Domyślny</string>
     <string name="theme_dark">Ciemny</string>
     <string name="settings_clear_cache_title">Wyczyść Cache Repozytorium</string>
