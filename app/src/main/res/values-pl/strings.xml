@@ -141,6 +141,11 @@
     <string name="settings_su_request_20">20 sekund</string>
     <string name="settings_su_request_30">30 ssekund</string>
     <string name="settings_su_request_60">60 sekund</string>
+    <string name="superuser_access">Dostęp Superuser</string>
+    <string name="auto_response">Automatyczna Odpowiedź</string>
+    <string name="request_timeout">Czas Prośby</string>
+    <string name="superuser_notification">Powiadomienia Superusern</string>
+    <string name="request_timeout_summary">%1$s sekund</string>
 
     <string name="settings_development_category">Dla Developerów</string>
     <string name="settings_developer_logging_title">Włącz zaawansowane logowanie debugowania</string>
