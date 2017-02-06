@@ -133,8 +133,8 @@
     <string name="settings_clear_cache_title">Wyczyść Cache Repozytorium</string>
     <string name="settings_clear_cache_summary">Wyczyść cache dla repozytorium, wymusza odświeżenie online przez aplikację</string>
 
-    <string name="settings_disable_title">Wyłącz Montowanie Magisk</string>
-    <string name="settings_disable_summary">Wyłącz montowanie Magisk, co uniemożliwi działanie wszystkim modułom</string>
+    <string name="settings_disable_title">Wyłącz Magisk</string>
+    <string name="settings_disable_summary">Wszystko zostanie wyłączone za wyjątkiem roota (MagiskSU)</string>
     <string name="settings_magiskhide_summary">Włącz Hide Magisk dla wykrytych aplikacji</string>
     <string name="settings_busybox_title">Włącz BusyBox</string>
     <string name="settings_busybox_summary">Zmień montowanie Magisk z wbudowanego busybox do xbin</string>
