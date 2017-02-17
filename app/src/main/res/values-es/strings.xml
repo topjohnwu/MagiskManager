@@ -27,7 +27,7 @@
     <string name="safetyNet_check_text">Toque para empezar la comprobación de SafetyNet</string>
     <string name="checking_safetyNet_status">Comprobando estado de SafetyNet…</string>
     <string name="safetyNet_connection_failed">No puede conectar con la API de Google</string>
-    <string name="safetyNet_connection_suspended">La conexión con la API de Google API fué suspendida</string>
+    <string name="safetyNet_connection_suspended">La conexión con la API de Google API fue suspendida</string>
     <string name="safetyNet_error">No puede comprobar SafetyNet, ¿No tiene internet?</string>
     <string name="safetyNet_fail">SafetyNet falló: No coincide el perfil CTS</string>
     <string name="safetyNet_pass">SafetyNet pasó</string>
@@ -74,7 +74,7 @@
     <string name="app_developers">Desarroladores principales</string>
     <string name="app_developers_"><![CDATA[Aplicación creada por <a href="https://github.com/topjohnwu">topjohnwu</a> en colaboración con <a href="https://github.com/d8ahazard">Digitalhigh</a> y <a href="https://github.com/dvdandroid">Dvdandroid</a>.]]></string>
     <string name="app_changelog">Registro de cambios de la aplicación</string>
-    <string name="translators"><![CDATA[Gawenda, netizen, <a href="https://github.com/topjohnwu">Deiki</a>]]></string>
+    <string name="translators"><![CDATA[Gawenda, netizen, <a href="https://github.com/DeicPro">Deiki</a>]]></string>
     <string name="app_version">Versión de la aplicación</string>
     <string name="app_source_code">Código fuente</string>
     <string name="donation">Donar</string>
@@ -127,7 +127,7 @@
     <string name="settings_clear_cache_summary">Limpiar la información en caché para los repositorios en línea, fuerza a la aplicación a actualizar en línea</string>
 
     <string name="settings_disable_title">Deshabilitar Magisk</string>
-    <string name="settings_disable_summary">Todo será desactivado excepto el root (MagiskSU)
+    <string name="settings_disable_summary">Todo será desactivado excepto el root (MagiskSU)</string>
     <string name="settings_magiskhide_summary">Ocultar Magisk de varias detecciones</string>
     <string name="settings_busybox_title">Habilitar BusyBox</string>
     <string name="settings_busybox_summary">Montar el busybox interno de Magisk en xbin</string>
