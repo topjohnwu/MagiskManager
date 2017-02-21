@@ -125,7 +125,7 @@
     <string name="process_error">Błąd procesu</string>
     <string name="internal_storage">Zip jest przechowywany w:\n[Pamięć Wewnętrzna]%1$s</string>
     <string name="zip_process_title">Przetwarzanie</string>
-    <string name="manual_boot_image">Proszę ręcznie wybrać boot.img!</string>
+    <string name="manual_boot_image">Proszę ręcznie wybrać boot image!</string>
 	
     <!--Settings Activity -->
     <string name="settings_general_category">Ogólne</string>
