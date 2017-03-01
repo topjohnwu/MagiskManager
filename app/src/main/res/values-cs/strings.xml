@@ -17,7 +17,7 @@
 
     <!--Status Fragment-->
     <string name="magisk_version">Nainstalován Magisk v%1$s</string>
-    <string name="magisk_version_disable">Magisk v%1$s disabled</string>
+    <string name="magisk_version_disable">Magisk v%1$s deaktivován</string>
     <string name="magisk_version_error">Magisk není nainstalován</string>
 
     <string name="checking_for_updates">Kontrola aktualizací…</string>
@@ -39,11 +39,11 @@
     <!--Install Fragment-->
     <string name="auto_detect">(Auto) %1$s</string>
     <string name="cannot_auto_detect">(Nelze zjistit automaticky)</string>
-    <string name="boot_image_title">Boot Image Location</string>
-    <string name="detect_button">Detect</string>
+    <string name="boot_image_title">Umístění Boot Image</string>
+    <string name="detect_button">Zjistit</string>
     <string name="advanced_settings_title">Pokročilá Nastavení</string>
-    <string name="keep_force_encryption">Keep force encryption</string>
-    <string name="keep_dm_verity">Keep dm-verity</string>
+    <string name="keep_force_encryption">Udržet "force encryption"</string>
+    <string name="keep_dm_verity">Udržet dm-verity</string>
     <string name="current_magisk_title">Nainstalovaná verze Magisk: %1$s</string>
     <string name="install_magisk_title">Poslední verze Magisk: %1$s</string>
     <string name="uninstall">Odinstalovat</string>
@@ -116,7 +116,7 @@
     <string name="magisk_update_title">K dispozici je aktualizace Magisk!</string>
     <string name="settings_reboot_toast">Restartovat pro použití nastavení</string>
     <string name="release_notes">Poznámky k vydání</string>
-    <string name="repo_cache_cleared">Repo cache cleared</string>
+    <string name="repo_cache_cleared">Mezipaměť smazána</string>
     <string name="safetyNet_hide_notice">Tato aplikace využívá SafetyNet\nVe výchozím nastavení již ovládaný skrze MagiskHide</string>
     <string name="start_magiskhide">Spouštění MagiskHide …</string>
     <string name="no_magisksu_title">Nepoužíváte MagiskSU!</string>
@@ -133,16 +133,16 @@
     <string name="settings_dark_theme_summary">Povolit tmavý vzhled</string>
     <string name="settings_notification_title">Oznámení o Aktualizaci</string>
     <string name="settings_notification_summary">Zobrazí oznámení aktualizace, když je k dispozici nová verze</string>
-    <string name="settings_clear_cache_title">Clear Repo Cache</string>
-    <string name="settings_clear_cache_summary">Clear the cached information for online repos, forces the app to refresh online</string>
+    <string name="settings_clear_cache_title">Smazat Uchovanou Mezipaměť</string>
+    <string name="settings_clear_cache_summary">Smaže informace online použití v Mezipaměti, donutí aplikaci obnovit informace online</string>
 
     <string name="settings_disable_title">Zakázat Magisk</string>
     <string name="settings_disable_summary">Všechno kromě rootu (MagiskSU) bude deaktivováno</string>
     <string name="settings_magiskhide_summary">Skryje root (MagiskSU) před různými aplikacemi</string>
     <string name="settings_busybox_title">Povolit BusyBox</string>
-    <string name="settings_busybox_summary">Bind mount Magisk\'s built-in busybox to xbin</string>
-    <string name="settings_hosts_title">Systemless hosts</string>
-    <string name="settings_hosts_summary">Systemless hosts support for Adblock apps</string>
+    <string name="settings_busybox_summary">Nasadí vestavěný Magisk busybox do xbin</string>
+    <string name="settings_hosts_title">Nesystémová "hosts" data</string>
+    <string name="settings_hosts_summary">Podpora nesystémových dat "hosts" pro Adblock aplikace</string>
 
     <string name="settings_su_app_adb">Aplikace i ADB</string>
     <string name="settings_su_app">Pouze aplikace</string>
@@ -194,7 +194,7 @@
 
     <!--Superuser logs-->
     <string name="pid">PID:\u0020</string>
-    <string name="target_uid">Target UID:\u0020</string>
-    <string name="command">Command:\u0020</string>
+    <string name="target_uid">Cílové UID:\u0020</string>
+    <string name="command">Příkaz:\u0020</string>
 
 </resources>
