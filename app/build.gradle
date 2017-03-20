@@ -38,6 +38,9 @@ android {
             path 'src/main/jni/CMakeLists.txt'
         }
     }
+    lintOptions {
+        abortOnError false
+    }
 }
 repositories {
     jcenter()
