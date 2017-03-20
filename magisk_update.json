@@ -6,10 +6,10 @@
     "changelog": "  - Upgrade on Play Store!"
   },
   "magisk": {
-    "versionCode": "11.1",
-    "link": "https://forum.xda-developers.com/attachment.php?attachmentid=4031933&d=1486424592",
+    "versionCode": "11.6",
+    "link": "https://forum.xda-developers.com/attachment.php?attachmentid=4082450&d=1490043181",
     "changelog": "Check the release notes",
-    "note": "https://forum.xda-developers.com/showpost.php?p=70897029&postcount=12"
+    "note": "https://forum.xda-developers.com/showpost.php?p=71502787&postcount=17"
   },
   "uninstall": {
     "filename": "Magisk-uninstaller-20170206.zip",
