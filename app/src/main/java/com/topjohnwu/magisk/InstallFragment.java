@@ -101,9 +101,9 @@ public class InstallFragment extends Fragment implements CallbackEvent.Listener<
                         Utils.getLegalFilename(filename)))
                 .setNeutralButton(R.string.release_notes, (dialog, which) -> {
                     if (magiskManager.releaseNoteLink != null) {
-                        Intent openReleasNoteLink = new Intent(Intent.ACTION_VIEW, Uri.parse(magiskManager.releaseNoteLink));
-                        openReleasNoteLink.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        magiskManager.startActivity(openReleasNoteLink);
+                        Intent openReleaseNoteLink = new Intent(Intent.ACTION_VIEW, Uri.parse(magiskManager.releaseNoteLink));
+                        openReleaseNoteLink.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        magiskManager.startActivity(openReleaseNoteLink);
                     }
                 })
                 .setNegativeButton(R.string.no_thanks, null)
