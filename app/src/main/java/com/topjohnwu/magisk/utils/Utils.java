@@ -108,14 +108,22 @@ public class Utils {
     }
 
     public static String detectBootImage() {
+        String bootSlotName = "boot";
+        List<String> ret;
+
+        ret = Shell.su("getprop ro.boot.slot_suffix");
+        if (isValidShellResponse(ret)) {
+            bootSlotName += ret.get(0);
+        }
+
         String[] commands = {
-                "for PARTITION in kern-a KERN-A android_boot ANDROID_BOOT kernel KERNEL boot BOOT lnx LNX; do",
+                "for PARTITION in kern-a KERN-A android_boot ANDROID_BOOT kernel KERNEL " + bootSlotName + " BOOT lnx LNX; do",
                 "BOOTIMAGE=`readlink /dev/block/by-name/$PARTITION || readlink /dev/block/platform/*/by-name/$PARTITION || readlink /dev/block/platform/*/*/by-name/$PARTITION`",
                 "if [ ! -z \"$BOOTIMAGE\" ]; then break; fi",
                 "done",
                 "echo \"${BOOTIMAGE##*/}\""
         };
-        List<String> ret = Shell.su(commands);
+        ret = Shell.su(commands);
         if (isValidShellResponse(ret)) {
             return ret.get(0);
         }
