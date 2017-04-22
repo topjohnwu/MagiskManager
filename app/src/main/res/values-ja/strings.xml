@@ -19,7 +19,7 @@
 
     <string name="checking_for_updates">更新をチェック中...</string>
     <string name="magisk_update_available">Magisk v%1$.1fが利用可能！</string>
-    <string name="cannot_check_updates">更新を確認できない、ネットがないか？</string>
+    <string name="cannot_check_updates">更新を確認できない、インターネット接続なし？</string>
     <string name="up_to_date">%1$sの最新バージョンがインストールされている</string>
     <string name="root_error">root権限は許可されていない。許可してないか？</string>
     <string name="not_rooted">rootされていない</string>
@@ -55,8 +55,8 @@
     <string name="update_file_created">>次の再起動時にモジュールを更新する</string>
     <string name="remove_file_created">次の再起動時にモジュールを削除する</string>
     <string name="remove_file_deleted">次の再起動時にモジュールを削除しない</string>
-    <string name="disable_file_created">次の再起動時にモジュールを無効する</string>
-    <string name="disable_file_removed">次の再起動時にモジュールを有効する</string>
+    <string name="disable_file_created">次の再起動時にモジュールを無効にする</string>
+    <string name="disable_file_removed">次の再起動時にモジュールを有効にする</string>
     <string name="author">%1$sに作成された</string>
     <string name="fab_flash_zip">モジュールジップを焼く</string>
 
@@ -71,7 +71,7 @@
     <string name="menuClearLog">ログを消去する</string>
     <string name="logs_cleared">ログを正常にクリアされた</string>
     <string name="log_is_empty">ログは空です</string>
-    <string name="logs_save_failed">SDカードにログを書き込めことができない：</string>
+    <string name="logs_save_failed">SDカードにログを書き込むことができない</string>
 
     <!--About Activity-->
     <string name="about">説明</string>
@@ -86,7 +86,7 @@
     <string name="support_thread">サポートスレッド</string>
 
     <!--Toasts, Dialogs-->
-    <string name="permissionNotGranted">この機能は外部ストレージを書き込む権限がないて動作しない。</string>
+    <string name="permissionNotGranted">この機能は外部ストレージを書き込む権限がないと作動しない</string>
     <string name="no_thanks">いいえ</string>
     <string name="yes">はい</string>
     <string name="ok">OK</string>
@@ -95,7 +95,7 @@
     <string name="repo_install_msg">%1$sをインストールしますか？</string>
     <string name="download_install">ダウンロードとインストール</string>
     <string name="download">ダウンロード</string>
-    <string name="goto_install">"インストール"界面に移動する</string>
+    <string name="goto_install">インストール画面に移動する</string>
     <string name="download_file_error">ダウンロード中にエラーが発生した</string>
     <string name="install_error">インストールエラー！</string>
     <string name="invalid_zip">このジップはMagiskモジュールじゃない</string>
@@ -117,7 +117,7 @@
     <string name="safetyNet_hide_notice">このアプリはSafetyNetを使用している。\n既定ではMagiskHideで既に処理された</string>
     <string name="start_magiskhide">MagiskHide開始... </string>
     <string name="no_magisksu_title">MagiskSUを使用してない！</string>
-    <string name="no_magisksu_msg">あなたのデバイスはMagiskSUにrootされていない、MagiskHideを使用するだけでは十分ではない。\nそれは正式にサポートされていないて、あなたはSafetyNetを通過ためにの追加ツール（例えばsuhide）が必要です。</string>
+    <string name="no_magisksu_msg">あなたのデバイスはMagiskSUにrootされていない、MagiskHideを使用するだけでは十分ではない。\nそれは正式にサポートされていなくて、あなたはSafetyNetを通過するための追加ツール（例えばsuhide）が必要です。</string>
     <string name="understand">わかった</string>
     <string name="process_error">プロセスエラー</string>
     <string name="internal_storage">ジップは:\n[Internal Storage]%1$sに保存されている</string>
@@ -131,7 +131,7 @@
     <string name="settings_notification_title">更新通知</string>
     <string name="settings_notification_summary">新しいバージョンが利用可能に更新通知を表示する</string>
     <string name="settings_clear_cache_title">キャッシュを消去</string>
-    <string name="settings_clear_cache_summary">オンラインリポジトリのキャッシュされた情報をクリアし、アプリをオンラインに更新させる</string>
+    <string name="settings_clear_cache_summary">オンラインリポジトリのキャッシュされた情報をクリアし、アプリをオンラインで更新する</string>
 　　<string name="settings_core_only_title">Magiskコアのみのモード</string>
     <string name="settings_core_only_summary">コア機能のみを有効にすると、すべてのモジュールがロードされません。 MagiskSU、MagiskHide、systemless hosts、BusyBoxは引き続き有効になります。</string>
     <string name="settings_magiskhide_summary">さまざまな検出からMagiskを隠す</string>
@@ -166,7 +166,7 @@
     <string name="deny">拒否</string>
     <string name="prompt">プロンプト</string>
     <string name="grant">許可</string>
-    <string name="su_warning">デバイスへの全部フルアクセスを許可する。\nもし確信が持てないなら拒否して！</string>
+    <string name="su_warning">デバイスへのフルアクセスを許可する。\nもし確信が持てないなら拒否して！</string>
     <string name="forever">永久</string>
     <string name="once">一度</string>
     <string name="tenmin">10分</string>
