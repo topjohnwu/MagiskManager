@@ -6,7 +6,7 @@
     "changelog": "  - Upgrade on Play Store!"
   },
   "magisk": {
-    "version": "12.0"
+    "version": "12.0",
     "versionCode": "120",
     "link": "https://forum.xda-developers.com/attachment.php?attachmentid=4095052&d=1490916845",
     "changelog": "Check the release notes",
