@@ -155,11 +155,11 @@
     <string name="superuser_notification">Superuser melding</string>
     <string name="request_timeout_summary">%1$s seconden</string>
 
-    <string name="settings_development_category">App ontwikkeling</string>
-    <string name="settings_developer_logging_title">Geavanceerde debug loggen inschakelen</string>
-    <string name="settings_developer_logging_summary">Aanvinken om uitgebreide loggen in te schakelen</string>
-    <string name="settings_shell_logging_title">Shell-opdrachten debug loggen inschakelen</string>
-    <string name="settings_shell_logging_summary">Aanvinken om alle shell-opdracht en uitvoer loggen in te schakelen</string>
+    <string name="settings_development_category">App-ontwikkeling</string>
+    <string name="settings_developer_logging_title">Geavanceerde debug logs inschakelen</string>
+    <string name="settings_developer_logging_summary">Aanvinken om uitgebreide logs in te schakelen</string>
+    <string name="settings_shell_logging_title">Shell-opdracht debug logs inschakelen</string>
+    <string name="settings_shell_logging_summary">Aanvinken om alle shell-opdracht en uitvoer logs in te schakelen</string>
 
     <!--Superuser-->
     <string name="su_request_title">Superuser verzoek</string>
