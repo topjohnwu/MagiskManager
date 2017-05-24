@@ -15,6 +15,12 @@
             android:summary="@string/settings_notification_summary"
             android:key="notification" />
 
+        <CheckBoxPreference
+            android:title="@string/icon_launcher"
+            android:summary="@string/icon_launcher_summary"
+            android:defaultValue="true"
+            android:key="icon_launcher"/>
+
         <Preference
             android:key="clear"
             android:title="@string/settings_clear_cache_title"
