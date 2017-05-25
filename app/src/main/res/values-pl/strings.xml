@@ -67,6 +67,152 @@
     <string name="update_available">Aktualizacja jest dostępna</string>
     <string name="installed">Zainstalowany</string>
     <string name="not_installed">Nie zainstalowany</string>
+    <string name="changelog">Zmiany</string>
+
+    <!--Log Fragment-->
+    <string name="menuSaveToSd">Zapisz na SD</string>
+    <string name="menuReload">Załaduj ponownie</string>
+    <string name="menuClearLog">Wyczyść Log</string>
+    <string name="logs_cleared">Log wyczyszczony</string>
+    <string name="log_is_empty">Log jest pusty</string>
+    <string name="logs_save_failed">Nie można zapisać logu na karcie SD:</string>
+
+    <!--About Activity-->
+    <string name="about">O Aplikacji</string>
+    <string name="app_developers">Developerzy</string>
+    <string name="app_developers_"><![CDATA[Autorzy aplikacji <a href="https://github.com/topjohnwu">topjohnwu</a> in collaboration with <a href="https://github.com/d8ahazard">Digitalhigh</a> and <a href="https://github.com/dvdandroid">Dvdandroid</a>.]]></string>
+    <string name="app_changelog">Zmiany w Aplikacji</string>
+    <string name="translators" />
+    <string name="app_version">Wersja Aplikacji</string>
+    <string name="app_source_code">Kod Źródłowy</string>
+    <string name="donation">Dotacja</string>
+    <string name="app_translators">Tłumacze Aplikacji</string>
+    <string name="support_thread">Strona Wsparcia</string>
+
+    <!--Toasts, Dialogs-->
+    <string name="permissionNotGranted">Ta funkcja nie będzie działać bez uprawnień do zapisu na pamięci zewnętrznej.</string>
+    <string name="no_thanks">Nie dziękuję</string>
+    <string name="yes">Tak</string>
+	<string name="ok">OK</string>
+    <string name="repo_install_title">Zainstaluj %1$s</string>
+    <string name="repo_install_msg">Czy chcesz zainstalować  %1$s ?</string>
+    <string name="download_install">Pobierz i zainstaluj</string>
+    <string name="goto_install">Idź do sekcji \"Instalacja\"</string>
+    <string name="download_file_error">Błąd pobierania pliku</string>
+    <string name="install_error">Błąd instalacji!</string>
+    <string name="manual_install_1">Plik zip umieszczony w %1$s</string>
+    <string name="manual_install_2">Zainstaluj go ręcznie w recovery</string>
+    <string name="invalid_zip">Ten zip nie jest Modułem Magisk!!</string>
+    <string name="reboot_title">Instalacja zakończona powodzeniem!</string>
+    <string name="reboot_msg">Czy chcesz teraz ponownie uruchomić?</string>
+    <string name="reboot">Restart</string>
+    <string name="copying_msg">Kopiowanie zip do katalogu temp</string>
+    <string name="zip_install_progress_title">Instalacja</string>
+    <string name="zip_install_unzip_zip_msg">Rozpakowywanie pliku zip …</string>
+    <string name="zip_install_process_zip_msg">Przetwarzanie pliku zip …</string>
+    <string name="zip_install_progress_msg">"Instalowanie %1$s …"</string>
+    <string name="no_magisk_title">Brak zainstalowanego Magisk!</string>
+    <string name="no_magisk_msg">Chcesz pobrać i zainstalować Magisk?</string>
+    <string name="downloading_toast">Pobieranie %1$s</string>
+    <string name="magisk_update_title">Nowa Wersja Magisk Dostępna!</string>
+    <string name="magisk_update_message">Magisk v%1$.1f jest dostępny, chcesz zainstalować?</string>
+    <string name="settings_reboot_toast">Uruchom ponownie, aby zastosować ustawienia</string>
+    <string name="check_release_notes">Sprawdź zmiany</string>
+    <string name="repo_cache_cleared">Cache repozytorium wyczyszczone</string>
+    <string name="safetyNet_hide_notice">Ta aplikacja wykorzystuje SafetyNet\nJest już domyślnie obsługiwana przez MagiskHide</string>
+    <string name="start_magiskhide">Uruchamianie MagiskHide …</string>
+    <string name="no_magisksu_title">Nie Używaj MagiskSU!</string>
+    <string name="no_magisksu_msg">Jeśli nie masz roota z MagiskSU, używanie samego MagiskHide może nie wystarczyć! Inne metody nie są oficjalnie obsługiwane. Do poprawnego działania SaftyNet potrzebne będą dodatkowe narzędzia (np suhide)</string>
+    <string name="understand">Rozumiem</string>
+    <string name="process_error">Błąd procesu</string>
+    <string name="internal_storage">Zip jest przechowywany w:\n[Pamięć Wewnętrzna]%1$s</string>
+    
+    <!--Settings Activity -->
+    <string name="settings_general_category">Ogólne</string>
+    <string name="settings_dark_theme_title">Ciemny Motyw</string>
+    <string name="settings_dark_theme_summary">Włącz ciemny motyw</string>
+    <string name="settings_clear_cache_title">Wyczyść Pamięć Repozytorium</string>
+    <string name="settings_clear_cache_summary">Wymusza na aplikacji odświeżenie online repozytorium</string>
+
+    <string name="settings_disable_title">Wyłącz Magisk</string>
+    <string name="settings_disable_summary">Wszystko zostanie wyłączone za wyjątkiem roota (MagiskSU)</string>
+    <string name="settings_magiskhide_summary">Włącz Hide Magisk dla wykrytych aplikacji</string>
+    <string name="settings_busybox_title">Włącz BusyBox</string>
+    <string name="settings_busybox_summary">Zmień montowanie Magisk z wbudowanego busybox do xbin</string>
+    <string name="settings_hosts_title">Włącz systemless hosts</string>
+    <string name="settings_hosts_summary">Wsparcie systemless dla aplikacji Adblock</string>
+    
+    <string name="settings_su_app_adb">Aplikacje i ADB</string>
+    <string name="settings_su_app">Tylko aplikacje</string>
+    <string name="settings_su_adb">Tylko ADB</string>
+    <string name="settings_su_disable">Wyłączone</string>
+    <string name="settings_su_request_10">10 sekund</string>
+    <string name="settings_su_request_20">20 sekund</string>
+    <string name="settings_su_request_30">30 sekund</string>
+    <string name="settings_su_request_60">60 sekund</string>
+    <string name="superuser_access">Dostęp Superuser</string>
+    <string name="auto_response">Automatyczna Odpowiedź</string>
+    <string name="request_timeout">Czas na decyzję</string>
+    <string name="superuser_notification">Powiadomienia Superusera</string>
+    <string name="request_timeout_summary">%1$s sekund</string>
+
+    <string name="settings_development_category">Dla Developerów</string>
+    <string name="settings_developer_logging_title">Włącz zaawansowane logowanie debugowania</string>
+    <string name="settings_developer_logging_summary">Zaznacz, aby umożliwić pełne rejestrowanie</string>
+    <string name="settings_shell_logging_title">Włącz rejestrowanie poleceń powłoki debugowania</string>
+    <string name="settings_shell_logging_summary">Włącz, aby rejestrować wszystkie polecenia powłoki i wyjścia</string>
+   
+    <!--Superuser-->
+    <string name="su_request_title">Prośba o dostęp Superusera</string>
+    <string name="deny_with_str">Odmów%1$s</string>
+    <string name="deny">Odmów</string>
+    <string name="prompt">Zapytaj</string>
+    <string name="grant">Przyznaj</string>
+    <string name="su_warning">Udziela pełnego dostępu do urządzenia.\nOdmów jeśli nie jesteś pewien!</string>
+    <string name="forever">Zawsze</string>
+    <string name="once">Raz</string>
+    <string name="tenmin">10 min</string>
+    <string name="twentymin">20 min</string>
+    <string name="thirtymin">30 min</string>
+    <string name="sixtymin">60 min</string>
+    <string name="su_allow_toast">%1$s ma przyznane uprawnienia Superusera</string>
+    <string name="su_deny_toast">%1$s ma odmówione uprawnienia Superusera</string>
+    <string name="no_apps_found">Nie znaleziono aplikacji</string>
+    <string name="su_snack_grant">Przyznano uprawnienia Superuser dla %1$s</string>
+    <string name="su_snack_deny">Odmówiono uprawnień Superuser dla %1$s</string>
+    <string name="su_snack_notif_on">Powiadomienia dla %1$s są włączone</string>
+    <string name="su_snack_notif_off">Powiadomienia dla %1$s są wyłączone</string>
+    <string name="su_snack_log_on">Logowanie dla %1$s jest włączone</string>
+    <string name="su_snack_log_off">Logowanie dla %1$s jest wyłączone</string>
+    <string name="su_snack_revoke">%1$s uprawnienia są odwołane</string>
+    <string name="su_revoke_title">Odwołać?</string>
+    <string name="su_revoke_msg">Potwierdzasz odwołanie uprawnień %1$s?</string>
+    <string name="toast">Powiadomienie</string>
+    <string name="none">Brak</string>
+
+    <!--Superuser logs-->
+    <string name="pid">PID:\u0020</string>
+    <string name="target_uid">Identyfikator UID:\u0020</string>
+    <string name="command">Komenda:\u0020</string>
+
+</resources>
+    <string name="reboot_countdown">Restartuj do %1$d</string>
+    
+    <!--Module Fragment-->
+    <string name="no_info_provided">(Nie umieszczono informacji)</string>
+    <string name="no_modules_found">Nie znaleziono modułów</string>
+    <string name="update_file_created">Moduł zostanie zaktualizowany przy następnym restarcie</string>
+    <string name="remove_file_created">Moduł zostanie usunięty przy następnym uruchomieniu</string>
+    <string name="remove_file_deleted">Moduł nie zostanie usunięty podczas następnego restartu</string>
+    <string name="disable_file_created">Moduł zostanie wyłączony przy następnym restarcie</string>
+    <string name="disable_file_removed">Moduł zostanie włączony przy następnym restarcie</string>
+    <string name="author">Autor modu: %1$s</string>
+    <string name="fab_flash_zip">Zainstaluj Moduł Zip</string>
+
+    <!--Repo Fragment-->
+    <string name="update_available">Aktualizacja jest dostępna</string>
+    <string name="installed">Zainstalowany</string>
+    <string name="not_installed">Nie zainstalowany</string>
 
     <!--Log Fragment-->
     <string name="menuSaveToSd">Zapisz na SD</string>
