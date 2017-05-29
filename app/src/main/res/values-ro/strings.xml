@@ -12,7 +12,7 @@
 
     <!--Status Fragment-->
     <string name="magisk_version">Magisk instalat v%1$s</string>
-    <string name="magisk_version_core_only">Magisk instalat v%1$s (Mod Doar Nucleu)</string>
+    <string name="magisk_version_core_only">Magisk instalat v%1$s (Mod de bază)</string>
     <string name="magisk_version_error">Magisk nu este instalat</string>
 
     <string name="checking_for_updates">Verificare actualizări…</string>
@@ -131,7 +131,7 @@
     <string name="settings_clear_cache_title">Eliminare cache</string>
     <string name="settings_clear_cache_summary">Ștergeți informațiile memorate în cache, forțează actualizarea aplicației online</string>
 
-    <string name="settings_core_only_title">Mod Doar nucleu</string>
+    <string name="settings_core_only_title">Mod de bază</string>
     <string name="settings_core_only_summary">Se activează numai caracteristicile principale, toate modulele nu vor fi încărcate. MagiskSU, MagiskHide, systemless hosts şi busybox vor fi în continuare activate</string>
     <string name="settings_magiskhide_summary">Ascundeţi Magisk de la diferite detectări</string>
     <string name="settings_busybox_title">Activare BusyBox</string>
