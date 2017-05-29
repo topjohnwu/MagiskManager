@@ -12,7 +12,7 @@
 
     <!--Status Fragment-->
     <string name="magisk_version">Установлен Magisk v%1$s</string>
-    <string name="magisk_version_core_only">Установлен v%1$s (Режим Core Only)</string>
+    <string name="magisk_version_core_only">Установлен v%1$s (Базовый режим)</string>
     <string name="magisk_version_error">Magisk не установлен</string>
 
     <string name="checking_for_updates">Проверка обновлений…</string>
@@ -135,8 +135,8 @@
     <string name="settings_clear_cache_title">Очистить кэш репозиториев</string>
     <string name="settings_clear_cache_summary">Удалить сохранённую информацию о сетевых репозиториях, чтобы приложение обновило информацию из сети</string>
 
-    <string name="settings_core_only_title">Режим Core Only</string>
-    <string name="settings_core_only_summary">Включить только основные функции, модули не будут загружены. MagiskSU, MagiskHide, Systemless hosts, и BusyBox будут включены</string>
+    <string name="settings_core_only_title">Базовый режим</string>
+    <string name="settings_core_only_summary">Включить только основные функции, не загружать модули. MagiskSU, MagiskHide, Systemless hosts, и BusyBox будут включены</string>
     <string name="settings_magiskhide_summary">Скрыть Magisk от различных проверок</string>
     <string name="settings_busybox_title">Включить BusyBox</string>
     <string name="settings_busybox_summary">Примонтировать встроенный busybox из Magisk в xbin</string>
