@@ -24,6 +24,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    productFlavors {
+        // includes proprietary libs
+        gms {
+        }
+
+        // only foss
+        foss {
+        }
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -63,6 +73,6 @@ dependencies {
     compile 'com.madgag.spongycastle:prov:1.54.0.0'
     compile 'com.madgag.spongycastle:pkix:1.54.0.0'
     compile 'com.madgag.spongycastle:pg:1.54.0.0'
-    compile 'com.google.android.gms:play-services-safetynet:9.0.1'
+    gmsCompile 'com.google.android.gms:play-services-safetynet:9.0.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
 }
