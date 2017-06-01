@@ -5,15 +5,14 @@
         android:title="@string/settings_general_category">
 
         <SwitchPreference
-            android:defaultValue="false"
+            android:key="dark_theme"
             android:title="@string/settings_dark_theme_title"
-            android:summary="@string/settings_dark_theme_summary"
-            android:key="dark_theme" />
+            android:summary="@string/settings_dark_theme_summary" />
 
         <SwitchPreference
+            android:key="notification"
             android:title="@string/settings_notification_title"
-            android:summary="@string/settings_notification_summary"
-            android:key="notification" />
+            android:summary="@string/settings_notification_summary" />
 
         <CheckBoxPreference
             android:title="@string/icon_launcher"
@@ -37,22 +36,13 @@
             android:title="@string/settings_core_only_title"
             android:summary="@string/settings_core_only_summary" />
 
-        <!-- No more busybox -->
-        <!--<SwitchPreference-->
-            <!--android:key="busybox"-->
-            <!--android:defaultValue="false"-->
-            <!--android:title="@string/settings_busybox_title"-->
-            <!--android:summary="@string/settings_busybox_summary" />-->
-
         <SwitchPreference
             android:key="magiskhide"
-            android:defaultValue="false"
             android:title="@string/magiskhide"
             android:summary="@string/settings_magiskhide_summary" />
 
         <SwitchPreference
             android:key="hosts"
-            android:defaultValue="false"
             android:title="@string/settings_hosts_title"
             android:summary="@string/settings_hosts_summary" />
 
@@ -66,6 +56,12 @@
             android:key="su_access"
             android:title="@string/superuser_access"
             android:entries="@array/su_access"
+            android:entryValues="@array/value_array" />
+
+        <ListPreference
+            android:key="multiuser_mode"
+            android:title="@string/multiuser_mode"
+            android:entries="@array/multiuser_mode"
             android:entryValues="@array/value_array" />
 
         <ListPreference
@@ -85,6 +81,11 @@
             android:title="@string/superuser_notification"
             android:entries="@array/su_notification"
             android:entryValues="@array/value_array" />
+
+        <SwitchPreference
+            android:key="su_reauth"
+            android:title="@string/settings_su_reauth_title"
+            android:summary="@string/settings_su_reauth_summary"/>
 
     </PreferenceCategory>
 

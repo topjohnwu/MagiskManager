@@ -3,7 +3,6 @@ package com.topjohnwu.magisk;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -13,13 +12,11 @@ import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.topjohnwu.magisk.components.AboutCardRow;
 import com.topjohnwu.magisk.components.Activity;
 import com.topjohnwu.magisk.components.AlertDialogBuilder;
-import com.topjohnwu.magisk.utils.Logger;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,7 +26,7 @@ import butterknife.ButterKnife;
 
 public class AboutActivity extends Activity {
 
-    private static final String DONATION_URL = "http://topjohnwu.github.io/donate";
+    private static final String DONATION_URL = "https://www.paypal.me/topjohnwu";
     private static final String XDA_THREAD = "http://forum.xda-developers.com/showthread.php?t=3432382";
     private static final String SOURCE_CODE_URL = "https://github.com/topjohnwu/MagiskManager";
 
@@ -45,10 +42,8 @@ public class AboutActivity extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String theme = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("theme", "");
-        Logger.dev("AboutActivity: Theme is " + theme);
         if (getApplicationContext().isDarkTheme) {
-            setTheme(R.style.AppTheme_Dark);
+            setTheme(R.style.AppTheme_Transparent_Dark);
         }
         setContentView(R.layout.activity_about);
         ButterKnife.bind(this);
@@ -133,20 +128,6 @@ public class AboutActivity extends Activity {
         donation.setOnClickListener(view -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(DONATION_URL))));
 
         setFloating();
-    }
-
-    public void setFloating() {
-        boolean isTablet = getResources().getBoolean(R.bool.isTablet);
-        if (isTablet) {
-            WindowManager.LayoutParams params = getWindow().getAttributes();
-            params.height = getResources().getDimensionPixelSize(R.dimen.floating_height);
-            params.width = getResources().getDimensionPixelSize(R.dimen.floating_width);
-            params.alpha = 1.0f;
-            params.dimAmount = 0.6f;
-            params.flags |= 2;
-            getWindow().setAttributes(params);
-            setFinishOnTouchOutside(true);
-        }
     }
 
 }
