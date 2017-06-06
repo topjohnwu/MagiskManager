@@ -1,7 +1,7 @@
 {
   "app": {
     "version": "4.3.3",
-    "versionCode": "32",
+    "versionCode": "31",
     "link": "https://github.com/topjohnwu/MagiskManager/releases/download/v4.3.3/MagiskManager-v4.3.3.apk"
   },
   "magisk": {
