@@ -6,6 +6,8 @@
     <color name="accent">#FFC107</color>
     <color name="accentFallback">#FBC02D</color>
     <color name="icon_grey">#757575</color>
+    <color name="grey800">#424242</color>
+    <color name="grey900">#212121</color>
 
     <color name="red500">#F44336</color>
     <color name="green500">#4CAF50</color>
