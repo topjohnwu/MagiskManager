@@ -99,8 +99,12 @@ public class MagiskFragment extends Fragment
     public void safetyNet() {
         safetyNetProgress.setVisibility(View.VISIBLE);
         safetyNetRefreshIcon.setVisibility(View.GONE);
-        safetyNetStatusText.setText(R.string.checking_safetyNet_status);
-        Utils.checkSafetyNet(getActivity());
+        if (BuildConfig.FLAVOR.equals("foss")) {
+            safetyNetStatusText.setText(R.string.checking_safetyNet_status_foss);
+        } else {
+            safetyNetStatusText.setText(R.string.checking_safetyNet_status);
+            Utils.checkSafetyNet(getActivity());
+        }
         collapse();
     }
 
