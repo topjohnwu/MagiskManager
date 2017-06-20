@@ -1,6 +1,8 @@
 package com.topjohnwu.magisk;
 
+import android.content.ComponentName;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.PreferenceCategory;
@@ -146,6 +148,14 @@ public class SettingsActivity extends Activity {
                         Utils.removeItem(MagiskManager.MAGISK_DISABLE_FILE);
                     }
                     Toast.makeText(getActivity(), R.string.settings_reboot_toast, Toast.LENGTH_LONG).show();
+                    break;
+                case "icon_launcher":
+                    PackageManager pm = getActivity().getPackageManager();
+                    String activity = "com.topjohnwu.magisk.SplashActivity-main";
+
+                    int state = prefs.getBoolean("icon_launcher", true) ? PackageManager.COMPONENT_ENABLED_STATE_ENABLED : PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
+
+                    pm.setComponentEnabledSetting(new ComponentName(getActivity(), activity), state, PackageManager.DONT_KILL_APP);
                     break;
                 case "magiskhide":
                     enabled = prefs.getBoolean("magiskhide", false);
