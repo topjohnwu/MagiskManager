@@ -60,7 +60,7 @@
     <string name="disable_file_created">Η ενότητα θα απενεργοποιηθεί στην επόμενη επανεκκίνηση</string>
     <string name="disable_file_removed">Η ενότητα θα ενεργοποιηθεί στην επόμενη επανεκκίνηση</string>
     <string name="author">Δημιουργήθηκε από τον/την %1$s</string>
-    <string name="fab_flash_zip">Flash Module Zip</string>
+    <string name="fab_flash_zip">Flash Zip Ενότητας</string>
 
     <!--Repo Fragment-->
     <string name="update_available">Διαθέσιμη Ενημέρωση</string>
@@ -155,7 +155,7 @@
     <string name="settings_su_request_60">60 δευτερόλεπτα</string>
     <string name="superuser_access">Πρόσβαση Υπερχρήστη</string>
     <string name="auto_response">Αυτόματη Απόκριση</string>
-    <string name="request_timeout">Request Timeout</string>
+    <string name="request_timeout">Timeout Αιτήματος</string>
     <string name="superuser_notification">Ειδοποίηση Υπερχρήστη</string>
     <string name="request_timeout_summary">%1$s δευτερόλεπτα</string>
     <string name="settings_su_reauth_title">Επανα-πιστοποίηση μετά από αναβάθμιση</string>
