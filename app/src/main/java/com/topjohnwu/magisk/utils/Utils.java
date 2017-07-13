@@ -154,6 +154,7 @@ public class Utils {
     }
 
     public static void checkSafetyNet(FragmentActivity activity) {
+        getMagiskManager(activity).safetyNetDone.inFlight = true;
         new SafetyNetHelper(activity) {
             @Override
             public void handleResults(Result result) {
