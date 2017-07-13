@@ -97,6 +97,10 @@ public class MagiskFragment extends Fragment
 
     @OnClick(R.id.safetyNet_title)
     public void safetyNet() {
+        if (magiskManager.safetyNetDone.inFlight) {
+            return;
+        }
+
         safetyNetProgress.setVisibility(View.VISIBLE);
         safetyNetRefreshIcon.setVisibility(View.GONE);
         safetyNetStatusText.setText(R.string.checking_safetyNet_status);

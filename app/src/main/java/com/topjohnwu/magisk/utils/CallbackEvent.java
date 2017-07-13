@@ -5,6 +5,7 @@ import java.util.Set;
 
 public class CallbackEvent<Result> {
 
+    public boolean inFlight = false;
     public boolean isTriggered = false;
     private Result result;
     private Set<Listener<Result>> listeners;
@@ -33,6 +34,7 @@ public class CallbackEvent<Result> {
     public void trigger(Result r) {
         result = r;
         isTriggered = true;
+        inFlight = false;
         if (listeners != null) {
             for (Listener<Result> listener : listeners) {
                 listener.onTrigger(this);
