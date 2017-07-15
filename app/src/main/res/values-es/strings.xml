@@ -154,7 +154,7 @@
     <string name="settings_owner_manage">Administrador del dispositivo</string>
     <string name="settings_user_independent">Usuario Independiente</string>
     <string name="owner_only_summary">Sólo el propietario tiene acceso root</string>
-    <string name="owner_manage_summary">Sólo el propietario puede administrar el acceso root y recibir solicitudes</string>
+    <string name="owner_manage_summary">Sólo el administrador puede supervisar el acceso root y recibir solicitudes</string>
     <string name="user_indepenent_summary">Cada usuario tiene separadas sus propias reglas de root </string>
     <string name="multiuser_hint_owner_request">Se ha enviado una solicitud al propietario del dispositivo. Por favor, cambie a la sesión del propietario y conceda el permiso</string>
     
