@@ -130,8 +130,6 @@
     <string name="settings_core_only_title">Magisk Modo Sólo Núcleo</string>
     <string name="settings_core_only_summary">Habilitar sólo funciones principales, no se cargarán todos los módulos. MagiskSU, MagiskHide, y hosts fuera de la partición de sistema seguiran habilitados</string>
     <string name="settings_magiskhide_summary">Ocultar Magisk de varias detecciones</string>
-    <string name="settings_busybox_title">Habilitar BusyBox</string>
-    <string name="settings_busybox_summary">Montar el busybox interno de Magisk en xbin</string>
     <string name="settings_hosts_title">Habilitar archivo hosts fuera de la partición de sistema</string>
     <string name="settings_hosts_summary">Soporte para aplicaciones de bloqueo de publicidad fuera de la partición de sistema</string>
 
