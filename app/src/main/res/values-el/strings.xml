@@ -50,6 +50,8 @@
     <string name="uninstall_magisk_title">Απεγκατάσταση Magisk</string>
     <string name="uninstall_magisk_msg">Αυτό θα αφαιρέσει όλες τις ενότητες, το MagiskSU και πιθανόν να κρυπτογραφύσει τα δεδομένα σας αν δεν είναι κρυπτογραφυμένα\nΕίστε σίγουρος/η ότι θέλετε να συνεχίσετε;</string>
     <string name="version_none">(Καμία)</string>
+    <string name="reinstall">Επανεγκατάσταση</string>
+    <string name="update">Ενημέρωση</string>
 
     <!--Module Fragment-->
     <string name="no_info_provided">(Δεν δόθηκαν πληροφορίες)</string>
@@ -127,6 +129,8 @@
     <string name="manual_boot_image">Παρακαλώ επιλέξτε χειροκίνητα μια εικόνα boot!</string>
     <string name="manager_update_title">Νέα Ενημέρωση Magisk Manager Διαθέσιμη!</string>
     <string name="manager_download_install">Πιέστε για κατέβασμα και εγκατάσταση</string>
+    <string name="magisk_updates">Ενημερώσεις Magisk</string>
+    <string name="flashing">Γίνεται Flash</string>
 
     <!--Settings Activity -->
     <string name="settings_general_category">Γενικά</string>
