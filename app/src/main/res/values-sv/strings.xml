@@ -6,7 +6,7 @@
     <!--Welcome Activity-->
     <string name="navigation_drawer_open">Öppna navigeringslåda</string>
     <string name="navigation_drawer_close">Stäng navigeringslåda</string>
-    <string name="magiskhide" translatable="false">Magisk dölj</string>
+    <string name="magiskhide" translatable="false">Magisk Hide</string>
     <string name="modules">Moduler</string>
     <string name="downloads">Nerladdningar</string>
     <string name="superuser">Superuser</string>
@@ -60,121 +60,121 @@
     <string name="no_info_provided">(Ingen information tillhandahållen)</string>
     <string name="no_modules_found">Hittade inga moduler</string>
     <string name="update_file_created">Modulen kommer att uppdateras vid nästa omstart</string>
-    <string name="remove_file_created">Module will be removed at next reboot</string>
-    <string name="remove_file_deleted">Module will not be removed at next reboot</string>
-    <string name="disable_file_created">Module will be disabled at next reboot</string>
-    <string name="disable_file_removed">Module will be enabled at next reboot</string>
-    <string name="author">Created by %1$s</string>
-    <string name="fab_flash_zip">Flash Module Zip</string>
+    <string name="remove_file_created">Modulen kommer att tas bort vid nästa omstart</string>
+    <string name="remove_file_deleted">Modulen kommer att inte att tas bort vid nästa omstart</string>
+    <string name="disable_file_created">Modulen kommer att inaktiveras vid nästa omstart</string>
+    <string name="disable_file_removed">Modulen kommer att aktiveras vid nästa omstart</string>
+    <string name="author">Skapad av %1$s</string>
+    <string name="fab_flash_zip">Flasha ZIP-modul</string>
 
     <!--Repo Fragment-->
-    <string name="update_available">Update Available</string>
-    <string name="installed">Installed</string>
-    <string name="not_installed">Not Installed</string>
+    <string name="update_available">Uppdatering tillgänglig</string>
+    <string name="installed">Installerad</string>
+    <string name="not_installed">Inte installerad</string>
 
     <!--Log Fragment-->
-    <string name="menuSaveToSd">Save to SD</string>
-    <string name="menuReload">Reload</string>
-    <string name="menuClearLog">Clear log now</string>
-    <string name="logs_cleared">Log successfully cleared</string>
-    <string name="log_is_empty">Log is empty</string>
-    <string name="logs_save_failed">Could not write log to SD card:</string>
+    <string name="menuSaveToSd">Spara till SD</string>
+    <string name="menuReload">Uppdatera</string>
+    <string name="menuClearLog">Rensa logg nu</string>
+    <string name="logs_cleared">Loggen rensad</string>
+    <string name="log_is_empty">Loggen är tom</string>
+    <string name="logs_save_failed">Loggen kunde inte skrivas till SD-kort:</string>
 
     <!--About Activity-->
-    <string name="about">About</string>
-    <string name="app_developers">Main developers</string>
-    <string name="app_developers_"><![CDATA[App created by <a href="https://github.com/topjohnwu">topjohnwu</a> in collaboration with <a href="https://github.com/d8ahazard">Digitalhigh</a> and <a href="https://github.com/dvdandroid">Dvdandroid</a>.]]></string>
-    <string name="app_changelog">App\'s changelog</string>
+    <string name="about">Om</string>
+    <string name="app_developers">Huvudutvecklare</string>
+    <string name="app_developers_"><![CDATA[Appen skapades av <a href="https://github.com/topjohnwu">topjohnwu</a> i samarbete med <a href="https://github.com/d8ahazard">Digitalhigh</a> och <a href="https://github.com/dvdandroid">Dvdandroid</a>.]]></string>
+    <string name="app_changelog">Ändringslogg</string>
     <string name="translators" />
-    <string name="app_version">App\'s version</string>
-    <string name="app_source_code">Source code</string>
+    <string name="app_version">Version</string>
+    <string name="app_source_code">Källkod</string>
     <string name="donation">Donation</string>
-    <string name="app_translators">App\'s translators</string>
-    <string name="support_thread">Support thread</string>
+    <string name="app_translators">Översättare</string>
+    <string name="support_thread">Supporttråd</string>
 
     <!--Toasts, Dialogs-->
-    <string name="permissionNotGranted">This feature will not work without permission to write external storage.</string>
-    <string name="no_thanks">No thanks</string>
-    <string name="yes">Yes</string>
+    <string name="permissionNotGranted">Denna funktionen måste ha behörighet att skriva till externt lagringsutrymme.</string>
+    <string name="no_thanks">Nej tack</string>
+    <string name="yes">Ja</string>
     <string name="ok">OK</string>
-    <string name="close">Close</string>
-    <string name="repo_install_title">Install %1$s</string>
-    <string name="repo_install_msg">Do you want to install %1$s ?</string>
-    <string name="download_install">Download &amp; Install</string>
-    <string name="download">Download</string>
+    <string name="close">Stäng</string>
+    <string name="repo_install_title">Installera %1$s</string>
+    <string name="repo_install_msg">Vill du installera %1$s ?</string>
+    <string name="download_install">Ladda ner &amp; installera</string>
+    <string name="download">Ladda ner</string>
     <string name="goto_install">Go to \"Install\" section</string>
     <string name="download_file_error">Error downloading file</string>
     <string name="install_error">Installation error!</string>
-    <string name="invalid_zip">The zip is not a Magisk Module!!</string>
-    <string name="reboot_title">Installation succeeded!</string>
-    <string name="reboot_msg">Do you want to reboot now?</string>
-    <string name="reboot">Reboot</string>
-    <string name="copying_msg">Copying zip to temp directory</string>
-    <string name="zip_install_progress_title">Installing</string>
-    <string name="zip_unzip_msg">Unzipping zip file …</string>
-    <string name="zip_process_msg">Processing zip file …</string>
-    <string name="zip_install_progress_msg">Installing %1$s …</string>
-    <string name="no_magisk_title">No Magisk Installed!</string>
-    <string name="no_magisk_msg">Do you want to download and install Magisk?</string>
-    <string name="downloading_toast">Downloading %1$s</string>
-    <string name="magisk_update_title">New Magisk Update Available!</string>
-    <string name="settings_reboot_toast">Reboot to apply settings</string>
+    <string name="invalid_zip">ZIP-filen är inte en modul till Magisk!</string>
+    <string name="reboot_title">Installationen lyckades!</string>
+    <string name="reboot_msg">Vill du starta om nu?</string>
+    <string name="reboot">Starta om</string>
+    <string name="copying_msg">Kopierar ZIP-filen till temp-katalogen</string>
+    <string name="zip_install_progress_title">Installerar</string>
+    <string name="zip_unzip_msg">Packar upp ZIP-filen …</string>
+    <string name="zip_process_msg">Bearbetar ZIP-filen …</string>
+    <string name="zip_install_progress_msg">Installerar %1$s …</string>
+    <string name="no_magisk_title">Magisk är inte installerad!</string>
+    <string name="no_magisk_msg">Vill du ladda ner och installera Magisk?</string>
+    <string name="downloading_toast">Laddar ner %1$s</string>
+    <string name="magisk_update_title">En uppdatering av Magisk finns tillgänglig!</string>
+    <string name="settings_reboot_toast">Starta om för att tillämpa inställningar</string>
     <string name="release_notes">Release notes</string>
-    <string name="repo_cache_cleared">Repo cache cleared</string>
-    <string name="safetyNet_hide_notice">This app uses SafetyNet\nAlready handled by MagiskHide by default</string>
-    <string name="start_magiskhide">Starting MagiskHide …</string>
-    <string name="no_magisksu_title">Not using MagiskSU!</string>
-    <string name="no_magisksu_msg">You are not rooted with MagiskSU, using MagiskHide itself might not be enough!\nIt\'s not officially supported, and you would need additional tools (e.g suhide) to pass Safety Net.</string>
-    <string name="understand">I understand</string>
-    <string name="process_error">Process error</string>
-    <string name="internal_storage">The zip is stored in:\n[Internal Storage]%1$s</string>
-    <string name="zip_process_title">Processing</string>
-    <string name="manual_boot_image">Please manually select a boot image!</string>
-    <string name="manager_update_title">New Magisk Manager Update Available!</string>
-    <string name="manager_download_install">Press to download and install</string>
-    <string name="magisk_updates">Magisk Updates</string>
+    <string name="repo_cache_cleared">Repo-cache rensad</string>
+    <string name="safetyNet_hide_notice">Denna appen använder SafetyNet\nHanteras redan av MagiskHide som standard</string>
+    <string name="start_magiskhide">Startar MagiskHide …</string>
+    <string name="no_magisksu_title">Använder inte MagiskSU!</string>
+    <string name="no_magisksu_msg">Du är inte rootad med MagiskSU och att endast använda MagiskHide kanske inte räcker!\nDet stöds inte officiellt och du skulle behöva ytterligare verktyg (t.ex suhide) för att ta dig förbi Safety Net.</string>
+    <string name="understand">Jag förstår</string>
+    <string name="process_error">Processfel</string>
+    <string name="internal_storage">ZIP-filen är sparad i:\n[Internal Storage]%1$s</string>
+    <string name="zip_process_title">Arbetar</string>
+    <string name="manual_boot_image">Välj manuellt en boot-image!</string>
+    <string name="manager_update_title">En uppdatering av Magisk Maneger finns tillgänglig!</string>
+    <string name="manager_download_install">Tryck för att ladda ner och installera</string>
+    <string name="magisk_updates">Magiska uppdateringa</string>
 
     <!--Settings Activity -->
-    <string name="settings_general_category">General</string>
-    <string name="settings_dark_theme_title">Dark Theme</string>
-    <string name="settings_dark_theme_summary">Enable dark theme</string>
-    <string name="settings_notification_title">Update Notification</string>
-    <string name="settings_notification_summary">Show update notifications when new version is available</string>
-    <string name="settings_clear_cache_title">Clear Repo Cache</string>
-    <string name="settings_clear_cache_summary">Clear the cached information for online repos, forces the app to refresh online</string>
+    <string name="settings_general_category">Allmän</string>
+    <string name="settings_dark_theme_title">Mörkt tema</string>
+    <string name="settings_dark_theme_summary">Aktivera mörkt tema</string>
+    <string name="settings_notification_title">Uppdateringsavisering</string>
+    <string name="settings_notification_summary">Visa en avisering när det finns en ny version tillgänglig</string>
+    <string name="settings_clear_cache_title">Rensa Repo-cache</string>
+    <string name="settings_clear_cache_summary">Rensa den lagrade information för online-repos, tvingar appen att uppdatera online</string>
 
     <string name="settings_core_only_title">Magisk Core Only Mode</string>
-    <string name="settings_core_only_summary">Enable only core features, all modules will not be loaded. MagiskSU, MagiskHide, and systemless hosts will still be enabled</string>
-    <string name="settings_magiskhide_summary">Hide Magisk from various detections</string>
-    <string name="settings_busybox_title">Enable BusyBox</string>
+    <string name="settings_core_only_summary">Aktiverar endast kärnfunktioner, alla moduler laddas inte. MagiskSU, MagiskHide och systemless hosts kommer fortfarande att vara aktiverade</string>
+    <string name="settings_magiskhide_summary">Dölj Magisk från att bli upptäckt</string>
+    <string name="settings_busybox_title">Aktivera BusyBox</string>
     <string name="settings_busybox_summary">Bind mount Magisk\'s built-in busybox to xbin</string>
     <string name="settings_hosts_title">Systemless hosts</string>
-    <string name="settings_hosts_summary">Systemless hosts support for Adblock apps</string>
+    <string name="settings_hosts_summary">Systemless hosts stöd för Adblock-appar</string>
 
-    <string name="settings_su_app_adb">Apps and ADB</string>
-    <string name="settings_su_app">Apps only</string>
-    <string name="settings_su_adb">ADB only</string>
-    <string name="settings_su_disable">Disabled</string>
-    <string name="settings_su_request_10">10 seconds</string>
-    <string name="settings_su_request_20">20 seconds</string>
-    <string name="settings_su_request_30">30 seconds</string>
-    <string name="settings_su_request_60">60 seconds</string>
-    <string name="superuser_access">Superuser Access</string>
-    <string name="auto_response">Automatic Response</string>
+    <string name="settings_su_app_adb">Apps och ADB</string>
+    <string name="settings_su_app">Endast appar</string>
+    <string name="settings_su_adb">Endast ADB</string>
+    <string name="settings_su_disable">Inaktiverad</string>
+    <string name="settings_su_request_10">10 sekunder</string>
+    <string name="settings_su_request_20">20 sekunder</string>
+    <string name="settings_su_request_30">30 sekunder</string>
+    <string name="settings_su_request_60">60 sekunder</string>
+    <string name="superuser_access">Superuser-tillgång</string>
+    <string name="auto_response">Automatiskt svar</string>
     <string name="request_timeout">Request Timeout</string>
-    <string name="superuser_notification">Superuser Notification</string>
-    <string name="request_timeout_summary">%1$s seconds</string>
-    <string name="settings_su_reauth_title">Re-authenticate after upgrade</string>
-    <string name="settings_su_reauth_summary">Re-authenticate superuser permissions after an application upgrades</string>
+    <string name="superuser_notification">Superuser-avisering</string>
+    <string name="request_timeout_summary">%1$s sekunder</string>
+    <string name="settings_su_reauth_title">Re-authenticate efter uppdatering</string>
+    <string name="settings_su_reauth_summary">Re-authenticate superuser permissions efter en applikationsuppdatering</string>
 
-    <string name="multiuser_mode">Multiuser Mode</string>
-    <string name="settings_owner_only">Device Owner Only</string>
+    <string name="multiuser_mode">Multianvändarläge</string>
+    <string name="settings_owner_only">Endast ägaren av enheten</string>
     <string name="settings_owner_manage">Device Owner Managed</string>
-    <string name="settings_user_independent">User Independent</string>
-    <string name="owner_only_summary">Only owner has root access</string>
+    <string name="settings_user_independent">Användaroberoende</string>
+    <string name="owner_only_summary">Endast ägaren har root-tillgång</string>
     <string name="owner_manage_summary">Only owner can manage root access and receive request prompts</string>
-    <string name="user_indepenent_summary">Each user has its own separate root rules</string>
-    <string name="multiuser_hint_owner_request">A request has been sent to the device owner. Please switch to the owner and grant the permission</string>
+    <string name="user_indepenent_summary">Varje användare har sina egna separata root-regler</string>
+    <string name="multiuser_hint_owner_request">En förfrågan har skickats till enhetens ägaren. Byt till ägaren och bevilja behörigheten</string>
 
     <string name="mount_namespace_mode">Mount Namespace Mode</string>
     <string name="settings_ns_global">Global Namespace</string>
@@ -185,20 +185,20 @@
     <string name="isolate_summary">Each root session will have its own isolated namespace</string>
 
     <string name="settings_development_category">App Development</string>
-    <string name="settings_developer_logging_title">Enable advanced debug logging</string>
+    <string name="settings_developer_logging_title">Aktivera avancerad debug-loggning</string>
     <string name="settings_developer_logging_summary">Check this to enable verbose logging</string>
     <string name="settings_shell_logging_title">Enable shell command debug logging</string>
-    <string name="settings_shell_logging_summary">Check this to enable logging all shell commands and its output</string>
+    <string name="settings_shell_logging_summary">Markera denna för att aktivera loggning av alla shell-kommandon och dess utmatning</string>
 
     <!--Superuser-->
     <string name="su_request_title">Superuser Request</string>
-    <string name="deny_with_str">Deny%1$s</string>
-    <string name="deny">Deny</string>
-    <string name="prompt">Prompt</string>
-    <string name="grant">Grant</string>
-    <string name="su_warning">Grants full access to your device.\nDeny if you\'re not sure!</string>
-    <string name="forever">Forever</string>
-    <string name="once">Once</string>
+    <string name="deny_with_str">Neka%1$s</string>
+    <string name="deny">Neka</string>
+    <string name="prompt">Fråga</string>
+    <string name="grant">Bevilja</string>
+    <string name="su_warning">Beviljar full tillgång till din enhet.\nNeka om du är osäker!</string>
+    <string name="forever">För alltid</string>
+    <string name="once">En gång</string>
     <string name="tenmin">10 min</string>
     <string name="twentymin">20 min</string>
     <string name="thirtymin">30 min</string>
