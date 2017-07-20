@@ -201,8 +201,8 @@
     <string name="twentymin">20 λεπτά</string>
     <string name="thirtymin">30 λεπτά</string>
     <string name="sixtymin">60 λεπτά</string>
-    <string name="su_allow_toast">Στο %1$s παραχορούνται δικαιώματα υπερχρήστη</string>
-    <string name="su_deny_toast">Στο %1$s απορρίπτονται τα δικαιώματα υπερχρήστη</string>
+    <string name="su_allow_toast">Παραχορούνται δικαιώματα υπερχρήστη στο %1$s</string>
+    <string name="su_deny_toast">Δεν παραχορούνται δικαιώματα υπερχρήστη στο %1$s</string>
     <string name="no_apps_found">Δεν βρέθηκαν εφαρμογές</string>
     <string name="su_snack_grant">Παραχορούνται δικαιώματα υπερχρήστη στο %1$s</string>
     <string name="su_snack_deny">Δεν παραχορούνται δικαιώματα υπερχρήστη στο %1$s</string>
