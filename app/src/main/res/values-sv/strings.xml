@@ -191,7 +191,7 @@
     <string name="settings_shell_logging_summary">Markera denna för att aktivera loggning av alla shell-kommandon och dess utmatning</string>
 
     <!--Superuser-->
-    <string name="su_request_title">Superuser Request</string>
+    <string name="su_request_title">Superuser-förfrågan</string>
     <string name="deny_with_str">Neka%1$s</string>
     <string name="deny">Neka</string>
     <string name="prompt">Fråga</string>
@@ -203,24 +203,24 @@
     <string name="twentymin">20 min</string>
     <string name="thirtymin">30 min</string>
     <string name="sixtymin">60 min</string>
-    <string name="su_allow_toast">%1$s is granted Superuser rights</string>
-    <string name="su_deny_toast">%1$s is denied Superuser rights</string>
-    <string name="no_apps_found">No apps found</string>
-    <string name="su_snack_grant">Superuser rights of %1$s is granted</string>
-    <string name="su_snack_deny">Superuser rights of %1$s is denied</string>
-    <string name="su_snack_notif_on">Notifications of %1$s is enabled</string>
-    <string name="su_snack_notif_off">Notifications of %1$s is disabled</string>
-    <string name="su_snack_log_on">Logging of %1$s is enabled</string>
-    <string name="su_snack_log_off">Logging of %1$s is disabled</string>
-    <string name="su_snack_revoke">%1$s rights are revoked</string>
-    <string name="su_revoke_title">Revoke?</string>
-    <string name="su_revoke_msg">Confirm to revoke %1$s rights?</string>
-    <string name="toast">Toast</string>
-    <string name="none">None</string>
+    <string name="su_allow_toast">%1$s är beviljad Superuser-rättigheter</string>
+    <string name="su_deny_toast">%1$s är nekad Superuser-rättigheter</string>
+    <string name="no_apps_found">Hittade inga appar</string>
+    <string name="su_snack_grant">Superuser-rättigheter av %1$s är beviljad</string>
+    <string name="su_snack_deny">Superuser-rättigheter av %1$s är nekad</string>
+    <string name="su_snack_notif_on">Aviseringar från %1$s är aktiverad</string>
+    <string name="su_snack_notif_off">Aviseringar från %1$s är inaktiverade</string>
+    <string name="su_snack_log_on">Loggning av %1$s är aktiverad</string>
+    <string name="su_snack_log_off">Loggning av %1$s är inaktiverad</string>
+    <string name="su_snack_revoke">%1$s rättigheter är upphävda</string>
+    <string name="su_revoke_title">Upphäv?</string>
+    <string name="su_revoke_msg">Bekräfta upphävning av %1$s rättigheter?</string>
+    <string name="toast">Toast-meddelande</string>
+    <string name="none">Inga</string>
 
     <!--Superuser logs-->
     <string name="pid">PID:\u0020</string>
-    <string name="target_uid">Target UID:\u0020</string>
-    <string name="command">Command:\u0020</string>
+    <string name="target_uid">Mål-UID:\u0020</string>
+    <string name="command">Kommando:\u0020</string>
 
 </resources>
