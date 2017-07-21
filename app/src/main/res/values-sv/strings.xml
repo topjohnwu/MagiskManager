@@ -20,7 +20,7 @@
     <string name="magisk_version_core_only">Magisk v%1$s installerad (endast kärnläge)</string>
     <string name="magisk_version_error">Magisk är inte installerad</string>
 
-    <string name="checking_for_updates">Checking for updates…</string>
+    <string name="checking_for_updates">Söker efter uppdateringar…</string>
     <string name="magisk_update_available">Magisk v%1$s tillgänglig!</string>
     <string name="cannot_check_updates">Kan inte söka efter uppdateringar, inget internet?</string>
     <string name="up_to_date">Senaste version av %1$s installerad</string>
@@ -43,13 +43,13 @@
     <!--Install Fragment-->
     <string name="auto_detect">(Auto) %1$s</string>
     <string name="cannot_auto_detect">(Det går inte att auto-detektera)</string>
-    <string name="boot_image_title">Boot Image Location</string>
+    <string name="boot_image_title">Boot-image plats</string>
     <string name="detect_button">Detektera</string>
     <string name="advanced_settings_title">Advancerade inställningar</string>
     <string name="keep_force_encryption">Fortsätt tvinga kryptering</string>
     <string name="keep_dm_verity">Behåll dm-verity</string>
-    <string name="current_magisk_title">Installerad Magisk version: %1$s</string>
-    <string name="install_magisk_title">Senaste Magisk version: %1$s</string>
+    <string name="current_magisk_title">Installerad Magisk: %1$s</string>
+    <string name="install_magisk_title">Senaste Magisk: %1$s</string>
     <string name="uninstall">Avinstallera</string>
     <string name="reboot_countdown">Omstart om %1$d</string>
     <string name="uninstall_magisk_title">Avinstallera Magisk</string>
@@ -104,8 +104,8 @@
     <string name="repo_install_msg">Vill du installera %1$s ?</string>
     <string name="download_install">Ladda ner &amp; installera</string>
     <string name="download">Ladda ner</string>
-    <string name="goto_install">Go to \"Install\" section</string>
-    <string name="download_file_error">Error downloading file</string>
+    <string name="goto_install">Gå till sektionen \"Installera\"</string>
+    <string name="download_file_error">Fel vid nerladdning av fil</string>
     <string name="install_error">Installation error!</string>
     <string name="invalid_zip">ZIP-filen är inte en modul till Magisk!</string>
     <string name="reboot_title">Installationen lyckades!</string>
@@ -132,9 +132,9 @@
     <string name="internal_storage">ZIP-filen är sparad i:\n[Internal Storage]%1$s</string>
     <string name="zip_process_title">Arbetar</string>
     <string name="manual_boot_image">Välj manuellt en boot-image!</string>
-    <string name="manager_update_title">En uppdatering av Magisk Maneger finns tillgänglig!</string>
+    <string name="manager_update_title">En uppdatering av Magisk maneger finns tillgänglig!</string>
     <string name="manager_download_install">Tryck för att ladda ner och installera</string>
-    <string name="magisk_updates">Magiska uppdateringa</string>
+    <string name="magisk_updates">Magiska uppdateringar</string>
 
     <!--Settings Activity -->
     <string name="settings_general_category">Allmän</string>
@@ -142,16 +142,16 @@
     <string name="settings_dark_theme_summary">Aktivera mörkt tema</string>
     <string name="settings_notification_title">Uppdateringsavisering</string>
     <string name="settings_notification_summary">Visa en avisering när det finns en ny version tillgänglig</string>
-    <string name="settings_clear_cache_title">Rensa Repo-cache</string>
+    <string name="settings_clear_cache_title">Rensa repo-cache</string>
     <string name="settings_clear_cache_summary">Rensa den lagrade information för online-repos, tvingar appen att uppdatera online</string>
 
-    <string name="settings_core_only_title">Magisk Core Only Mode</string>
+    <string name="settings_core_only_title">Endast Magisk kärnläge</string>
     <string name="settings_core_only_summary">Aktiverar endast kärnfunktioner, alla moduler laddas inte. MagiskSU, MagiskHide och systemless hosts kommer fortfarande att vara aktiverade</string>
     <string name="settings_magiskhide_summary">Dölj Magisk från att bli upptäckt</string>
     <string name="settings_busybox_title">Aktivera BusyBox</string>
-    <string name="settings_busybox_summary">Bind mount Magisk\'s built-in busybox to xbin</string>
+    <string name="settings_busybox_summary">Bind mount Magisk\'s inbyggda busybox till xbin</string>
     <string name="settings_hosts_title">Systemless hosts</string>
-    <string name="settings_hosts_summary">Systemless hosts stöd för Adblock-appar</string>
+    <string name="settings_hosts_summary">Systemless hosts-stöd för Adblock-appar</string>
 
     <string name="settings_su_app_adb">Apps och ADB</string>
     <string name="settings_su_app">Endast appar</string>
@@ -163,34 +163,34 @@
     <string name="settings_su_request_60">60 sekunder</string>
     <string name="superuser_access">Superuser-tillgång</string>
     <string name="auto_response">Automatiskt svar</string>
-    <string name="request_timeout">Request Timeout</string>
+    <string name="request_timeout">Förfrågnings-timeout</string>
     <string name="superuser_notification">Superuser-avisering</string>
     <string name="request_timeout_summary">%1$s sekunder</string>
-    <string name="settings_su_reauth_title">Re-authenticate efter uppdatering</string>
-    <string name="settings_su_reauth_summary">Re-authenticate superuser permissions efter en applikationsuppdatering</string>
+    <string name="settings_su_reauth_title">Återautentisera efter uppdatering</string>
+    <string name="settings_su_reauth_summary">Återautentisera superuser-behörigheter efter en applikationsuppdatering</string>
 
     <string name="multiuser_mode">Multianvändarläge</string>
     <string name="settings_owner_only">Endast ägaren av enheten</string>
-    <string name="settings_owner_manage">Device Owner Managed</string>
+    <string name="settings_owner_manage">Enhetsägarhantering</string>
     <string name="settings_user_independent">Användaroberoende</string>
     <string name="owner_only_summary">Endast ägaren har root-tillgång</string>
-    <string name="owner_manage_summary">Only owner can manage root access and receive request prompts</string>
+    <string name="owner_manage_summary">Endast ägaren kan hantera root-åtkomst och få begärda förfrågningar</string>
     <string name="user_indepenent_summary">Varje användare har sina egna separata root-regler</string>
     <string name="multiuser_hint_owner_request">En förfrågan har skickats till enhetens ägaren. Byt till ägaren och bevilja behörigheten</string>
 
     <string name="mount_namespace_mode">Mount Namespace Mode</string>
-    <string name="settings_ns_global">Global Namespace</string>
-    <string name="settings_ns_requester">Inherit Namespace</string>
-    <string name="settings_ns_isolate">Isolated Namespace</string>
-    <string name="global_summary">All root sessions use the global mount namespace</string>
-    <string name="requester_summary">Root sessions will inherit its requester\'s namespace</string>
-    <string name="isolate_summary">Each root session will have its own isolated namespace</string>
+    <string name="settings_ns_global">Global namnrymd</string>
+    <string name="settings_ns_requester">Ärv namnrymden</string>
+    <string name="settings_ns_isolate">Isolerad namnrymd</string>
+    <string name="global_summary">Alla root-sessioner använder den globala monteringsnamnrymden</string>
+    <string name="requester_summary">Root-sessioner kommer att ärva den sökandes namnrymd</string>
+    <string name="isolate_summary">Varje root-session kommer att ha sin egen isolerade namnrymd</string>
 
-    <string name="settings_development_category">App Development</string>
+    <string name="settings_development_category">Apputveckling</string>
     <string name="settings_developer_logging_title">Aktivera avancerad debug-loggning</string>
-    <string name="settings_developer_logging_summary">Check this to enable verbose logging</string>
-    <string name="settings_shell_logging_title">Enable shell command debug logging</string>
-    <string name="settings_shell_logging_summary">Markera denna för att aktivera loggning av alla shell-kommandon och dess utmatning</string>
+    <string name="settings_developer_logging_summary">Markera för att aktivera detaljerad loggning</string>
+    <string name="settings_shell_logging_title">Aktivera felsökningsloggning av shell-kommandon</string>
+    <string name="settings_shell_logging_summary">Markera för att aktivera loggning av alla shell-kommandon och dess utmatning</string>
 
     <!--Superuser-->
     <string name="su_request_title">Superuser-förfrågan</string>
