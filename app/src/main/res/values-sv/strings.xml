@@ -30,8 +30,8 @@
     <string name="safetyNet_check_text">Tryck för att starta SafetyNet-kontroll</string>
     <string name="checking_safetyNet_status">Kontrollerar SafetyNet-status…</string>
     <string name="safetyNet_check_success">SafetyNet-kontroll lyckades</string>
-    <string name="safetyNet_connection_failed">Kan inte ansluta till Google API</string>
-    <string name="safetyNet_connection_suspended">Anslutningen till Google API stängdes av</string>
+    <string name="safetyNet_connection_failed">Kan inte ansluta till Google-API</string>
+    <string name="safetyNet_connection_suspended">Anslutningen till Google-API stängdes av</string>
     <string name="safetyNet_no_response">Kan inte kontrollera SafetyNet, inget internet?</string>
     <string name="safetyNet_fail">SafetyNet misslyckades: CTS-profilen matchade inte</string>
     <string name="safetyNet_pass">SafetyNet godkänd</string>
@@ -75,9 +75,9 @@
     <string name="not_installed">Inte installerad</string>
 
     <!--Log Fragment-->
-    <string name="menuSaveToSd">Spara till SD</string>
+    <string name="menuSaveToSd">Spara till SD-kort</string>
     <string name="menuReload">Uppdatera</string>
-    <string name="menuClearLog">Rensa logg nu</string>
+    <string name="menuClearLog">Rensa loggen</string>
     <string name="logs_cleared">Loggen rensad</string>
     <string name="log_is_empty">Loggen är tom</string>
     <string name="logs_save_failed">Loggen kunde inte skrivas till SD-kort:</string>
@@ -178,7 +178,7 @@
     <string name="user_indepenent_summary">Varje användare har sina egna separata root-regler</string>
     <string name="multiuser_hint_owner_request">En förfrågan har skickats till enhetens ägaren. Byt till ägaren och bevilja behörigheten</string>
 
-    <string name="mount_namespace_mode">Mount Namespace Mode</string>
+    <string name="mount_namespace_mode">Montera namnrymdsläge</string>
     <string name="settings_ns_global">Global namnrymd</string>
     <string name="settings_ns_requester">Ärv namnrymden</string>
     <string name="settings_ns_isolate">Isolerad namnrymd</string>
