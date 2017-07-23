@@ -140,6 +140,8 @@
     <string name="settings_notification_summary">Εμφάνιση ειδοποιήσεων ενημέρωσης όταν είναι διαθέσιμη νέα έκδοση</string>
     <string name="settings_clear_cache_title">Εκκαθάριση προσωρινής μνήμης αποθετηρίων</string>
     <string name="settings_clear_cache_summary">Καθαρίζει τις κρυφές πληροφορίες για απευθείας συνδεδεμένα αποθετήρια, αναγκάζει την εφαρμογή να κάνει ανανέωση σε απευθείας σύνδεση</string>
+    <string name="language">Γλώσσα</string>
+    <string name="system_default">(Προεπιλογή Συστήματος)</string>
 
     <string name="settings_core_only_title">Magisk Λειτουργία Πυρήνα Μόνο</string>
     <string name="settings_core_only_summary">Ενεργοποίηση μόνο των λειτουργιών πυρήνα, καμία από τις ενότητες δεν θα ενεργοποιηθεί. Τα MagiskSU, MagiskHide, και systemless hosts θα παραμείνουν ενεργά</string>
