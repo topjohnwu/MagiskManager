@@ -14,7 +14,7 @@
 
     <!--Magisk Fragment-->
     <string name="magisk_version">Instalado Magisk v%1$s</string>
-     <string name="magisk_version_core_only">Instalado Magisk v%1$s (Core Only Mode)</string>
+    <string name="magisk_version_core_only">Instalado Magisk v%1$s (Core Only Mode)</string>
     <string name="magisk_version_error">Magisk no está instalado</string>
 
     <string name="checking_for_updates">Comprobando actualizaciones…</string>
@@ -26,6 +26,7 @@
     <string name="proper_root">Correctamente rooteado</string>
     <string name="safetyNet_check_text">Toque para empezar la comprobación de SafetyNet</string>
     <string name="checking_safetyNet_status">Comprobando estado de SafetyNet…</string>
+    <string name="safetyNet_check_success">La comprobación de SafetyNet fue exitosa</string>
     <string name="safetyNet_connection_failed">No puede conectar con la API de Google</string>
     <string name="safetyNet_connection_suspended">La conexión con la API de Google API fue suspendida</string>
     <string name="safetyNet_no_response">No puede comprobar SafetyNet, ¿No tiene internet?</string>
