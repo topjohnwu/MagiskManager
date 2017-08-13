@@ -27,7 +27,7 @@
     <string name="safetyNet_check_success">Ο Έλεγχος του SafetyNet Ήταν Επιτυχής</string>
     <string name="safetyNet_connection_failed">Αδυναμία σύνδεσης στο Google API</string>
     <string name="safetyNet_connection_suspended">Η σύνδεση στο Google API διακόπηκε</string>
-    <string name="safetyNet_no_response">Αδυναμία επαλήθευσης SafetyNet, δεν έχει Internet;</string>
+    <string name="safetyNet_no_response">Αδυναμία επαλήθευσης SafetyNet, δεν έχει internet;</string>
     <string name="safetyNet_fail">Άκυρο SafetyNet: CTS profile mismatch</string>
     <string name="safetyNet_pass">Το SafetyNet Πέρασε</string>
     <string name="safetyNet_network_loss">Αδυναμία σύνδεσης στο δίκτυο</string>
