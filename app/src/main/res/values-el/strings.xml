@@ -131,6 +131,8 @@
     <string name="manager_download_install">Πιέστε για λήψη και εγκατάσταση</string>
     <string name="magisk_updates">Ενημερώσεις Magisk</string>
     <string name="flashing">Γίνεται Flash</string>
+    <string name="hide_manager_toast">Κρύβοντας το Magisk Manager…</string>
+    <string name="hide_manager_fail_toast">Το κρύψιμο Magisk Manager απέτυχε…</string>
 
     <!--Settings Activity -->
     <string name="settings_general_category">Γενικά</string>
@@ -140,6 +142,8 @@
     <string name="settings_notification_summary">Εμφάνιση ειδοποιήσεων ενημέρωσης όταν είναι διαθέσιμη νέα έκδοση</string>
     <string name="settings_clear_cache_title">Εκκαθάριση προσωρινής μνήμης αποθετηρίων</string>
     <string name="settings_clear_cache_summary">Καθαρίζει τις κρυφές πληροφορίες για απευθείας συνδεδεμένα αποθετήρια, αναγκάζει την εφαρμογή να κάνει ανανέωση σε απευθείας σύνδεση</string>
+    <string name="settings_hide_manager_title">Κρύψιμο Magisk Manager</string>
+    <string name="settings_hide_manager_summary">Προσωρινό κρύψιμο του Magisk Manager.\nΑυτό θα εγκαταστήσει μια νέα εφαρμογή με το όνομα \"Unhide Magisk Manager\"</string>
     <string name="language">Γλώσσα</string>
     <string name="system_default">(Προεπιλογή Συστήματος)</string>
 
