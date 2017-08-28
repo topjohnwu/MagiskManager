@@ -1,0 +1,13 @@
+{
+  "app": {
+    "version": "5.1.1",
+    "versionCode": "51",
+    "link": "https://github.com/topjohnwu/MagiskManager/releases/download/v5.1.1/MagiskManager-v5.1.1.apk"
+  },
+  "magisk": {
+    "version": "13.3",
+    "versionCode": "1330",
+    "link": "https://forum.xda-developers.com/attachment.php?attachmentid=4217245&d=1500493800",
+    "note": "https://forum.xda-developers.com/showpost.php?p=73079059&postcount=25"
+  }
+}
