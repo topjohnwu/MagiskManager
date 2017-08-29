@@ -146,6 +146,9 @@
     <string name="settings_hide_manager_summary">Προσωρινό κρύψιμο του Magisk Manager.\nΑυτό θα εγκαταστήσει μια νέα εφαρμογή με το όνομα \"Unhide Magisk Manager\"</string>
     <string name="language">Γλώσσα</string>
     <string name="system_default">(Προεπιλογή Συστήματος)</string>
+    <string name="settings_update_channel_title">Κανάλι Ενημερώσεων</string>
+    <string name="settings_update_stable">Σταθερή</string>
+    <string name="settings_update_beta">Beta</string>
 
     <string name="settings_core_only_title">Magisk Λειτουργία Πυρήνα Μόνο</string>
     <string name="settings_core_only_summary">Ενεργοποίηση μόνο των λειτουργιών πυρήνα, καμία από τις ενότητες δεν θα ενεργοποιηθεί. Τα MagiskSU, MagiskHide, και systemless hosts θα παραμείνουν ενεργά</string>
