@@ -135,7 +135,11 @@
     <string name="flashing">Flasheando</string>
     <string name="hide_manager_toast">Ocultando Magisk Manager...</string>
     <string name="hide_manager_fail_toast">La Ocultación de Magisk Manager ha fallado…</string>
-
+    <string name="download_zip_only">Descargar sólo el archivo ZIP</string>
+    <string name="patch_boot_file">Parcheo de la imagen de arranque</string>
+    <string name="direct_install">Instalación Directa (Recomendado)</string>
+    <string name="select_method">Seleccionar Método</string>
+    
     <!--Settings Activity -->
     <string name="settings_general_category">General</string>
     <string name="settings_dark_theme_title">Tema oscuro</string>
