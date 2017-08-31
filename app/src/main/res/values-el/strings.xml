@@ -133,7 +133,11 @@
     <string name="flashing">Γίνεται Flash</string>
     <string name="hide_manager_toast">Κρύβοντας το Magisk Manager…</string>
     <string name="hide_manager_fail_toast">Το κρύψιμο Magisk Manager απέτυχε…</string>
-
+    <string name="download_zip_only">Μόνο Λήψη Zip</string>
+    <string name="patch_boot_file">Εφαρμογή Patch στο Αρχείο Εικόνας Boot</string>
+    <string name="direct_install">Απευθείας Εγκατάσταση (Προτείνεται)</string>
+    <string name="select_method">Επιλογή Μεθόδου</string>
+    
     <!--Settings Activity -->
     <string name="settings_general_category">Γενικά</string>
     <string name="settings_dark_theme_title">Σκούρο θέμα</string>
