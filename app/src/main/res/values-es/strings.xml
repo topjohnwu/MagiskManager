@@ -139,11 +139,12 @@
     <string name="patch_boot_file">Parcheo de la imagen de arranque</string>
     <string name="direct_install">Instalación Directa (Recomendado)</string>
     <string name="select_method">Seleccionar Método</string>
+    <string name="no_boot_file_patch_support">La versión de Magisk no admite el parcheo de la imagen de arranque</string>
     
     <!--Settings Activity -->
     <string name="settings_general_category">General</string>
     <string name="settings_dark_theme_title">Tema oscuro</string>
-    <string name="settings_dark_theme_summary">Habilita el tema oscuro</string>
+    <string name="settings_dark_theme_summary">Habilitar el tema oscuro</string>
     <string name="settings_notification_title">Notificar Actualización</string>
     <string name="settings_notification_summary">Notificar cuando una nueva versión esté disponible</string>
     <string name="settings_clear_cache_title">Limpiar caché del repositorio</string>
