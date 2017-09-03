@@ -153,9 +153,12 @@
     <string name="settings_hide_manager_summary">Ocultar temporalmente Magisk Manager.\nEsto instalará una nueva aplicación llamada \"Unhide Magisk Manager\"</string>  
     <string name="language">Idioma</string>
     <string name="system_default">(Idioma del sistema)</string>
+    <string name="settings_update">Ajustes de Actualización</string>
     <string name="settings_update_channel_title">Canal de Actualización</string>
     <string name="settings_update_stable">Estable</string>
     <string name="settings_update_beta">Beta</string>
+    <string name="settings_boot_format_title">Parchear formato de salida en imagen de arranque</string>
+    <string name="settings_boot_format_summary">Seleccionar el formato de salida para parchear la imagen de arranque.\nEscoga .img para flashear mediante fastboot/download mode; escoga .img.tar para flashear con ODIN.</string>
     
     <string name="settings_core_only_summary">Habilitar sólo funciones principales, no se cargarán todos los módulos. MagiskSU, MagiskHide, y archivo hosts fuera de la partición de sistema seguirán habilitados</string>
     <string name="settings_magiskhide_summary">Ocultar Magisk de varias detecciones</string>
