@@ -53,7 +53,7 @@
     <string name="uninstall_magisk_msg">Esto eliminará todos los módulos, MagiskSU, y potencialmente puede cifrar sus datos si no está encriptada\nEstas seguro de continuar?</string>
     <string name="version_none">(Ninguno)</string>
     <string name="reinstall">Re-Instalar</string>
-    <string name="update">Actualización</string>
+    <string name="update">Actualización %1$s</string>
     
     <!--Module Fragment-->
     <string name="no_info_provided">(No hay información)</string>
@@ -81,7 +81,7 @@
 
     <!--About Activity-->
     <string name="about">Acerca de</string>
-    <string name="app_developers">Desarroladores principales</string>
+    <string name="app_developers">Desarrolladores principales</string>
     <string name="app_developers_"><![CDATA[Aplicación creada por <a href="https://github.com/topjohnwu">topjohnwu</a> en colaboración con <a href="https://github.com/d8ahazard">Digitalhigh</a> y <a href="https://github.com/dvdandroid">Dvdandroid</a>.]]></string>
     <string name="app_changelog">Registro de cambios de la aplicación</string>
     <string name="translators">Gawenda, netizen, Deiki, Nosi>, dark-basic</string>
