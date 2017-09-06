@@ -2,7 +2,7 @@
   "app": {
     "version": "5.3.0",
     "versionCode": "54",
-    "link": "https://labs-dl.xda-cdn.com/apks/18abebd2-1eab-4df6-a679-ea3bd140749e.apk?st=0mHDkQDDXprYmddbEQIL7Q&e=1504713546"
+    "link": "https://github.com/topjohnwu/MagiskManager/releases/download/v5.3.0/MagiskManager-v5.3.0.apk"
   },
   "magisk": {
     "version": "14.0",
