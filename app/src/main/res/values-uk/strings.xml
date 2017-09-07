@@ -25,7 +25,7 @@
     <string name="proper_root">Коректний root-доступ</string>
     <string name="safetyNet_check_text">Перевірити статус SafetyNet</string>
     <string name="checking_safetyNet_status">Перевірка статусу SafetyNet…</string>
-    <string name="safetyNet_check_success">Перевірку SafetyNet пройдено</string>
+    <string name="safetyNet_check_success">Перевірку SafetyNet завершено</string>
     <string name="safetyNet_connection_failed">Неможливо підключитися до Google API</string>
     <string name="safetyNet_connection_suspended">Підключення до Google API було перервано</string>
     <string name="safetyNet_no_response">Неможливо виконати перевірку SafetyNet</string>
@@ -37,8 +37,8 @@
     <string name="root_info_warning">Функціональність значно обмежена</string>
 
     <!--Install Fragment-->
-    <string name="auto_detect">(Авто) %1$s</string>
-    <string name="cannot_auto_detect">(Автовизначення неможливе)</string>
+    <string name="auto_detect">(авто) %1$s</string>
+    <string name="cannot_auto_detect">(автовизначення неможливе)</string>
     <string name="boot_image_title">Розташування boot-образу</string>
     <string name="detect_button">Визначити</string>
     <string name="advanced_settings_title">Розширені налаштування</string>
@@ -50,12 +50,12 @@
     <string name="reboot_countdown">Перезавантаження через %1$d</string>
     <string name="uninstall_magisk_title">Видалити Magisk</string>
     <string name="uninstall_magisk_msg">Ця дія призведе до видалення всіх модулів, MagiskSU, і може зашифрувати дані, якщо вони не зашифровані.\nВпевнені, що бажаєте продовжити?</string>
-    <string name="version_none">(Немає даних)</string>
+    <string name="version_none">(немає даних)</string>
     <string name="reinstall">Перевстановити</string>
     <string name="update">Оновити</string>
     
     <!--Module Fragment-->
-    <string name="no_info_provided">(Немає наданої інформації)</string>
+    <string name="no_info_provided">(немає наданої інформації)</string>
     <string name="no_modules_found">Модулів не знайдено</string>
     <string name="update_file_created">Модуль оновиться при перезавантаженні</string>
     <string name="remove_file_created">Модуль видалиться при перезавантаженні</string>
@@ -83,7 +83,7 @@
     <string name="app_developers">Головні розробники</string>
     <string name="app_developers_"><![CDATA[Програму створив <a href="https://github.com/topjohnwu">topjohnwu</a>, разом з <a href="https://github.com/d8ahazard">Digitalhigh</a> і <a href="https://github.com/dvdandroid">Dvdandroid</a>.]]></string>
     <string name="app_changelog">Список змін</string>
-    <string name="translators">Перекладачі</string>
+    <string name="translators" />
     <string name="app_version">Версія</string>
     <string name="app_source_code">Вихідний код</string>
     <string name="donation">Підтримати проект</string>
@@ -126,12 +126,27 @@
     <string name="understand">Розумію</string>
     <string name="process_error">Помилка опрацювання</string>
     <string name="internal_storage">Архів розташований:\n[Внутрішнє Сховище]%1$s</string>
+    <string name="zip_download_title">Завантаження</string>
+    <string name="zip_download_msg">Завантаження zip файлу …</string>
     <string name="zip_process_title">Опрацювання</string>
+    <string name="zip_process_msg">Опрацювання архіву …</string>
     <string name="manual_boot_image">Будь ласка, виберіть boot-образ!</string>
     <string name="manager_update_title">Доступне оновлення Magisk Manager!</string>
     <string name="manager_download_install">Натисніть, щоб завантажити і встановити</string>
     <string name="magisk_updates">Оновлення Magisk</string>
     <string name="flashing">Прошивання</string>
+    <string name="hide_manager_toast">Приховування Magisk Manager…</string>
+    <string name="hide_manager_fail_toast">Не вдалося приховати Magisk Manager…</string>
+    <string name="download_zip_only">Тільки завантажити</string>
+    <string name="patch_boot_file">Пропатчити boot образ</string>
+    <string name="direct_install">Пряме встановлення (рекомендовано)</string>
+    <string name="select_method">Виберіть спосіб</string>
+    <string name="no_boot_file_patch_support">Цільова версія Magisk не підтримує пропатчування boot образу</string>
+    <string name="boot_file_patch_msg">Виберіть дамп заводського boot образу в форматі .img чи .img.tar</string>
+    <string name="complete_uninstall">Видалення виконано</string>
+    <string name="restore_stock_boot">Відновити заводський образ</string>
+    <string name="restore_done">Відновлення завершено!</string>
+    <string name="restore_fail">Немає резервної копії заводського boot образу</string>
 
     <!--Settings Activity -->
     <string name="settings_general_category">Основні</string>
@@ -141,8 +156,16 @@
     <string name="settings_notification_summary">Показувати сповіщення про оновлення в Панелі сповіщень, коли доступна нова версія</string>
     <string name="settings_clear_cache_title">Очищення кешу</string>
     <string name="settings_clear_cache_summary">Очистити збережену інформацію про мережеві репозиторії, змушуючи програму примусово оновлюватися через Інтернет</string>
+    <string name="settings_hide_manager_title">Приховати Magisk Manager</string>
+    <string name="settings_hide_manager_summary">Тимчасово приховати Magisk Manager.\nЦя дія встановить новий додаток \"Unhide Magisk Manager\"</string>
     <string name="language">Мова</string>
     <string name="system_default">Стандартна (системна)</string>
+    <string name="settings_update">Оновити налаштування</string>
+    <string name="settings_update_channel_title">Канал оновлення</string>
+    <string name="settings_update_stable">Стабільний реліз</string>
+    <string name="settings_update_beta">Бета реліз</string>
+    <string name="settings_boot_format_title">Формат пропатченого образу</string>
+    <string name="settings_boot_format_summary">Виберіть формат вихідного пропатченого boot образу.\n.img - для прошивання через fastboot/download режим;\n.img.tar - для прошивання через ODIN.</string>
 
     <string name="settings_core_only_title">Режим ядра Magisk</string>
     <string name="settings_core_only_summary">Увімкнути тільки можливості ядра, всі модулі не будуть активними. MagiskSU, MagiskHide і позасистемні хости залишуться увімкненими</string>
