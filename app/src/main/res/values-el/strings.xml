@@ -1,39 +1,27 @@
 <resources>
     <!--Welcome Activity-->
-    <string name="navigation_drawer_open">Άνοιγμα συρταριού πλοήγησης</string>
-    <string name="navigation_drawer_close">Κλείσιμο συρταριού πλοήγησης</string>
     <string name="modules">Ενότητες</string>
     <string name="downloads">Λήψεις</string>
     <string name="superuser">Υπερχρήστης</string>
     <string name="log">Aρχείο Kαταγραφής</string>
     <string name="settings">Ρυθμίσεις</string>
-    <string name="status">Κατάσταση</string>
     <string name="install">Εγκατάσταση</string>
 
     <!--Status Fragment-->
-    <string name="magisk_version">Εγκατεστημένο Magisk v%1$s</string>
-    <string name="magisk_version_core_only">Εγκατεστημένο Magisk v%1$s (Λειτουργία Πυρήνα Μόνο)</string>
     <string name="magisk_version_error">Το Magisk δεν είναι εγκατεστημένο</string>
 
     <string name="checking_for_updates">Έλεγχος για ενημερώσεις…</string>
     <string name="magisk_update_available">Το Magisk v%1$s είναι διαθέσιμο!</string>
-    <string name="cannot_check_updates">Αδυναμία ελέγχου για ενημερώσεις, δεν έχει Internet;</string>
-    <string name="up_to_date">Τελευταία έκδοση του %1$s εγκατεστημένη</string>
+    <string name="cannot_check_updates">Αδυναμία ελέγχου για ενημερώσεις, δεν έχει internet;</string>
     <string name="root_error">Υπάρχει root αλλά όχι άδεια για root, δεν επιτρέπεται;</string>
     <string name="not_rooted">Δεν υπάρχει root</string>
-    <string name="proper_root">Rooted κανονικά</string>
     <string name="safetyNet_check_text">Πατήστε για έλεγχο του SafetyNet</string>
     <string name="checking_safetyNet_status">Έλεγχος κατάστασης SafetyNet…</string>
-    <string name="safetyNet_check_success">Επιτυχημένος έλεγχος SafetyNet</string>
-    <string name="safetyNet_connection_failed">Αδυναμία σύνδεσης στο Google API</string>
-    <string name="safetyNet_connection_suspended">Η σύνδεση στο Google API διακόπηκε</string>
-    <string name="safetyNet_no_response">Αδυναμία ελέγχου SafetyNet, δεν έχει Internet;</string>
-    <string name="safetyNet_fail">Αποτυχία SafetyNet: CTS profile mismatch</string>
-    <string name="safetyNet_pass">Το SafetyNet Πέρασε</string>
-    <string name="safetyNet_network_loss">Χάθηκε η σύνδεση στο δίκτυο</string>
+    <string name="safetyNet_check_success">Ο Έλεγχος του SafetyNet Ήταν Επιτυχής</string>
+    <string name="safetyNet_no_response">Αδυναμία επαλήθευσης SafetyNet, δεν έχει internet;</string>
+    <string name="safetyNet_network_loss">Αδυναμία σύνδεσης στο δίκτυο</string>
     <string name="safetyNet_service_disconnected">Η υπηρεσία τερματίστηκε</string>
     <string name="safetyNet_res_invalid">Η απόκριση είναι άκυρη</string>
-    <string name="root_info_warning">Η λειτουργία είναι πολύ περιορισμένη</string>
 
     <!--Install Fragment-->
     <string name="auto_detect">(Αυτόματα) %1$s</string>
@@ -48,10 +36,7 @@
     <string name="uninstall">Απεγκατάσταση</string>
     <string name="reboot_countdown">Επανεκκίνηση σε %1$d</string>
     <string name="uninstall_magisk_title">Απεγκατάσταση Magisk</string>
-    <string name="uninstall_magisk_msg">Αυτό θα αφαιρέσει όλες τις ενότητες, το MagiskSU και πιθανόν να κρυπτογραφήσει τα δεδομένα σας αν δεν είναι κρυπτογραφυμένα\nΕίστε σίγουρος/η ότι θέλετε να συνεχίσετε;</string>
-    <string name="version_none">(Καμία)</string>
-    <string name="reinstall">Επανεγκατάσταση</string>
-    <string name="update">Ενημέρωση</string>
+    <string name="update">Ενημέρωση %1$s</string>
 
     <!--Module Fragment-->
     <string name="no_info_provided">(Δεν δόθηκαν πληροφορίες)</string>
@@ -62,7 +47,6 @@
     <string name="disable_file_created">Η ενότητα θα απενεργοποιηθεί στην επόμενη επανεκκίνηση</string>
     <string name="disable_file_removed">Η ενότητα θα ενεργοποιηθεί στην επόμενη επανεκκίνηση</string>
     <string name="author">Δημιουργήθηκε από τον/την %1$s</string>
-    <string name="fab_flash_zip">Flash Zip Ενότητας</string>
 
     <!--Repo Fragment-->
     <string name="update_available">Διαθέσιμη Ενημέρωση</string>
@@ -97,32 +81,18 @@
     <string name="close">Κλείσιμο</string>
     <string name="repo_install_title">Εγκατάσταση %1$s</string>
     <string name="repo_install_msg">Θέλετε να εγκαταστήσετε το %1$s τώρα;</string>
-    <string name="download_install">Λήψη &amp; Εγκατάσταση</string>
     <string name="download">Λήψη</string>
-    <string name="goto_install">Μεταφορά στο τμήμα \"Εγκατάσταση\"</string>
     <string name="download_file_error">Σφάλμα στη λήψη του αρχείου</string>
     <string name="install_error">Σφάλμα εγκατάστασης!</string>
     <string name="invalid_zip">Αυτό το zip δεν είναι Ενότητα Magisk!!</string>
-    <string name="reboot_title">Η εγκατάσταση πέτυχε!</string>
-    <string name="reboot_msg">Θέλετε να κάνετε επανεκκίνηση τώρα;</string>
     <string name="reboot">Επανεκκίνηση</string>
-    <string name="copying_msg">Αντιγραφή zip στον προσωρινό κατάλογο</string>
-    <string name="zip_install_progress_title">Εγκατάσταση</string>
-    <string name="zip_unzip_msg">Αποσυμπίεση αρχείου zip …</string>
     <string name="zip_process_msg">Επεξεργασία αρχείου zip …</string>
-    <string name="zip_install_progress_msg">Εγκατάσταση %1$s …</string>
-    <string name="no_magisk_title">Το Magisk δεν είναι εγκατεστημένο!</string>
-    <string name="no_magisk_msg">Θέλετε να κατεβάσετε και να εγκαταστήσετε το Magisk;</string>
     <string name="downloading_toast">Κατέβασμα %1$s</string>
     <string name="magisk_update_title">Νέα Ενημέρωση Magisk Διαθέσιμη!</string>
     <string name="settings_reboot_toast">Επανεκκίνηση για εφαρμογή ρυθμίσεων</string>
     <string name="release_notes">Σημειώσεις έκδοσης</string>
     <string name="repo_cache_cleared">Η Repo cache καθαρίστηκε</string>
     <string name="safetyNet_hide_notice">Αυτή η εφαρμογή χρησιμοποιεί SafetyNet\nΉδη διαχειρίζεται από το MagiskHide από προεπιλογή</string>
-    <string name="start_magiskhide">Εκκίνηση MagiskHide …</string>
-    <string name="no_magisksu_title">Δεν χρησιμοποιείται το MagiskSU!</string>
-    <string name="no_magisksu_msg">Δεν είστε rooted με το MagiskSU, η χρήση του MagiskHide μόνο μπορεί να μην είναι αρκετή!\nΔεν υποτηρίζεται επισήμως, και θα χρειαζόσασταν πρόσθετα εργαλεία (π.χ. suhide) για να περάσετε το Safety Net.</string>
-    <string name="understand">Καταλαβαίνω</string>
     <string name="process_error">Σφάλμα διαδικασίας</string>
     <string name="internal_storage">Το zip είναι αποθηκευμένο σε:\n[Εσωτερική μνήμη]%1$s</string>
     <string name="zip_process_title">Επεξεργασία</string>
@@ -131,7 +101,13 @@
     <string name="manager_download_install">Πιέστε για λήψη και εγκατάσταση</string>
     <string name="magisk_updates">Ενημερώσεις Magisk</string>
     <string name="flashing">Γίνεται Flash</string>
-
+    <string name="hide_manager_toast">Κρύβοντας το Magisk Manager…</string>
+    <string name="hide_manager_fail_toast">Το κρύψιμο Magisk Manager απέτυχε…</string>
+    <string name="download_zip_only">Λήψη Zip Μόνο</string>
+    <string name="patch_boot_file">Εφαρμογή Patch στο Αρχείο Εικόνας Boot</string>
+    <string name="direct_install">Απευθείας Εγκατάσταση (Προτείνεται)</string>
+    <string name="select_method">Επιλογή Μεθόδου</string>
+    
     <!--Settings Activity -->
     <string name="settings_general_category">Γενικά</string>
     <string name="settings_dark_theme_title">Σκούρο θέμα</string>
@@ -140,14 +116,20 @@
     <string name="settings_notification_summary">Εμφάνιση ειδοποιήσεων ενημέρωσης όταν είναι διαθέσιμη νέα έκδοση</string>
     <string name="settings_clear_cache_title">Εκκαθάριση προσωρινής μνήμης αποθετηρίων</string>
     <string name="settings_clear_cache_summary">Καθαρίζει τις κρυφές πληροφορίες για απευθείας συνδεδεμένα αποθετήρια, αναγκάζει την εφαρμογή να κάνει ανανέωση σε απευθείας σύνδεση</string>
+    <string name="settings_hide_manager_title">Κρύψιμο Magisk Manager</string>
+    <string name="settings_hide_manager_summary">Προσωρινό κρύψιμο του Magisk Manager.\nΑυτό θα εγκαταστήσει μια νέα εφαρμογή με το όνομα \"Unhide Magisk Manager\"</string>
     <string name="language">Γλώσσα</string>
     <string name="system_default">(Προεπιλογή Συστήματος)</string>
+    <string name="settings_update">Ρυθμίσεις Ενημερώσεων</string>
+    <string name="settings_update_channel_title">Κανάλι Ενημερώσεων</string>
+    <string name="settings_update_stable">Σταθερή</string>
+    <string name="settings_update_beta">Beta</string>
+    <string name="settings_boot_format_title">Μορφή Τροποποιημένης Εικόνας Boot</string>
+    <string name="settings_boot_format_summary">Επιλέξτε τη μορφή της εξαγόμενης εικόνας boot μετά το patch.\nΕπιλέξτε .img για flash μέσω λειτουργίας fastboot/download· επιλέξτε .img.tar για flash μέσω ODIN.</string>
 
     <string name="settings_core_only_title">Magisk Λειτουργία Πυρήνα Μόνο</string>
     <string name="settings_core_only_summary">Ενεργοποίηση μόνο των λειτουργιών πυρήνα, καμία από τις ενότητες δεν θα ενεργοποιηθεί. Τα MagiskSU, MagiskHide, και systemless hosts θα παραμείνουν ενεργά</string>
     <string name="settings_magiskhide_summary">Κρύβει το Magisk από διάφορες ανιχνεύσεις</string>
-    <string name="settings_busybox_title">Ενεργοποίηση BusyBox</string>
-    <string name="settings_busybox_summary">Υποχρεωτική προσάρτηση του ενσωματωμένου busybox του Magisk στο xbin</string>
     <string name="settings_hosts_title">Systemless hosts</string>
     <string name="settings_hosts_summary">Υποστήριξη Systemless hosts για εφαρμογές Adblock</string>
 
@@ -203,8 +185,8 @@
     <string name="twentymin">20 λεπτά</string>
     <string name="thirtymin">30 λεπτά</string>
     <string name="sixtymin">60 λεπτά</string>
-    <string name="su_allow_toast">Παραχορούνται δικαιώματα υπερχρήστη στο %1$s</string>
-    <string name="su_deny_toast">Δεν παραχορούνται δικαιώματα υπερχρήστη στο %1$s</string>
+    <string name="su_allow_toast">Παραχωρήθηκαν δικαιώματα υπερχρήστη στο %1$s</string>
+    <string name="su_deny_toast">Απορρίφθηκαν τα δικαιώματα υπερχρήστη του %1$s</string>
     <string name="no_apps_found">Δεν βρέθηκαν εφαρμογές</string>
     <string name="su_snack_grant">Παραχορούνται δικαιώματα υπερχρήστη στο %1$s</string>
     <string name="su_snack_deny">Δεν παραχορούνται δικαιώματα υπερχρήστη στο %1$s</string>

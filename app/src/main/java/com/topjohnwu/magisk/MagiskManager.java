@@ -3,6 +3,9 @@ package com.topjohnwu.magisk;
 import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -12,11 +15,17 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
 
+import com.topjohnwu.magisk.asyncs.CheckUpdates;
 import com.topjohnwu.magisk.asyncs.DownloadBusybox;
+import com.topjohnwu.magisk.asyncs.LoadModules;
 import com.topjohnwu.magisk.asyncs.ParallelTask;
+import com.topjohnwu.magisk.asyncs.UpdateRepos;
 import com.topjohnwu.magisk.database.RepoDatabaseHelper;
 import com.topjohnwu.magisk.database.SuDatabaseHelper;
 import com.topjohnwu.magisk.module.Module;
+import com.topjohnwu.magisk.services.UpdateCheckService;
+import com.topjohnwu.magisk.superuser.SuReceiver;
+import com.topjohnwu.magisk.superuser.SuRequestActivity;
 import com.topjohnwu.magisk.utils.SafetyNetHelper;
 import com.topjohnwu.magisk.utils.Shell;
 import com.topjohnwu.magisk.utils.Topic;
@@ -26,21 +35,21 @@ import java.io.File;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 public class MagiskManager extends Application {
 
     public static final String MAGISK_DISABLE_FILE = "/cache/.disable_magisk";
     public static final String TMP_FOLDER_PATH = "/dev/tmp";
     public static final String MAGISK_PATH = "/magisk";
-    public static final String UNINSTALLER = "magisk_uninstaller.sh";
-    public static final String UTIL_FUNCTIONS= "util_functions.sh";
     public static final String INTENT_SECTION = "section";
     public static final String INTENT_VERSION = "version";
     public static final String INTENT_LINK = "link";
     public static final String MAGISKHIDE_PROP = "persist.magisk.hide";
     public static final String DISABLE_INDICATION_PROP = "ro.magisk.disable";
     public static final String NOTIFICATION_CHANNEL = "magisk_update_notice";
-    public static final String BUSYBOX_VERSION = "1.27.1";
+    public static final String BUSYBOXPATH = "/dev/magisk/bin";
+    public static final int UPDATE_SERVICE_ID = 1;
 
     // Topics
     public final Topic magiskHideDone = new Topic();
@@ -89,6 +98,9 @@ public class MagiskManager extends Application {
     public int suResponseType;
     public int suNotificationType;
     public int suNamespaceMode;
+    public String localeConfig;
+    public int updateChannel;
+    public String bootFormat;
 
     // Global resources
     public SharedPreferences prefs;
@@ -97,6 +109,7 @@ public class MagiskManager extends Application {
     public Shell shell;
 
     private static Handler mHandler = new Handler();
+    private boolean started = false;
 
     private static class LoadLocale extends ParallelTask<Void, Void, Void> {
 
@@ -123,15 +136,17 @@ public class MagiskManager extends Application {
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         suDB = new SuDatabaseHelper(this);
         repoDB = new RepoDatabaseHelper(this);
+        defaultLocale = Locale.getDefault();
+        setLocale();
         loadConfig();
     }
 
     public void setLocale() {
-        String localeTag = prefs.getString("locale", "");
-        if (localeTag.isEmpty()) {
+        localeConfig = prefs.getString("locale", "");
+        if (localeConfig.isEmpty()) {
             locale = defaultLocale;
         } else {
-            locale = Locale.forLanguageTag(localeTag);
+            locale = Locale.forLanguageTag(localeConfig);
         }
         Resources res = getBaseContext().getResources();
         Configuration config = new Configuration(res.getConfiguration());
@@ -139,11 +154,7 @@ public class MagiskManager extends Application {
         res.updateConfiguration(config, res.getDisplayMetrics());
     }
 
-    private void loadConfig() {
-        // Locale
-        defaultLocale = Locale.getDefault();
-        setLocale();
-
+    public void loadConfig() {
         isDarkTheme = prefs.getBoolean("dark_theme", false);
         if (BuildConfig.DEBUG) {
             devLogging = prefs.getBoolean("developer_logging", false);
@@ -155,14 +166,16 @@ public class MagiskManager extends Application {
 
         // su
         suRequestTimeout = Utils.getPrefsInt(prefs, "su_request_timeout", 10);
-        suResponseType = Utils.getPrefsInt(prefs, "su_auto_response", 0);
-        suNotificationType = Utils.getPrefsInt(prefs, "su_notification", 1);
+        suResponseType = Utils.getPrefsInt(prefs, "su_auto_response", SuRequestActivity.PROMPT);
+        suNotificationType = Utils.getPrefsInt(prefs, "su_notification", SuReceiver.TOAST);
         suReauth = prefs.getBoolean("su_reauth", false);
-        suAccessState = suDB.getSettings(SuDatabaseHelper.ROOT_ACCESS, 3);
-        multiuserMode = suDB.getSettings(SuDatabaseHelper.MULTIUSER_MODE, 0);
-        suNamespaceMode = suDB.getSettings(SuDatabaseHelper.MNT_NS, 1);
+        suAccessState = suDB.getSettings(SuDatabaseHelper.ROOT_ACCESS, SuDatabaseHelper.ROOT_ACCESS_APPS_AND_ADB);
+        multiuserMode = suDB.getSettings(SuDatabaseHelper.MULTIUSER_MODE, SuDatabaseHelper.MULTIUSER_MODE_OWNER_ONLY);
+        suNamespaceMode = suDB.getSettings(SuDatabaseHelper.MNT_NS, SuDatabaseHelper.NAMESPACE_MODE_REQUESTER);
 
         updateNotification = prefs.getBoolean("notification", true);
+        updateChannel = Utils.getPrefsInt(prefs, "update_channel", CheckUpdates.STABLE_CHANNEL);
+        bootFormat = prefs.getString("boot_format", ".img");
     }
 
     public void toast(String msg, int duration) {
@@ -173,10 +186,27 @@ public class MagiskManager extends Application {
         mHandler.post(() -> Toast.makeText(this, resId, duration).show());
     }
 
-    public void init() {
-        new LoadLocale(this).exec();
-        new DownloadBusybox(this).exec();
+    public void startup() {
+        if (started)
+            return;
+        started = true;
+
+        boolean hasNetwork = Utils.checkNetworkStatus(this);
+
         getMagiskInfo();
+        new LoadLocale(this).exec();
+
+        // Force synchronous, make sure we have busybox to use
+        if (hasNetwork && Shell.rootAccess()
+                && !Utils.itemExist(shell, BUSYBOXPATH + "/busybox")) {
+            try {
+                new DownloadBusybox(this).exec().get();
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
+        shell.su_raw("export PATH=" + BUSYBOXPATH + ":$PATH");
+
         updateBlockInfo();
 
         // Write back default values
@@ -193,11 +223,10 @@ public class MagiskManager extends Application {
                 .putString("su_access", String.valueOf(suAccessState))
                 .putString("multiuser_mode", String.valueOf(multiuserMode))
                 .putString("mnt_ns", String.valueOf(suNamespaceMode))
-                .putString("busybox_version", BUSYBOX_VERSION)
+                .putString("update_channel", String.valueOf(updateChannel))
+                .putString("locale", localeConfig)
+                .putString("boot_format", bootFormat)
                 .apply();
-
-        // Add busybox to PATH
-        shell.su_raw("PATH=" + getApplicationInfo().dataDir + "/busybox:$PATH");
 
         // Create notification channel on Android O
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -206,11 +235,26 @@ public class MagiskManager extends Application {
             ((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE)).createNotificationChannel(channel);
         }
 
+        LoadModules loadModuleTask = new LoadModules(this);
+        // Start update check job
+        if (hasNetwork) {
+            ComponentName service = new ComponentName(this, UpdateCheckService.class);
+            JobInfo jobInfo = new JobInfo.Builder(UPDATE_SERVICE_ID, service)
+                    .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+                    .setPersisted(true)
+                    .setPeriodic(8 * 60 * 60 * 1000)
+                    .build();
+            ((JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE)).schedule(jobInfo);
+            loadModuleTask.setCallBack(() -> new UpdateRepos(this).exec());
+        }
+        // Fire asynctasks
+        loadModuleTask.exec();
+
     }
 
     public void getMagiskInfo() {
-        Shell.getShell(this);
         List<String> ret;
+        Shell.getShell(this);
         ret = shell.sh("su -v");
         if (Utils.isValidShellResponse(ret)) {
             suVersion = ret.get(0);
@@ -258,7 +302,7 @@ public class MagiskManager extends Application {
         if (Utils.isValidShellResponse(res)) {
             bootBlock = res.get(0);
         } else {
-            blockList = shell.su("ls -d /dev/block/mmc* /dev/block/sd* 2>/dev/null");
+            blockList = shell.su("find /dev/block -type b | grep -vE 'dm-0|ram|loop'");
         }
     }
 

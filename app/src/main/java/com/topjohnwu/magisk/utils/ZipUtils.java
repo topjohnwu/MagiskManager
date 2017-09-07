@@ -1,6 +1,7 @@
 package com.topjohnwu.magisk.utils;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import org.bouncycastle.asn1.ASN1InputStream;
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
@@ -21,6 +22,8 @@ import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
 import org.bouncycastle.operator.jcajce.JcaDigestCalculatorProviderBuilder;
 import org.bouncycastle.util.encoders.Base64;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -65,9 +68,13 @@ public class ZipUtils {
     // File name in assets
     private static final String PUBLIC_KEY_NAME = "public.certificate.x509.pem";
     private static final String PRIVATE_KEY_NAME = "private.key.pk8";
+    private static final String UNHIDE_APK = "unhide.apk";
 
     private static final String CERT_SF_NAME = "META-INF/CERT.SF";
     private static final String CERT_SIG_NAME = "META-INF/CERT.%s";
+
+    private static final String ANDROID_MANIFEST = "AndroidManifest.xml";
+    private static final byte[] UNHIDE_PKG_NAME = "com.topjohnwu.unhide\0".getBytes();
 
     private static Provider sBouncyCastleProvider;
     // bitmasks for which hash algorithms we need the manifest to include.
@@ -82,10 +89,67 @@ public class ZipUtils {
 
     public native static void zipAdjust(String filenameIn, String filenameOut);
 
+    public static String generateUnhide(Context context, File output) {
+        File temp = new File(context.getCacheDir(), "temp.apk");
+        String pkg = "";
+        try {
+            JarInputStream source = new JarInputStream(context.getAssets().open(UNHIDE_APK));
+            JarOutputStream dest = new JarOutputStream(new FileOutputStream(temp));
+            JarEntry entry;
+            int size;
+            byte buffer[] = new byte[4096];
+            while ((entry = source.getNextJarEntry()) != null) {
+                dest.putNextEntry(new JarEntry(entry.getName()));
+                if (TextUtils.equals(entry.getName(), ANDROID_MANIFEST)) {
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    while((size = source.read(buffer)) != -1) {
+                        baos.write(buffer, 0, size);
+                    }
+                    int offset = -1;
+                    byte xml[] = baos.toByteArray();
+
+                    // Linear search pattern offset
+                    for (int i = 0; i < xml.length - UNHIDE_PKG_NAME.length; ++i) {
+                        boolean match = true;
+                        for (int j = 0; j < UNHIDE_PKG_NAME.length; ++j) {
+                            if (xml[i + j] != UNHIDE_PKG_NAME[j]) {
+                                match = false;
+                                break;
+                            }
+                        }
+                        if (match) {
+                            offset = i;
+                            break;
+                        }
+                    }
+                    if (offset < 0)
+                        return "";
+
+                    // Patch binary XML with new package name
+                    pkg = Utils.genPackageName("com.", UNHIDE_PKG_NAME.length - 1);
+                    System.arraycopy(pkg.getBytes(), 0, xml, offset, pkg.length());
+                    dest.write(xml);
+                } else {
+                    while((size = source.read(buffer)) != -1) {
+                        dest.write(buffer, 0, size);
+                    }
+                }
+            }
+            source.close();
+            dest.close();
+            signZip(context, temp, output, false);
+            temp.delete();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return pkg;
+        }
+        return pkg;
+    }
+
     public static void removeTopFolder(InputStream in, File output) throws IOException {
         try {
             JarInputStream source = new JarInputStream(in);
-            JarOutputStream dest = new JarOutputStream(new FileOutputStream(output));
+            JarOutputStream dest = new JarOutputStream(new BufferedOutputStream(new FileOutputStream(output)));
             JarEntry entry;
             String path;
             int size;
@@ -98,11 +162,11 @@ public class ZipUtils {
                     continue;
                 }
                 // Don't include placeholder
-                if (path.contains("system/placeholder")) {
+                if (path.equals("system/placeholder")) {
                     continue;
                 }
                 dest.putNextEntry(new JarEntry(path));
-                while((size = source.read(buffer, 0, 2048)) != -1) {
+                while((size = source.read(buffer)) != -1) {
                     dest.write(buffer, 0, size);
                 }
             }
@@ -115,34 +179,38 @@ public class ZipUtils {
         }
     }
 
-    public static void unzip(File file, File folder, String path) throws Exception {
-        int count;
-        FileOutputStream out;
-        File dest;
-        InputStream is;
-        JarEntry entry;
+    public static void unzip(File zip, File folder, String path, boolean junkPath) throws Exception {
+        InputStream in = new BufferedInputStream(new FileInputStream(zip));
+        unzip(in, folder, path, junkPath);
+        in.close();
+    }
+
+    public static void unzip(InputStream zip, File folder, String path, boolean junkPath) throws Exception {
         byte data[] = new byte[4096];
-        try (JarFile zipfile = new JarFile(file)) {
-            Enumeration<JarEntry> e = zipfile.entries();
-            while(e.hasMoreElements()) {
-                entry = e.nextElement();
-                if (!entry.getName().contains(path) || entry.isDirectory()){
+        try {
+            JarInputStream zipfile = new JarInputStream(zip);
+            JarEntry entry;
+            while ((entry = zipfile.getNextJarEntry()) != null) {
+                if (!entry.getName().startsWith(path) || entry.isDirectory()){
                     // Ignore directories, only create files
                     continue;
                 }
-                Logger.dev("ZipUtils: Extracting: " + entry);
-                is = zipfile.getInputStream(entry);
-                dest = new File(folder, entry.getName());
-                if (dest.getParentFile().mkdirs()) {
-                    dest.createNewFile();
+                String name;
+                if (junkPath) {
+                    name = entry.getName().substring(entry.getName().lastIndexOf('/') + 1);
+                } else {
+                    name = entry.getName();
                 }
-                out = new FileOutputStream(dest);
-                while ((count = is.read(data)) != -1) {
+                Logger.dev("ZipUtils: Extracting: " + entry);
+                File dest = new File(folder, name);
+                dest.getParentFile().mkdirs();
+                FileOutputStream out = new FileOutputStream(dest);
+                int count;
+                while ((count = zipfile.read(data)) != -1) {
                     out.write(data, 0, count);
                 }
                 out.flush();
                 out.close();
-                is.close();
             }
         } catch(Exception e) {
             e.printStackTrace();
@@ -153,7 +221,7 @@ public class ZipUtils {
     public static void signZip(Context context, File input, File output, boolean minSign) {
         int alignment = 4;
         JarFile inputJar = null;
-        FileOutputStream outputFile = null;
+        BufferedOutputStream outputFile = null;
         int hashes = 0;
         try {
             X509Certificate publicKey = readPublicKey(context.getAssets().open(PUBLIC_KEY_NAME));
@@ -165,7 +233,7 @@ public class ZipUtils {
             long timestamp = publicKey.getNotBefore().getTime() + 3600L * 1000;
             PrivateKey privateKey = readPrivateKey(context.getAssets().open(PRIVATE_KEY_NAME));
 
-            outputFile = new FileOutputStream(output);
+            outputFile = new BufferedOutputStream(new FileOutputStream(output));
             if (minSign) {
                 ZipUtils.signWholeFile(input, publicKey, privateKey, outputFile);
             } else {

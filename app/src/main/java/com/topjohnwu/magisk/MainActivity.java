@@ -1,15 +1,11 @@
 package com.topjohnwu.magisk;
 
-import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -42,24 +38,20 @@ public class MainActivity extends Activity
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
+        getMagiskManager().startup();
 
-        prefs = getApplicationContext().prefs;
+        prefs = getMagiskManager().prefs;
 
-        if (getApplicationContext().isDarkTheme) {
+        if (getMagiskManager().isDarkTheme) {
             setTheme(R.style.AppTheme_Dark);
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
-                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
-        }
-
         setSupportActionBar(toolbar);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.magisk, R.string.magisk) {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
@@ -116,21 +108,21 @@ public class MainActivity extends Activity
 
     @Override
     public Topic[] getSubscription() {
-        return new Topic[] { getApplicationContext().reloadActivity };
+        return new Topic[] { getMagiskManager().reloadActivity };
     }
 
     public void checkHideSection() {
         Menu menu = navigationView.getMenu();
         menu.findItem(R.id.magiskhide).setVisible(
-                Shell.rootAccess() && getApplicationContext().magiskVersionCode >= 1300
+                Shell.rootAccess() && getMagiskManager().magiskVersionCode >= 1300
                         && prefs.getBoolean("magiskhide", false));
         menu.findItem(R.id.modules).setVisible(
-                Shell.rootAccess() && getApplicationContext().magiskVersionCode >= 0);
+                Shell.rootAccess() && getMagiskManager().magiskVersionCode >= 0);
         menu.findItem(R.id.downloads).setVisible(Utils.checkNetworkStatus(this) &&
-                Shell.rootAccess() && getApplicationContext().magiskVersionCode >= 0);
+                Shell.rootAccess() && getMagiskManager().magiskVersionCode >= 0);
         menu.findItem(R.id.log).setVisible(Shell.rootAccess());
         menu.findItem(R.id.superuser).setVisible(
-                Shell.rootAccess() && getApplicationContext().isSuClient);
+                Shell.rootAccess() && getMagiskManager().isSuClient);
     }
 
     public void navigate(String item) {
@@ -139,9 +131,6 @@ public class MainActivity extends Activity
             switch (item) {
                 case "magisk":
                     itemId = R.id.magisk;
-                    break;
-                case "install":
-                    itemId = -1;
                     break;
                 case "superuser":
                     itemId = R.id.superuser;
@@ -174,13 +163,6 @@ public class MainActivity extends Activity
         mDrawerItem = itemId;
         navigationView.setCheckedItem(itemId);
         switch (itemId) {
-            case -1:
-                Bundle args = new Bundle();
-                args.putBoolean(MagiskFragment.SHOW_DIALOG, true);
-                Fragment frag = new MagiskFragment();
-                frag.setArguments(args);
-                displayFragment(frag, "magisk", true);
-                break;
             case R.id.magisk:
                 displayFragment(new MagiskFragment(), "magisk", true);
                 break;

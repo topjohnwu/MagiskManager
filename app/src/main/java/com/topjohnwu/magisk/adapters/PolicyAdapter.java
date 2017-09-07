@@ -1,5 +1,6 @@
 package com.topjohnwu.magisk.adapters;
 
+import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
@@ -12,7 +13,7 @@ import android.widget.TextView;
 
 import com.topjohnwu.magisk.R;
 import com.topjohnwu.magisk.components.AlertDialogBuilder;
-import com.topjohnwu.magisk.components.ExpandableViewHolder;
+import com.topjohnwu.magisk.components.ExpandableView;
 import com.topjohnwu.magisk.components.SnackbarMaker;
 import com.topjohnwu.magisk.database.SuDatabaseHelper;
 import com.topjohnwu.magisk.superuser.Policy;
@@ -50,7 +51,7 @@ public class PolicyAdapter extends RecyclerView.Adapter<PolicyAdapter.ViewHolder
         holder.setExpanded(expandList.contains(policy));
 
         holder.itemView.setOnClickListener(view -> {
-            if (holder.mExpanded) {
+            if (holder.isExpanded()) {
                 holder.collapse();
                 expandList.remove(policy);
             } else {
@@ -92,7 +93,7 @@ public class PolicyAdapter extends RecyclerView.Adapter<PolicyAdapter.ViewHolder
                 dbHelper.updatePolicy(policy);
             }
         });
-        holder.delete.setOnClickListener(v -> new AlertDialogBuilder(v.getContext())
+        holder.delete.setOnClickListener(v -> new AlertDialogBuilder((Activity) v.getContext())
                 .setTitle(R.string.su_revoke_title)
                 .setMessage(v.getContext().getString(R.string.su_revoke_msg, policy.appName))
                 .setPositiveButton(R.string.yes, (dialog, which) -> {
@@ -119,7 +120,7 @@ public class PolicyAdapter extends RecyclerView.Adapter<PolicyAdapter.ViewHolder
         return policyList.size();
     }
 
-    static class ViewHolder extends ExpandableViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder implements ExpandableView {
 
         @BindView(R.id.app_name) TextView appName;
         @BindView(R.id.package_name) TextView packageName;
@@ -127,18 +128,23 @@ public class PolicyAdapter extends RecyclerView.Adapter<PolicyAdapter.ViewHolder
         @BindView(R.id.master_switch) Switch masterSwitch;
         @BindView(R.id.notification_switch) Switch notificationSwitch;
         @BindView(R.id.logging_switch) Switch loggingSwitch;
+        @BindView(R.id.expand_layout) ViewGroup expandLayout;
 
         @BindView(R.id.delete) ImageView delete;
         @BindView(R.id.more_info) ImageView moreInfo;
 
+        private Container container = new Container();
+
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            container.expandLayout = expandLayout;
+            setupExpandable();
         }
 
         @Override
-        public void setExpandLayout(View itemView) {
-            expandLayout = itemView.findViewById(R.id.expand_layout);
+        public Container getContainer() {
+            return container;
         }
     }
 }

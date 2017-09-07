@@ -383,6 +383,7 @@
                 android:layout_marginTop="4dp"
                 android:clickable="true"
                 android:foreground="?android:attr/selectableItemBackground"
+                android:visibility="gone"
                 app:cardCornerRadius="@dimen/card_corner_radius"
                 app:cardElevation="@dimen/card_elevation">
 
@@ -399,7 +400,7 @@
                         android:id="@+id/imageView"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="20dp"
+                        android:layout_marginEnd="5dp"
                         android:layout_weight="0"
                         app:srcCompat="@mipmap/ic_launcher" />
 
@@ -411,6 +412,7 @@
                         android:ems="10"
                         android:fontFamily="sans-serif"
                         android:gravity="center"
+                        android:text="@string/install"
                         android:textAllCaps="false"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -418,7 +420,7 @@
                     <FrameLayout
                         android:layout_width="50dp"
                         android:layout_height="match_parent"
-                        android:layout_marginStart="20dp"
+                        android:layout_marginStart="5dp"
                         android:layout_weight="0">
 
                     </FrameLayout>

@@ -2,39 +2,28 @@
     <!--Universal-->
 
     <!--Welcome Activity-->
-    <string name="navigation_drawer_open">Abrir menú de navegación</string>
-    <string name="navigation_drawer_close">Cerrar menú de navegación</string>
     <string name="modules">Módulos</string>
     <string name="downloads">Descargas</string>
     <string name="superuser">Superusuario</string>
     <string name="log">Registro</string>
     <string name="settings">Ajustes</string>
-    <string name="status">Estado</string>
     <string name="install">Instalar</string>
 
     <!--Magisk Fragment-->
-    <string name="magisk_version">Instalado Magisk v%1$s</string>
-     <string name="magisk_version_core_only">Instalado Magisk v%1$s (Core Only Mode)</string>
     <string name="magisk_version_error">Magisk no está instalado</string>
 
     <string name="checking_for_updates">Comprobando actualizaciones…</string>
     <string name="magisk_update_available">¡Disponible Magisk v%1$s!</string>
     <string name="cannot_check_updates">No se pueden comprobar actualizaciones ¿No tiene internet?</string>
-    <string name="up_to_date">Última versión de %1$s instalada</string>
     <string name="root_error">Rooteado pero sin permiso root, ¿No lo permitiste?</string>
     <string name="not_rooted">No rooteado</string>
-    <string name="proper_root">Correctamente rooteado</string>
     <string name="safetyNet_check_text">Toque para empezar la comprobación de SafetyNet</string>
     <string name="checking_safetyNet_status">Comprobando estado de SafetyNet…</string>
-    <string name="safetyNet_connection_failed">No puede conectar con la API de Google</string>
-    <string name="safetyNet_connection_suspended">La conexión con la API de Google API fue suspendida</string>
+    <string name="safetyNet_check_success">La comprobación de SafetyNet fue exitosa</string>
     <string name="safetyNet_no_response">No puede comprobar SafetyNet, ¿No tiene internet?</string>
-    <string name="safetyNet_fail">SafetyNet: Error, no coincide el perfil CTS</string>
-    <string name="safetyNet_pass">SafetyNet: Correcto</string>
     <string name="safetyNet_network_loss">Conexión de red perdida</string>
     <string name="safetyNet_service_disconnected">Se ha detenido el servicio</string>
     <string name="safetyNet_res_invalid">La respuesta no es válida</string>
-    <string name="root_info_warning">Funcionalidad enormemente limitada</string>
 
     <!--Install Fragment-->
     <string name="auto_detect">(Auto) %1$s</string>
@@ -48,11 +37,9 @@
     <string name="install_magisk_title">Última versión de Magisk: %1$s</string>
     <string name="uninstall">Desinstalar</string>
     <string name="reboot_countdown">Reiniciando en %1$d</string>
+    <string name="uninstall_magisk_msg">Todos los módulos serán desactivados / eliminados. El acceso Root se eliminará y, posiblemente, encriptará los datos si los datos no están cifrados actualmente.</string>
     <string name="uninstall_magisk_title">Desinstalar Magisk</string>
-    <string name="uninstall_magisk_msg">Esto eliminará todos los módulos, MagiskSU, y potencialmente puede cifrar sus datos si no está encriptada\nEstas seguro de continuar?</string>
-    <string name="version_none">(Ninguno)</string>
-    <string name="reinstall">Re-Instalar</string>
-    <string name="update">Actualización</string>
+    <string name="update">Actualización %1$s</string>
     
     <!--Module Fragment-->
     <string name="no_info_provided">(No hay información)</string>
@@ -63,7 +50,6 @@
     <string name="disable_file_created">El módulo se desactivará en el siguiente reinicio</string>
     <string name="disable_file_removed">El módulo se activará en el siguiente reinicio</string>
     <string name="author">Creado por %1$s</string>
-    <string name="fab_flash_zip">Flashear el zip del módulo</string>
 
     <!--Repo Fragment-->
     <string name="update_available">Actualización disponible</string>
@@ -80,7 +66,7 @@
 
     <!--About Activity-->
     <string name="about">Acerca de</string>
-    <string name="app_developers">Desarroladores principales</string>
+    <string name="app_developers">Desarrolladores principales</string>
     <string name="app_developers_"><![CDATA[Aplicación creada por <a href="https://github.com/topjohnwu">topjohnwu</a> en colaboración con <a href="https://github.com/d8ahazard">Digitalhigh</a> y <a href="https://github.com/dvdandroid">Dvdandroid</a>.]]></string>
     <string name="app_changelog">Registro de cambios de la aplicación</string>
     <string name="translators">Gawenda, netizen, Deiki, Nosi>, dark-basic</string>
@@ -98,51 +84,57 @@
     <string name="close">Cerrar</string>
     <string name="repo_install_title">Instalar %1$s</string>
     <string name="repo_install_msg">¿Quieres instalar %1$s ahora?</string>
-    <string name="download_install">Descargar e instalar</string>
     <string name="download">Descargar</string>
-    <string name="goto_install">Ir a la sección \"Instalar\"</string>
     <string name="download_file_error">Error descargando archivo</string>
     <string name="install_error">¡Error en la instalación!</string>
     <string name="invalid_zip">¡El zip no es un módulo Magisk!</string>
-    <string name="reboot_title">¡Instalación correcta!</string>
-    <string name="reboot_msg">¿Deseas reiniciar ahora?</string>
     <string name="reboot">Reiniciar</string>
-    <string name="copying_msg">Copiando zip a un directorio temporal</string>
-    <string name="zip_install_progress_title">Instalando</string>
-    <string name="zip_unzip_msg">Descomprimiendo archivo zip …</string>
     <string name="zip_process_msg">Procesando archivo zip …</string>
-    <string name="zip_install_progress_msg">Instalando %1$s …</string>
-    <string name="no_magisk_title">¡Magisk no instalado!</string>
-    <string name="no_magisk_msg">¿Deseas descargar e instalar Magisk?</string>
     <string name="downloading_toast">Descargando %1$s</string>
     <string name="magisk_update_title">¡Nueva actualización de Magisk disponible!</string>
     <string name="settings_reboot_toast">Reinicia para aplicar los ajustes</string>
     <string name="release_notes">Notas de lanzamiento</string>
     <string name="repo_cache_cleared">Caché del repositorio limpiada</string>
     <string name="safetyNet_hide_notice">Esta aplicación usa SafetyNet\nYa manejado por defecto por MagiskHide</string>
-    <string name="start_magiskhide">Iniciando MagiskHide …</string>
-    <string name="no_magisksu_title">¡No está usando MagiskSU!</string>
-    <string name="no_magisksu_msg">No estás rooteado con MagiskSU, ¡Usando MagiskHide por si mismo podría no ser suficiente!\nNo está oficialmente soportado, y necesitaria herramientas adiccionales (ej. suhide) para pasar Safety Net.</string>
-    <string name="understand">Entendido</string>
     <string name="process_error">Error de proceso</string>
     <string name="internal_storage">El zip es almacenado en:\n[Internal Storage]%1$s</string>
     <string name="zip_process_title">Procesando</string>
-    <string name="manual_boot_image">¡Selecciona manualmente una imagen de arranque!</string>
+    <string name="manual_boot_image">¡Selecciona manualmente una imagen boot!</string>
     <string name="manager_update_title">Nueva actualización de Magisk Manager disponible!</string>
     <string name="manager_download_install">Pulse para descargar e instalar</string>
     <string name="magisk_updates">Actualización de Magisk</string>
     <string name="flashing">Flasheando</string>
-
+    <string name="hide_manager_toast">Ocultando Magisk Manager...</string>
+    <string name="hide_manager_fail_toast">La Ocultación de Magisk Manager ha fallado…</string>
+    <string name="download_zip_only">Descargar sólo el archivo ZIP</string>
+    <string name="patch_boot_file">Parcheo de la imagen boot</string>
+    <string name="direct_install">Instalación Directa (Recomendado)</string>
+    <string name="select_method">Seleccionar Método</string>
+    <string name="no_boot_file_patch_support">La versión de Magisk no admite el parcheo de la imagen boot</string>
+     <string name="boot_file_patch_msg">Seleccione el volcado de la imagen boot en formato .img o .img.tar</string>
+    <string name="complete_uninstall">Desinstalación completa</string>
+    <string name="restore_stock_boot">Restaurar imagen boot Stock</string>
+    <string name="restore_done">¡Restauración Terminada!</string>
+    <string name="restore_fail">¡El respaldo de la imagen boot Stock no existe!</string>
+    
     <!--Settings Activity -->
     <string name="settings_general_category">General</string>
     <string name="settings_dark_theme_title">Tema oscuro</string>
-    <string name="settings_dark_theme_summary">Habilita el tema oscuro</string>
+    <string name="settings_dark_theme_summary">Habilitar el tema oscuro</string>
     <string name="settings_notification_title">Notificar Actualización</string>
     <string name="settings_notification_summary">Notificar cuando una nueva versión esté disponible</string>
     <string name="settings_clear_cache_title">Limpiar caché del repositorio</string>
     <string name="settings_clear_cache_summary">Limpiar la información en caché para los repositorios en línea, fuerza a la aplicación a actualizar en línea</string>
+    <string name="settings_hide_manager_title">Ocultar Magisk Manager</string>
+    <string name="settings_hide_manager_summary">Ocultar temporalmente Magisk Manager.\nEsto instalará una nueva aplicación llamada \"Unhide Magisk Manager\"</string>  
     <string name="language">Idioma</string>
     <string name="system_default">(Idioma del sistema)</string>
+    <string name="settings_update">Ajustes de Actualización</string>
+    <string name="settings_update_channel_title">Canal de Actualización</string>
+    <string name="settings_update_stable">Estable</string>
+    <string name="settings_update_beta">Beta</string>
+    <string name="settings_boot_format_title">Parchear imagen boot por tipo de formato</string>
+    <string name="settings_boot_format_summary">Seleccionar el formato de salida para parchear la imagen boot.\nEscoja .img para flashear mediante fastboot/download mode; escoja .img.tar para flashear con ODIN.</string>
     
     <string name="settings_core_only_summary">Habilitar sólo funciones principales, no se cargarán todos los módulos. MagiskSU, MagiskHide, y archivo hosts fuera de la partición de sistema seguirán habilitados</string>
     <string name="settings_magiskhide_summary">Ocultar Magisk de varias detecciones</string>
