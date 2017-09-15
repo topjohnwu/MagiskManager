@@ -119,6 +119,7 @@
     <string name="restore_stock_boot">Restaurar imagen boot Stock</string>
     <string name="restore_done">¡Restauración Terminada!</string>
     <string name="restore_fail">¡El respaldo de la imagen boot Stock no existe!</string>
+    <string name="uninstall_toast">Desinstalación de Magisk Manager en 5 segundos, por favor después reinicie manualmente </string>
     
     <!--Settings Activity -->
     <string name="settings_general_category">General</string>
