@@ -55,7 +55,7 @@
     <string name="menuClearLog">Effacer le journal maintenant</string>
     <string name="logs_cleared">Journal effacé avec succès</string>
     <string name="log_is_empty">Journal vide</string>
-    <string name="logs_save_failed">Impossible d\'écrire le journal sur la SD card:</string>
+    <string name="logs_save_failed">Impossible d\'écrire le journal sur la carte SD:</string>
     <!--About Activity-->
     <string name="about">À propos</string>
     <string name="app_developers">Principaux développeurs</string>
@@ -134,7 +134,7 @@
     <string name="request_timeout">Délai de requête</string>
     <string name="superuser_notification">Notification Superuser</string>
     <string name="request_timeout_summary">%1$s secondes</string>
-    <string name="settings_development_category">Dévellopement de l\'application</string>
+    <string name="settings_development_category">Développement de l\'application</string>
     <string name="settings_developer_logging_title">Activer le journal de débogage avancé</string>
     <string name="settings_developer_logging_summary">Cocher ceci pour activer la journalisation "verbose" (tout)</string>
     <string name="settings_shell_logging_title">Activer la journalisation de débogage de commande shell</string>
