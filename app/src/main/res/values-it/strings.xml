@@ -1,7 +1,10 @@
 <resources>
     <!--Universal-->
-
+	<string name="app_name" translatable="false">Magisk Manager</string>
+    <string name="magisk" translatable="false">Magisk</string>
+	
     <!--Welcome Activity-->
+	<string name="magiskhide" translatable="false">Magisk Hide</string>
     <string name="modules">Moduli</string>
     <string name="downloads">Download</string>
     <string name="superuser">Superuser</string>
@@ -11,31 +14,33 @@
 
     <!--Status Fragment-->
     <string name="magisk_version_error">Magisk non installato</string>
-
+	
     <string name="checking_for_updates">Controllo aggiornamenti…</string>
     <string name="magisk_update_available">È disponibile Magisk v%1$s!</string>
     <string name="cannot_check_updates">Impossibile controllare aggiornamenti</string>
-    <string name="root_error">Rootato ma senza permessi. Non sei autorizzato?</string>
-    <string name="not_rooted">Non rootato</string>
+    <string name="root_error">Root presente, ma senza permessi. Sei autorizzato?</string>
+    <string name="not_rooted">Root non presente</string>
     <string name="safetyNet_check_text">Tocca per avviare controllo SafetyNet</string>
     <string name="checking_safetyNet_status">Controllo stato SafetyNet</string>
     <string name="safetyNet_check_success">Controllo SafetyNet OK</string>
-    <string name="safetyNet_network_loss">persa conenssioen di rete</string>
-    <string name="safetyNet_service_disconnected">Ils ervizio è stato terminato</string>
+	<string name="safetyNet_api_error">Errore API SafetyNet</string>															   
+    <string name="safetyNet_network_loss">Connessione di rete persa</string>
+    <string name="safetyNet_service_disconnected">Il servizio è stato terminato</string>
     <string name="safetyNet_res_invalid">La risposta non è valida</string>
 
     <!--Install Fragment-->
     <string name="auto_detect">%1$s (auto)</string>
     <string name="cannot_auto_detect">(impossibile rilevare automaticamente)</string>
-    <string name="boot_image_title">Percorso immagine boot</string>
+    <string name="boot_image_title">Percorso immagine di boot</string>
     <string name="detect_button">Rileva</string>
     <string name="advanced_settings_title">Impostazioni avanzate</string>
     <string name="keep_force_encryption">Mantieni crittografia forzata</string>
     <string name="keep_dm_verity">Mantieni dm-verity</string>
-    <string name="current_magisk_title">Versione Magisk installata: %1$s</string>
-    <string name="install_magisk_title">Versione Magisk aggiornata: %1$s</string>
+    <string name="current_magisk_title">Versione di Magisk installata: %1$s</string>
+    <string name="install_magisk_title">Ultima versione di Magisk: %1$s</string>
     <string name="uninstall">Disinstalla</string>
     <string name="uninstall_magisk_title">Disinstalla Magisk</string>
+	<string name="uninstall_magisk_msg">Tutti i moduli verranno disabilitati/rimossi. Il root verrà rimosso, e se il dispositivo non è crittografato è possibile che tutti i dati vengano crittografati</string>													  
     <string name="update">Aggiorna %1$s</string>
 
     <!--Module Fragment-->
@@ -66,7 +71,7 @@
     <string name="app_developers">Sviluppatori</string>
     <string name="app_developers_"><![CDATA[App creata da <a href="https://github.com/topjohnwu">topjohnwu</a> in collaborazione con <a href="https://github.com/d8ahazard">Digitalhigh</a> e <a href="https://github.com/dvdandroid">Dvdandroid</a>.]]></string>
     <string name="app_changelog">Novità</string>
-    <string name="translators">Fabb2303 - bovirus</string>
+    <string name="translators">Auanasgheps | Fabb2303 | bovirus</string>
     <string name="app_version">Versione app</string>
     <string name="app_source_code">Codice sorgente</string>
     <string name="donation">Dona</string>
@@ -74,7 +79,7 @@
     <string name="support_thread">Supporto app</string>
 
     <!--Toasts, Dialogs-->
-    <string name="permissionNotGranted">Questa funzione non sarà operativa senza il permesso di scrittura nella memoria di archiviazione esterna</string>
+    <string name="permissionNotGranted">Questa funzione non sarà operativa senza il permesso di scrittura nella memoria di archiviazione esterna.</string>
     <string name="no_thanks">No grazie</string>
     <string name="yes">Sì</string>
     <string name="ok">OK</string>
@@ -86,7 +91,6 @@
     <string name="install_error">Errore di installazione!</string>
     <string name="invalid_zip">Lo ZIP non è un modulo Magisk!!</string>
     <string name="reboot">Riavvia</string>
-    <string name="zip_process_msg">Elaborazione file ZIP…</string>
     <string name="downloading_toast">Download di %1$s</string>
     <string name="magisk_update_title">Disponibile nuovo aggiornamento Magisk!</string>
     <string name="settings_reboot_toast">Riavvia per applicare</string>
@@ -95,29 +99,58 @@
     <string name="safetyNet_hide_notice">Quest\'app usa SafetyNet\ned è già gestita da MagiskHide</string>
     <string name="process_error">Errore di elaborazione</string>
     <string name="internal_storage">Lo ZIP si trova in:\n[memoria interna]%1$s</string>
+    <string name="zip_download_title">Download in corso</string>
+    <string name="zip_download_msg">Download del file zip(%1$d%%) …</string>  
     <string name="zip_process_title">Elaborazione</string>
+	<string name="zip_process_msg">Elaborazione del file zip …</string>  
     <string name="manual_boot_image">Seleziona manualmente l\'immagine di boot!</string>
     <string name="manager_update_title">Nuovo aggiornamento di Magisk Manager disponibile!</string>
     <string name="manager_download_install">Premere per scaricare e installare</string>
-    <string name="magisk_updates">Aggiornamenti Magisk</string>
-    <string name="flashing">Flashando</string>
+    <string name="magisk_updates">Aggiornamento Magisk</string>
+    <string name="flashing">Flash in corso</string>
+	<string name="hide_manager_toast">Nascondendo Magisk Manager…</string>
+    <string name="hide_manager_toast2">Potrebbe volerci un po'…</string>
+    <string name="hide_manager_fail_toast">Non è stato possibile nascondere Magisk Manager…</string>
+    <string name="download_zip_only">Scarica solo Zip</string>
+    <string name="patch_boot_file">Aggiorna immagine di boot</string>
+    <string name="direct_install">Installazione diretta(raccomandato)</string>
+    <string name="install_second_slot">Installa nel secondo slot (Dopo OTA)</string>
+    <string name="select_method">Scegli un metodo</string>
+    <string name="no_boot_file_patch_support">La versione Magisk di destinazione non supporta l'aggiornamento dell'immagine di boot</string>
+    <string name="boot_file_patch_msg">Seleziona l'immagine originale di boot in formato .img o img.tar</string>
+    <string name="complete_uninstall">Completa disinstallazione</string>
+    <string name="restore_stock_boot">Ripristina immagine originale di boot</string>
+    <string name="restore_done">Ripristino completato!</string>
+    <string name="restore_fail">Non esiste una immagine originale di boot!</string>
+    <string name="uninstall_toast">Disinstallazione di Magisk Manager in 5 secondi, riavvia manualmente per completare</string>
+    <string name="proprietary_title">Scarica codice proprietario</string>
+    <string name="proprietary_notice">Magisk Manager è FOSS, quindi non contiene il codice proprietario delle API Google SafetyNet.\n\nVuoi permettere il download di una estensione (che contiene GoogleApiClient) per controllare lo stato di SafetyNet?</string>
 
     <!--Settings Activity -->
     <string name="settings_general_category">Generale</string>
     <string name="settings_dark_theme_title">Tema scuro</string>
     <string name="settings_dark_theme_summary">Abilita tema scuro</string>
     <string name="settings_notification_title">Notifica aggiornamenti</string>
-    <string name="settings_notification_summary">Visualizza notifica quando sono diponibili aggiornamenti</string>
-    <string name="settings_clear_cache_title">Azzera cache repository</string>
-    <string name="settings_clear_cache_summary">Azzera le informazioni nella cache per i repository online, e forza l\'aggiornamento online dell\'app</string>
-
-    <string name="settings_core_only_title">Solo modo core Magisk</string>
-    <string name="settings_core_only_summary">Abilita solo le funzioni principali. Non tutti i moduli verranno caricati. MagiskSU, MagiskHide, e host systemless rimarranno abilitati</string>
-    <string name="settings_magiskhide_summary">Nasconde Magisk da numerose rilevazioni</string>
-    <string name="settings_hosts_title">Host systemless</string>
-    <string name="settings_hosts_summary">Supporto host systemless per app blocco pubblicità</string>
-
-    <string name="settings_su_app_adb">App e ADB</string>
+    <string name="settings_notification_summary">Visualizza notifica quando sono disponibili aggiornamenti</string>
+    <string name="settings_clear_cache_title">Pulisci cache repository</string>
+    <string name="settings_clear_cache_summary">Pulisci la cache dei repository, e forza l\'aggiornamento online dell\'app</string>
+	<string name="settings_hide_manager_title">Nascondi Magisk Manager</string>
+	<string name="settings_hide_manager_summary">Reinstalla Magisk Manager con un nome del pacchetto casuale</string>										 
+	<string name="language">Lingua</string>													   
+	<string name="system_default">(Predefinito)</string>
+    <string name="settings_update">Impostazioni di aggiornamento</string>
+    <string name="settings_update_channel_title">Canale di aggiornamento</string>
+    <string name="settings_update_stable">Stabile</string>
+    <string name="settings_update_beta">Beta</string>
+    <string name="settings_boot_format_title">Formato immagine di boot aggiornata</string>    
+	<string name="settings_boot_format_summary">Seleziona il formato nel quale l'immagine di boot verrà salvata. .\nSeleziona .img per il flash in fastboot/download mode; Seleziona .img.tar per il flash con ODIN.</string>													   
+	<string name="settings_core_only_title">Solo modo core Magisk</string>							
+	<string name="settings_core_only_summary">Abilita solo le funzioni principali. Non tutti i moduli verranno caricati. MagiskSU, MagiskHide, e host systemless rimarranno abilitati</string>
+	<string name="settings_magiskhide_summary">Nasconde Magisk da numerose rilevazioni</string>			
+	<string name="settings_hosts_title">Host systemless</string>		
+	<string name="settings_hosts_summary">Supporto host systemless per app blocco pubblicità</string>
+	
+	<string name="settings_su_app_adb">App e ADB</string>
     <string name="settings_su_app">Solo app</string>
     <string name="settings_su_adb">Solo ADB</string>
     <string name="settings_su_disable">Disabilitato</string>
@@ -132,16 +165,24 @@
     <string name="request_timeout_summary">%1$s secondi</string>
     <string name="settings_su_reauth_title">Ri-autentifica dopo aggiornamento</string>
     <string name="settings_su_reauth_summary">Ri-autentifica permessi superuser dopo aggiornamento applicazione</string>
-
-    <string name="multiuser_mode">Modo multiutente</string>
-    <string name="settings_owner_only">Solo proprietario dispositivo</string>
-    <string name="settings_owner_manage">gestito da propietario utente</string>
-    <string name="settings_user_independent">Utente indipendente</string>
-    <string name="owner_only_summary">Solo proprietario che ha accesso root</string>
-    <string name="owner_manage_summary">Solo il propietario può gestire accesso root e ricevere richieste</string>
+    
+    <string name="multiuser_mode">Modalità multiutente</string>    
+	<string name="settings_owner_only">Solo proprietario dispositivo</string>
+    <string name="settings_owner_manage">Gestito dal proprietario utente</string>
+    <string name="settings_user_independent">Utente indipendente</string>		
+	<string name="owner_only_summary">Solo il proprietario ha accesso root</string>
+    <string name="owner_manage_summary">Solo il proprietario può gestire accesso root e ricevere richieste</string>
     <string name="user_indepenent_summary">Ogni utente ha le sue regole di root separate</string>
-    <string name="multiuser_hint_owner_request">Una richiestà è stata inviata al propietario dipositivo. Accedi come propietario dispositivo e concedi i permessi.</string>
-
+    <string name="multiuser_hint_owner_request">Una richiesta è stata inviata al proprietario dispositivo. Accedi come proprietario dispositivo e concedi i permessi.</string>														 
+    
+	<string name="mount_namespace_mode">Modalità montaggio Namespace</string>
+    <string name="settings_ns_global">Namespace globale</string>
+    <string name="settings_ns_requester">Namespace ereditato</string>
+    <string name="settings_ns_isolate">Namespace isolato</string>
+    <string name="global_summary">Tutte le sessioni di root erediteranno il namespace globale</string>
+    <string name="requester_summary">Le sessioni di root erediteranno il namespace del loro richiedente</string>
+    <string name="isolate_summary">Ogni sessione di root avrà il suo namespace isolato</string>
+	
     <!--Superuser-->
     <string name="su_request_title">Richiesta Superuser</string>
     <string name="deny_with_str">Nega %1$s</string>
