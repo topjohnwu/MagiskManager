@@ -44,7 +44,7 @@
     <string name="update">Aggiorna %1$s</string>
 
     <!--Module Fragment-->
-    <string name="no_info_provided">(nessuna informazione)</string>
+    <string name="no_info_provided">(Nessuna informazione)</string>
     <string name="no_modules_found">Nessun modulo trovato</string>
     <string name="update_file_created">Il modulo sarà aggiornato al prossimo riavvio</string>
     <string name="remove_file_created">Il modulo sarà rimosso al prossimo riavvio</string>
