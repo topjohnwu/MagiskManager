@@ -80,7 +80,7 @@
 
     <!--Toasts, Dialogs-->
     <string name="permissionNotGranted">Questa funzione non sarà operativa senza il permesso di scrittura nella memoria di archiviazione esterna.</string>
-    <string name="no_thanks">No grazie</string>
+    <string name="no_thanks">No, grazie</string>
     <string name="yes">Sì</string>
     <string name="ok">OK</string>
     <string name="close">Chiudi</string>
@@ -92,7 +92,7 @@
     <string name="invalid_zip">Lo ZIP non è un modulo Magisk!!</string>
     <string name="reboot">Riavvia</string>
     <string name="downloading_toast">Download di %1$s</string>
-    <string name="magisk_update_title">Disponibile nuovo aggiornamento Magisk!</string>
+    <string name="magisk_update_title">Disponibile un nuovo aggiornamento di Magisk!</string>
     <string name="settings_reboot_toast">Riavvia per applicare</string>
     <string name="release_notes">Note di rilascio</string>
     <string name="repo_cache_cleared">Cache reposititory azzerata</string>
@@ -100,9 +100,9 @@
     <string name="process_error">Errore di elaborazione</string>
     <string name="internal_storage">Lo ZIP si trova in:\n[memoria interna]%1$s</string>
     <string name="zip_download_title">Download in corso</string>
-    <string name="zip_download_msg">Download del file zip(%1$d%%) …</string>  
+    <string name="zip_download_msg">Download del file zip (%1$d%%) …</string>  
     <string name="zip_process_title">Elaborazione</string>
-	<string name="zip_process_msg">Elaborazione del file zip …</string>  
+	<string name="zip_process_msg">Elaborazione del file zip…</string>  
     <string name="manual_boot_image">Seleziona manualmente l\'immagine di boot!</string>
     <string name="manager_update_title">Nuovo aggiornamento di Magisk Manager disponibile!</string>
     <string name="manager_download_install">Premere per scaricare e installare</string>
@@ -111,9 +111,9 @@
 	<string name="hide_manager_toast">Nascondendo Magisk Manager…</string>
     <string name="hide_manager_toast2">Potrebbe volerci un po'…</string>
     <string name="hide_manager_fail_toast">Non è stato possibile nascondere Magisk Manager…</string>
-    <string name="download_zip_only">Scarica solo Zip</string>
+    <string name="download_zip_only">Scarica solo file zip</string>
     <string name="patch_boot_file">Aggiorna immagine di boot</string>
-    <string name="direct_install">Installazione diretta(raccomandato)</string>
+    <string name="direct_install">Installazione diretta (raccomandato)</string>
     <string name="install_second_slot">Installa nel secondo slot (Dopo OTA)</string>
     <string name="select_method">Scegli un metodo</string>
     <string name="no_boot_file_patch_support">La versione Magisk di destinazione non supporta l'aggiornamento dell'immagine di boot</string>
@@ -121,10 +121,10 @@
     <string name="complete_uninstall">Completa disinstallazione</string>
     <string name="restore_stock_boot">Ripristina immagine originale di boot</string>
     <string name="restore_done">Ripristino completato!</string>
-    <string name="restore_fail">Non esiste una immagine originale di boot!</string>
+    <string name="restore_fail">Non esiste un'immagine originale di boot!</string>
     <string name="uninstall_toast">Disinstallazione di Magisk Manager in 5 secondi, riavvia manualmente per completare</string>
     <string name="proprietary_title">Scarica codice proprietario</string>
-    <string name="proprietary_notice">Magisk Manager è FOSS, quindi non contiene il codice proprietario delle API Google SafetyNet.\n\nVuoi permettere il download di una estensione (che contiene GoogleApiClient) per controllare lo stato di SafetyNet?</string>
+    <string name="proprietary_notice">Magisk Manager è FOSS, quindi non contiene il codice proprietario delle API Google SafetyNet.\n\nVuoi permettere il download di un'estensione (che contiene GoogleApiClient) per controllare lo stato di SafetyNet?</string>
 
     <!--Settings Activity -->
     <string name="settings_general_category">Generale</string>
@@ -144,8 +144,8 @@
     <string name="settings_update_beta">Beta</string>
     <string name="settings_boot_format_title">Formato immagine di boot aggiornata</string>    
 	<string name="settings_boot_format_summary">Seleziona il formato nel quale l'immagine di boot verrà salvata. .\nSeleziona .img per il flash in fastboot/download mode; Seleziona .img.tar per il flash con ODIN.</string>													   
-	<string name="settings_core_only_title">Solo modo core Magisk</string>							
-	<string name="settings_core_only_summary">Abilita solo le funzioni principali. Non tutti i moduli verranno caricati. MagiskSU, MagiskHide, e host systemless rimarranno abilitati</string>
+	<string name="settings_core_only_title">Modalità Core Magisk</string>							
+	<string name="settings_core_only_summary">Abilita solo le funzioni principali. Tutti i moduli non verranno caricati. MagiskSU, MagiskHide e host systemless rimarranno abilitati</string>
 	<string name="settings_magiskhide_summary">Nasconde Magisk da numerose rilevazioni</string>			
 	<string name="settings_hosts_title">Host systemless</string>		
 	<string name="settings_hosts_summary">Supporto host systemless per app blocco pubblicità</string>
