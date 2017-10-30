@@ -49,7 +49,7 @@
     <string name="update_file_created">Il modulo sarà aggiornato al prossimo riavvio</string>
     <string name="remove_file_created">Il modulo sarà rimosso al prossimo riavvio</string>
     <string name="remove_file_deleted">Il modulo non sarà rimosso al prossimo riavvio</string>
-    <string name="disable_file_created">Il modulo sarà disattivato al prossimo riavvio</string>
+    <string name="disable_file_created">Il modulo sarà disabilitato al prossimo riavvio</string>
     <string name="disable_file_removed">Il modulo sarà abilitato al prossimo riavvio</string>
     <string name="author">Creato da: %1$s</string>
 
