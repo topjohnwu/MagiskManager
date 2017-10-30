@@ -30,7 +30,7 @@
 
     <!--Install Fragment-->
     <string name="auto_detect">%1$s (auto)</string>
-    <string name="cannot_auto_detect">(impossibile rilevare automaticamente)</string>
+    <string name="cannot_auto_detect">(Impossibile rilevare automaticamente)</string>
     <string name="boot_image_title">Percorso immagine di boot</string>
     <string name="detect_button">Rileva</string>
     <string name="advanced_settings_title">Impostazioni avanzate</string>
@@ -40,7 +40,7 @@
     <string name="install_magisk_title">Ultima versione di Magisk: %1$s</string>
     <string name="uninstall">Disinstalla</string>
     <string name="uninstall_magisk_title">Disinstalla Magisk</string>
-	<string name="uninstall_magisk_msg">Tutti i moduli verranno disabilitati/rimossi. Il root verrà rimosso, e se il dispositivo non è crittografato è possibile che tutti i dati vengano crittografati</string>													  
+	<string name="uninstall_magisk_msg">Tutti i moduli verranno disabilitati/rimossi. Il root verrà rimosso, e se il dispositivo non è crittografato è possibile che vengano crittografati tutti i dati</string>													  
     <string name="update">Aggiorna %1$s</string>
 
     <!--Module Fragment-->
