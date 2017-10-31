@@ -17,7 +17,7 @@
     <string name="cannot_check_updates">Impossibile controllare gli aggiornamenti</string>
     <string name="root_error">Root presente, ma senza permessi. Sei autorizzato?</string>
     <string name="not_rooted">Root non presente</string>
-    <string name="safetyNet_check_text">Tocca per avviare il controllo SafetyNet</string>
+    <string name="safetyNet_check_text">Tocca per controllare SafetyNet</string>
     <string name="checking_safetyNet_status">Controllo stato di SafetyNet</string>
     <string name="safetyNet_check_success">Controllo di SafetyNet OK</string>
     <string name="safetyNet_api_error">Errore API di SafetyNet</string>															   
@@ -86,7 +86,7 @@
     <string name="download">Download</string>
     <string name="download_file_error">Errore nel download del file</string>
     <string name="install_error">Errore di installazione!</string>
-    <string name="invalid_zip">Lo ZIP non è un modulo Magisk!</string>
+    <string name="invalid_zip">Lo zip non è un modulo Magisk!</string>
     <string name="reboot">Riavvia</string>
     <string name="downloading_toast">Download di %1$s</string>
     <string name="magisk_update_title">Disponibile un nuovo aggiornamento di Magisk!</string>
@@ -104,13 +104,13 @@
     <string name="manager_update_title">Nuovo aggiornamento di Magisk Manager disponibile!</string>
     <string name="manager_download_install">Premere per scaricare e installare</string>
     <string name="magisk_updates">Aggiornamento Magisk</string>
-    <string name="flashing">Flash in corso...</string>
+    <string name="flashing">Flash in corso…</string>
     <string name="hide_manager_toast">Nascondendo Magisk Manager…</string>
     <string name="hide_manager_toast2">Potrebbe volerci un po'…</string>
     <string name="hide_manager_fail_toast">Non è stato possibile nascondere Magisk Manager</string>
     <string name="download_zip_only">Scarica solo il file zip</string>
     <string name="patch_boot_file">Aggiorna l'immagine di boot</string>
-    <string name="direct_install">Installazione diretta (raccomandatza)</string>
+    <string name="direct_install">Installazione diretta (raccomandata)</string>
     <string name="install_second_slot">Installa nel secondo slot (dopo OTA)</string>
     <string name="select_method">Seleziona un metodo</string>
     <string name="no_boot_file_patch_support">La versione Magisk di destinazione non supporta l'aggiornamento dell'immagine di boot</string>
@@ -145,7 +145,7 @@
     <string name="settings_core_only_summary">Abilita solo le funzioni principali. Nessun modulo verrà caricato. MagiskSU, MagiskHide e host systemless rimarranno abilitati</string>
     <string name="settings_magiskhide_summary">Nasconde Magisk da numerose rilevazioni</string>			
     <string name="settings_hosts_title">Host systemless</string>		
-    <string name="settings_hosts_summary">Supporto a host systemless per le app per il blocco delle pubblicità</string>
+    <string name="settings_hosts_summary">Supporto a host systemless per le app che bloccano le pubblicità</string>
 	
     <string name="settings_su_app_adb">App e ADB</string>
     <string name="settings_su_app">Solo app</string>
