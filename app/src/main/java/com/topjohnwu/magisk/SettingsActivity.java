@@ -147,6 +147,11 @@ public class SettingsActivity extends Activity implements Topic.Subscriber {
                     prefScreen.removePreference(magiskCategory);
                 }
             }
+            
+            // Remove request timeout if Auto response is set to 'grant'
+            if (autoRes.getValue() == 2) {
+                prefScreen.removePreference(requestTimeout);
+            }
         }
 
         private void setLocalePreference(ListPreference lp) {
