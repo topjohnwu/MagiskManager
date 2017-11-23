@@ -1,13 +1,13 @@
 {
   "app": {
-    "version": "5.4.2",
-    "versionCode": "63",
-    "link": "https://github.com/topjohnwu/MagiskManager/releases/download/v5.4.2/MagiskManager-v5.4.2.apk"
+    "version": "5.4.3",
+    "versionCode": "64",
+    "link": "https://github.com/topjohnwu/MagiskManager/releases/download/v5.4.3/MagiskManager-v5.4.3.apk"
   },
   "magisk": {
     "version": "14.5",
-    "versionCode": "1455",
-    "link": "https://forum.xda-developers.com/attachment.php?attachmentid=4339487&d=1511373400",
-    "note": "https://forum.xda-developers.com/showpost.php?p=74601830&postcount=32"
+    "versionCode": "1456",
+    "link": "https://forum.xda-developers.com/attachment.php?attachmentid=4340290&d=1511453617",
+    "note": "https://forum.xda-developers.com/showpost.php?p=74611835&postcount=4580"
   }
 }
