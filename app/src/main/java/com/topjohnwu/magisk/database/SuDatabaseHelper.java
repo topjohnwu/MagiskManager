@@ -7,11 +7,15 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Build;
 import android.text.TextUtils;
+import android.widget.Toast;
 
 import com.topjohnwu.magisk.MagiskManager;
+import com.topjohnwu.magisk.R;
 import com.topjohnwu.magisk.container.Policy;
 import com.topjohnwu.magisk.container.SuLogEntry;
+import com.topjohnwu.magisk.utils.Shell;
 import com.topjohnwu.magisk.utils.Utils;
 
 import java.io.File;
@@ -23,35 +27,87 @@ import java.util.List;
 
 public class SuDatabaseHelper extends SQLiteOpenHelper {
 
-    public static final String ROOT_ACCESS = "root_access";
-    public static final int ROOT_ACCESS_DISABLED = 0;
-    public static final int ROOT_ACCESS_APPS_ONLY = 1;
-    public static final int ROOT_ACCESS_ADB_ONLY = 2;
-    public static final int ROOT_ACCESS_APPS_AND_ADB = 3;
-
-    public static final String MULTIUSER_MODE = "multiuser_mode";
-    public static final int MULTIUSER_MODE_OWNER_ONLY = 0;
-    public static final int MULTIUSER_MODE_OWNER_MANAGED = 1;
-    public static final int MULTIUSER_MODE_USER = 2;
-
-    public static final String MNT_NS = "mnt_ns";
-    public static final int NAMESPACE_MODE_GLOBAL = 0;
-    public static final int NAMESPACE_MODE_REQUESTER = 1;
-    public static final int NAMESPACE_MODE_ISOLATE = 2;
-
     public static final String DB_NAME = "su.db";
-    private static final int DATABASE_VER = 3;
+
+    private static final int DATABASE_VER = 5;
     private static final String POLICY_TABLE = "policies";
     private static final String LOG_TABLE = "logs";
     private static final String SETTINGS_TABLE = "settings";
+    private static final String STRINGS_TABLE = "strings";
 
-    private MagiskManager mm;
+    private static String GLOBAL_DB;
+
+    private Context mContext;
     private PackageManager pm;
     private SQLiteDatabase mDb;
 
+    private static Context preProcess() {
+        Context context;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Context ce = MagiskManager.get();
+            context = ce.createDeviceProtectedStorageContext();
+            File oldDB = Utils.getDatabasePath(ce, DB_NAME);
+            if (oldDB.exists()) {
+                // Migrate DB path
+                context.moveDatabaseFrom(ce, DB_NAME);
+            }
+        } else {
+            context = MagiskManager.get();
+        }
+        GLOBAL_DB = context.getFilesDir().getParentFile().getParent() + "/magisk.db";
+        File db = Utils.getDatabasePath(context, DB_NAME);
+        if (!db.exists() && Utils.itemExist(GLOBAL_DB)) {
+            // Migrate global DB to ours
+            db.getParentFile().mkdirs();
+            Shell.su(
+                    "magisk --clone-attr " + context.getFilesDir() + " " + GLOBAL_DB,
+                    "chmod 660 " + GLOBAL_DB,
+                    "ln " + GLOBAL_DB + " " + db
+            );
+        }
+        return context;
+    }
+
+    public static void setupSuDB() {
+        MagiskManager mm = MagiskManager.get();
+        // Check if we need to migrate suDB
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && mm.magiskVersionCode >= 1410 &&
+                Utils.getDatabasePath(mm, SuDatabaseHelper.DB_NAME).exists()) {
+            mm.suDB.close();
+            mm.suDB = new SuDatabaseHelper();
+        }
+
+        File suDbFile = mm.suDB.getDbFile();
+
+        if (!Utils.itemExist(GLOBAL_DB)) {
+            // Hard link our DB globally
+            Shell.su_raw("ln " + suDbFile + " " + GLOBAL_DB);
+        }
+
+        // Check if we are linked globally
+        List<String> ret = Shell.sh("ls -l " + suDbFile);
+        if (Utils.isValidShellResponse(ret)) {
+            try {
+                int links = Integer.parseInt(ret.get(0).trim().split("\\s+")[1]);
+                if (links < 2) {
+                    mm.suDB.close();
+                    suDbFile.delete();
+                    new File(suDbFile + "-journal").delete();
+                    mm.suDB = new SuDatabaseHelper();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public SuDatabaseHelper() {
+        this(preProcess());
+    }
+
     public SuDatabaseHelper(Context context) {
         super(context, DB_NAME, null, DATABASE_VER);
-        mm = Utils.getMagiskManager(context);
+        mContext = context;
         pm = context.getPackageManager();
         mDb = getWritableDatabase();
         cleanup();
@@ -64,35 +120,70 @@ public class SuDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion == 0) {
-            createTables(db);
-            oldVersion = 2;
-        }
-        if (oldVersion == 1) {
-            // We're dropping column app_name, rename and re-construct table
-            db.execSQL("ALTER TABLE " + POLICY_TABLE + " RENAME TO " + POLICY_TABLE + "_old");
-
-            // Create the new tables
-            createTables(db);
-
-            // Migrate old data to new tables
-            db.execSQL(
-                    "INSERT INTO " + POLICY_TABLE + " SELECT " +
-                    "uid, package_name, policy, until, logging, notification " +
-                    "FROM " + POLICY_TABLE + "_old");
-            db.execSQL("DROP TABLE " + POLICY_TABLE + "_old");
-
-            File oldDB = mm.getDatabasePath("sulog.db");
-            if (oldDB.exists()) {
-                migrateLegacyLogList(oldDB, db);
-                mm.deleteDatabase("sulog.db");
+        try {
+            if (oldVersion == 0) {
+                createTables(db);
+                oldVersion = 3;
             }
-            ++oldVersion;
+            if (oldVersion == 1) {
+                // We're dropping column app_name, rename and re-construct table
+                db.execSQL("ALTER TABLE " + POLICY_TABLE + " RENAME TO " + POLICY_TABLE + "_old");
+
+                // Create the new tables
+                createTables(db);
+
+                // Migrate old data to new tables
+                db.execSQL(
+                        "INSERT INTO " + POLICY_TABLE + " SELECT " +
+                                "uid, package_name, policy, until, logging, notification " +
+                                "FROM " + POLICY_TABLE + "_old");
+                db.execSQL("DROP TABLE " + POLICY_TABLE + "_old");
+
+                File oldDB = Utils.getDatabasePath(MagiskManager.get(), "sulog.db");
+                if (oldDB.exists()) {
+                    migrateLegacyLogList(oldDB, db);
+                    MagiskManager.get().deleteDatabase("sulog.db");
+                }
+                ++oldVersion;
+            }
+            if (oldVersion == 2) {
+                db.execSQL("UPDATE " + LOG_TABLE + " SET time=time*1000");
+                ++oldVersion;
+            }
+            if (oldVersion == 3) {
+                db.execSQL(
+                        "CREATE TABLE IF NOT EXISTS " + STRINGS_TABLE + " " +
+                                "(key TEXT, value TEXT, PRIMARY KEY(key))");
+                ++oldVersion;
+            }
+            if (oldVersion == 4) {
+                db.execSQL("UPDATE " + POLICY_TABLE + " SET uid=uid%100000");
+                ++oldVersion;
+            }
+
+            if (!Utils.itemExist(GLOBAL_DB)) {
+                // Hard link our DB globally
+                Shell.su_raw("ln " + getDbFile() + " " + GLOBAL_DB);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            onDowngrade(db, DATABASE_VER, 0);
         }
-        if (oldVersion == 2) {
-            db.execSQL("UPDATE " + LOG_TABLE + " SET time=time*1000");
-            ++oldVersion;
-        }
+    }
+
+    @Override
+    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        MagiskManager.toast(R.string.su_db_corrupt, Toast.LENGTH_LONG);
+        // Remove everything, we do not support downgrade
+        db.execSQL("DROP TABLE IF EXISTS " + POLICY_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + LOG_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + SETTINGS_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + STRINGS_TABLE);
+        onUpgrade(db, 0, DATABASE_VER);
+    }
+
+    public File getDbFile() {
+        return mContext.getDatabasePath(DB_NAME);
     }
 
     private void createTables(SQLiteDatabase db) {
@@ -121,7 +212,7 @@ public class SuDatabaseHelper extends SQLiteOpenHelper {
                 new String[] { String.valueOf(System.currentTimeMillis() / 1000) });
         // Clear outdated logs
         mDb.delete(LOG_TABLE, "time < ?", new String[] { String.valueOf(
-                System.currentTimeMillis() - mm.suLogTimeout * 86400000) });
+                System.currentTimeMillis() - MagiskManager.get().suLogTimeout * 86400000) });
     }
 
     public void deletePolicy(Policy policy) {
@@ -138,7 +229,7 @@ public class SuDatabaseHelper extends SQLiteOpenHelper {
 
     public Policy getPolicy(int uid) {
         Policy policy = null;
-        try (Cursor c = mDb.query(POLICY_TABLE, null, "uid=?", new String[] { String.valueOf(uid) }, null, null, null)) {
+        try (Cursor c = mDb.query(POLICY_TABLE, null, "uid=?", new String[] { String.valueOf(uid % 100000) }, null, null, null)) {
             if (c.moveToNext()) {
                 policy = new Policy(c, pm);
             }
@@ -177,18 +268,6 @@ public class SuDatabaseHelper extends SQLiteOpenHelper {
             while (c.moveToNext()) {
                 try {
                     Policy policy = new Policy(c, pm);
-                    // The application changed UID for some reason, check user config
-                    if (policy.info.uid != policy.uid) {
-                        if (mm.suReauth) {
-                            // Reauth required, remove from DB
-                            deletePolicy(policy);
-                            continue;
-                        } else {
-                            // No reauth, update to use the new UID
-                            policy.uid = policy.info.uid;
-                            updatePolicy(policy);
-                        }
-                    }
                     ret.add(policy);
                 } catch (PackageManager.NameNotFoundException e) {
                     // The app no longer exist, remove from DB
@@ -258,6 +337,27 @@ public class SuDatabaseHelper extends SQLiteOpenHelper {
         try (Cursor c = mDb.query(SETTINGS_TABLE, null, "key=?",new String[] { key }, null, null, null)) {
             if (c.moveToNext()) {
                 value = c.getInt(c.getColumnIndex("value"));
+            }
+        }
+        return value;
+    }
+
+    public void setStrings(String key, String value) {
+        if (value == null) {
+            mDb.delete(STRINGS_TABLE, "key=?", new String[] { key });
+        } else {
+            ContentValues data = new ContentValues();
+            data.put("key", key);
+            data.put("value", value);
+            mDb.replace(STRINGS_TABLE, null, data);
+        }
+    }
+
+    public String getStrings(String key, String defaultValue) {
+        String value = defaultValue;
+        try (Cursor c = mDb.query(STRINGS_TABLE, null, "key=?",new String[] { key }, null, null, null)) {
+            if (c.moveToNext()) {
+                value = c.getString(c.getColumnIndex("value"));
             }
         }
         return value;

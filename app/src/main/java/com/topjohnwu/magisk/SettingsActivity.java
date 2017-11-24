@@ -8,17 +8,20 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
-import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.preference.SwitchPreference;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.topjohnwu.magisk.asyncs.CheckUpdates;
 import com.topjohnwu.magisk.asyncs.HideManager;
 import com.topjohnwu.magisk.components.Activity;
-import com.topjohnwu.magisk.database.SuDatabaseHelper;
+import com.topjohnwu.magisk.components.AlertDialogBuilder;
+import com.topjohnwu.magisk.utils.Const;
 import com.topjohnwu.magisk.utils.Shell;
 import com.topjohnwu.magisk.utils.Topic;
 import com.topjohnwu.magisk.utils.Utils;
@@ -71,8 +74,7 @@ public class SettingsActivity extends Activity implements Topic.Subscriber {
     }
 
     public static class SettingsFragment extends PreferenceFragment
-            implements SharedPreferences.OnSharedPreferenceChangeListener,
-            Topic.Subscriber {
+            implements SharedPreferences.OnSharedPreferenceChangeListener, Topic.Subscriber {
 
         private SharedPreferences prefs;
         private PreferenceScreen prefScreen;
@@ -86,30 +88,59 @@ public class SettingsActivity extends Activity implements Topic.Subscriber {
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.app_settings);
-            prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-            prefScreen = getPreferenceScreen();
             mm = Utils.getMagiskManager(getActivity());
+            prefs = mm.prefs;
+            prefScreen = getPreferenceScreen();
 
             generalCatagory = (PreferenceCategory) findPreference("general");
             PreferenceCategory magiskCategory = (PreferenceCategory) findPreference("magisk");
             PreferenceCategory suCategory = (PreferenceCategory) findPreference("superuser");
-
-            updateChannel = (ListPreference) findPreference("update_channel");
-            suAccess = (ListPreference) findPreference("su_access");
-            autoRes = (ListPreference) findPreference("su_auto_response");
-            requestTimeout = (ListPreference) findPreference("su_request_timeout");
-            suNotification = (ListPreference) findPreference("su_notification");
-            multiuserMode = (ListPreference) findPreference("multiuser_mode");
-            namespaceMode = (ListPreference) findPreference("mnt_ns");
-            SwitchPreference reauth = (SwitchPreference) findPreference("su_reauth");
             Preference hideManager = findPreference("hide");
+            findPreference("clear").setOnPreferenceClickListener((pref) -> {
+                prefs.edit().remove(Const.Key.ETAG_KEY).apply();
+                mm.repoDB.clearRepo();
+                MagiskManager.toast(R.string.repo_cache_cleared, Toast.LENGTH_SHORT);
+                return true;
+            });
+
+            updateChannel = (ListPreference) findPreference(Const.Key.UPDATE_CHANNEL);
+            suAccess = (ListPreference) findPreference(Const.Key.ROOT_ACCESS);
+            autoRes = (ListPreference) findPreference(Const.Key.SU_AUTO_RESPONSE);
+            requestTimeout = (ListPreference) findPreference(Const.Key.SU_REQUEST_TIMEOUT);
+            suNotification = (ListPreference) findPreference(Const.Key.SU_NOTIFICATION);
+            multiuserMode = (ListPreference) findPreference(Const.Key.SU_MULTIUSER_MODE);
+            namespaceMode = (ListPreference) findPreference(Const.Key.SU_MNT_NS);
+            SwitchPreference reauth = (SwitchPreference) findPreference(Const.Key.SU_REAUTH);
+
+            updateChannel.setOnPreferenceChangeListener((pref, o) -> {
+                mm.updateChannel = Integer.parseInt((String) o);
+                if (mm.updateChannel == Const.Value.CUSTOM_CHANNEL) {
+                    LinearLayout layout = new LinearLayout(getActivity());
+                    EditText url = new EditText(getActivity());
+                    url.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_URI);
+                    url.setText(mm.customChannelUrl);
+                    layout.setOrientation(LinearLayout.VERTICAL);
+                    layout.addView(url);
+                    LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) url.getLayoutParams();
+                    params.setMargins(Utils.dpInPx(15), 0, Utils.dpInPx(15), 0);
+                    new AlertDialogBuilder(getActivity())
+                        .setTitle(R.string.settings_update_custom)
+                        .setMessage(R.string.settings_update_custom_msg)
+                        .setView(layout)
+                        .setPositiveButton(R.string.ok, (d, i) -> {
+                            prefs.edit().putString(Const.Key.CUSTOM_CHANNEL, url.getText().toString()).apply();
+                        })
+                        .setNegativeButton(R.string.close, null)
+                        .show();
+                }
+                return true;
+            });
 
             setSummary();
 
             // Disable dangerous settings in user mode if selected owner manage
-            if (getActivity().getApplicationInfo().uid > 99999) {
+            if (mm.userId > 0) {
                 suCategory.removePreference(multiuserMode);
-                generalCatagory.removePreference(hideManager);
             }
 
             // Remove re-authentication option on Android O, it will not work
@@ -117,29 +148,23 @@ public class SettingsActivity extends Activity implements Topic.Subscriber {
                 suCategory.removePreference(reauth);
             }
 
-            findPreference("clear").setOnPreferenceClickListener((pref) -> {
-                Utils.clearRepoCache(getActivity());
-                return true;
-            });
-
-            hideManager.setOnPreferenceClickListener((pref) -> {
-                Utils.runWithPermission(getActivity(),
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        () -> new HideManager(getActivity()).exec());
-                return true;
-            });
+            if (mm.getPackageName().equals(Const.ORIG_PKG_NAME) && mm.magiskVersionCode >= 1440) {
+                hideManager.setOnPreferenceClickListener((pref) -> {
+                    Utils.runWithPermission(getActivity(),
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            () -> new HideManager().exec());
+                    return true;
+                });
+            } else {
+                generalCatagory.removePreference(hideManager);
+            }
 
             if (!Shell.rootAccess()) {
                 prefScreen.removePreference(magiskCategory);
                 prefScreen.removePreference(suCategory);
                 generalCatagory.removePreference(hideManager);
-            } else {
-                if (!mm.isSuClient) {
-                    prefScreen.removePreference(suCategory);
-                }
-                if (mm.magiskVersionCode < 1300) {
-                    prefScreen.removePreference(magiskCategory);
-                }
+            } else if (mm.magiskVersionCode < 1300) {
+                prefScreen.removePreference(magiskCategory);
             }
         }
 
@@ -160,7 +185,7 @@ public class SettingsActivity extends Activity implements Topic.Subscriber {
             lp.setEntries(entries);
             lp.setEntryValues(entryValues);
             lp.setTitle(R.string.language);
-            lp.setKey("locale");
+            lp.setKey(Const.Key.LOCALE);
             lp.setSummary(MagiskManager.locale.getDisplayName(MagiskManager.locale));
             if (isNew) {
                 generalCatagory.addPreference(lp);
@@ -186,65 +211,60 @@ public class SettingsActivity extends Activity implements Topic.Subscriber {
             boolean enabled;
 
             switch (key) {
-                case "dark_theme":
-                    enabled = prefs.getBoolean("dark_theme", false);
+                case Const.Key.DARK_THEME:
+                    enabled = prefs.getBoolean(Const.Key.DARK_THEME, false);
                     if (mm.isDarkTheme != enabled) {
                         mm.reloadActivity.publish(false);
                     }
                     break;
-                case "disable":
-                    enabled = prefs.getBoolean("disable", false);
+                case Const.Key.DISABLE:
+                    enabled = prefs.getBoolean(Const.Key.DISABLE, false);
                     if (enabled) {
-                        Utils.createFile(getShell(), MagiskManager.MAGISK_DISABLE_FILE);
+                        Utils.createFile(Const.MAGISK_DISABLE_FILE);
                     } else {
-                        Utils.removeItem(getShell(), MagiskManager.MAGISK_DISABLE_FILE);
+                        Utils.removeItem(Const.MAGISK_DISABLE_FILE);
                     }
                     Toast.makeText(getActivity(), R.string.settings_reboot_toast, Toast.LENGTH_LONG).show();
                     break;
-                case "magiskhide":
-                    enabled = prefs.getBoolean("magiskhide", false);
+                case Const.Key.MAGISKHIDE:
+                    enabled = prefs.getBoolean(Const.Key.MAGISKHIDE, false);
                     if (enabled) {
-                        Utils.enableMagiskHide(getShell());
+                        Shell.su_raw("magiskhide --enable");
                     } else {
-                        Utils.disableMagiskHide(getShell());
+                        Shell.su_raw("magiskhide --disable");
                     }
                     break;
-                case "hosts":
-                    enabled = prefs.getBoolean("hosts", false);
+                case Const.Key.HOSTS:
+                    enabled = prefs.getBoolean(Const.Key.HOSTS, false);
                     if (enabled) {
-                        getShell().su_raw(
-                                "cp -af /system/etc/hosts " + MagiskManager.MAGISK_HOST_FILE,
-                                "mount -o bind " + MagiskManager.MAGISK_HOST_FILE + " /system/etc/hosts");
+                        Shell.su_raw(
+                                "cp -af /system/etc/hosts " + Const.MAGISK_HOST_FILE(),
+                                "mount -o bind " + Const.MAGISK_HOST_FILE() + " /system/etc/hosts");
                     } else {
-                        getShell().su_raw(
+                        Shell.su_raw(
                                 "umount -l /system/etc/hosts",
-                                "rm -f " + MagiskManager.MAGISK_HOST_FILE);
+                                "rm -f " + Const.MAGISK_HOST_FILE());
                     }
                     break;
-                case "su_access":
-                    mm.suDB.setSettings(SuDatabaseHelper.ROOT_ACCESS, Utils.getPrefsInt(prefs, "su_access"));
+                case Const.Key.ROOT_ACCESS:
+                    mm.suDB.setSettings(Const.Key.ROOT_ACCESS, Utils.getPrefsInt(prefs, Const.Key.ROOT_ACCESS));
                     break;
-                case "multiuser_mode":
-                    mm.suDB.setSettings(SuDatabaseHelper.MULTIUSER_MODE, Utils.getPrefsInt(prefs, "multiuser_mode"));
+                case Const.Key.SU_MULTIUSER_MODE:
+                    mm.suDB.setSettings(Const.Key.SU_MULTIUSER_MODE, Utils.getPrefsInt(prefs, Const.Key.SU_MULTIUSER_MODE));
                     break;
-                case "mnt_ns":
-                    mm.suDB.setSettings(SuDatabaseHelper.MNT_NS, Utils.getPrefsInt(prefs, "mnt_ns"));
+                case Const.Key.SU_MNT_NS:
+                    mm.suDB.setSettings(Const.Key.SU_MNT_NS, Utils.getPrefsInt(prefs, Const.Key.SU_MNT_NS));
                     break;
-                case "locale":
+                case Const.Key.LOCALE:
                     mm.setLocale();
                     mm.reloadActivity.publish(false);
                     break;
-                case "update_channel":
-                    mm.updateChannel = Utils.getPrefsInt(prefs, "update_channel");
-                    new CheckUpdates(mm, true).exec();
+                case Const.Key.UPDATE_CHANNEL:
+                    new CheckUpdates().exec();
                     break;
             }
             mm.loadConfig();
             setSummary();
-        }
-
-        private Shell getShell() {
-            return Shell.getShell(getActivity());
         }
 
         private void setSummary() {
@@ -257,7 +277,7 @@ public class SettingsActivity extends Activity implements Topic.Subscriber {
             suNotification.setSummary(getResources()
                     .getStringArray(R.array.su_notification)[mm.suNotificationType]);
             requestTimeout.setSummary(
-                    getString(R.string.request_timeout_summary, prefs.getString("su_request_timeout", "10")));
+                    getString(R.string.request_timeout_summary, prefs.getString(Const.Key.SU_REQUEST_TIMEOUT, "10")));
             multiuserMode.setSummary(getResources()
                     .getStringArray(R.array.multiuser_summary)[mm.multiuserMode]);
             namespaceMode.setSummary(getResources()
@@ -266,7 +286,7 @@ public class SettingsActivity extends Activity implements Topic.Subscriber {
 
         @Override
         public void onTopicPublished(Topic topic, Object result) {
-            setLocalePreference((ListPreference) findPreference("locale"));
+            setLocalePreference((ListPreference) findPreference(Const.Key.LOCALE));
         }
 
         @Override

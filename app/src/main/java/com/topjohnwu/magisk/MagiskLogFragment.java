@@ -1,9 +1,7 @@
 package com.topjohnwu.magisk;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
@@ -22,6 +20,7 @@ import android.widget.Toast;
 import com.topjohnwu.magisk.asyncs.ParallelTask;
 import com.topjohnwu.magisk.components.Fragment;
 import com.topjohnwu.magisk.components.SnackbarMaker;
+import com.topjohnwu.magisk.utils.Const;
 import com.topjohnwu.magisk.utils.Shell;
 import com.topjohnwu.magisk.utils.Utils;
 
@@ -29,14 +28,13 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 public class MagiskLogFragment extends Fragment {
-
-    private static final String MAGISK_LOG = "/cache/magisk.log";
 
     private Unbinder unbinder;
 
@@ -110,30 +108,29 @@ public class MagiskLogFragment extends Fragment {
             super(MagiskLogFragment.this.getActivity());
         }
 
-        @SuppressLint("DefaultLocale")
         @Override
         protected Object doInBackground(Object... params) {
             mode = (int) params[0];
             switch (mode) {
                 case 0:
                     StringBuildingList logList = new StringBuildingList();
-                    getShell().su(logList, "cat " + MAGISK_LOG);
-                    return logList.toString();
+                    Shell.su(logList, "cat " + Const.MAGISK_LOG + " | tail -n 1000");
+                    return logList.getCharSequence();
 
                 case 1:
-                    getShell().su_raw("echo -n > " + MAGISK_LOG);
+                    Shell.su_raw("echo -n > " + Const.MAGISK_LOG);
                     SnackbarMaker.make(txtLog, R.string.logs_cleared, Snackbar.LENGTH_SHORT).show();
                     return "";
 
                 case 2:
                     Calendar now = Calendar.getInstance();
-                    String filename = String.format(
-                            "magisk_%s_%04d%02d%02d_%02d%02d%02d.log", "error",
+                    String filename = String.format(Locale.US,
+                            "magisk_log_%04d%02d%02d_%02d:%02d:%02d.log",
                             now.get(Calendar.YEAR), now.get(Calendar.MONTH) + 1,
                             now.get(Calendar.DAY_OF_MONTH), now.get(Calendar.HOUR_OF_DAY),
                             now.get(Calendar.MINUTE), now.get(Calendar.SECOND));
 
-                    targetFile = new File(Environment.getExternalStorageDirectory() + "/MagiskManager/" + filename);
+                    targetFile = new File(Const.EXTERNAL_PATH + "/logs", filename);
 
                     if ((!targetFile.getParentFile().exists() && !targetFile.getParentFile().mkdirs())
                             || (targetFile.exists() && !targetFile.delete())) {
@@ -142,7 +139,7 @@ public class MagiskLogFragment extends Fragment {
 
                     try (FileWriter out = new FileWriter(targetFile)) {
                         FileWritingList fileWritingList = new FileWritingList(out);
-                        getShell().su(fileWritingList, "cat " + MAGISK_LOG);
+                        Shell.su(fileWritingList, "cat " + Const.MAGISK_LOG);
                     } catch (IOException e) {
                         e.printStackTrace();
                         return false;
@@ -158,21 +155,21 @@ public class MagiskLogFragment extends Fragment {
             switch (mode) {
                 case 0:
                 case 1:
-                    String llog = (String) o;
+                    CharSequence llog = (CharSequence) o;
                     progressBar.setVisibility(View.GONE);
                     if (TextUtils.isEmpty(llog))
                         txtLog.setText(R.string.log_is_empty);
                     else
                         txtLog.setText(llog);
-                    svLog.post(() -> svLog.scrollTo(0, txtLog.getHeight()));
-                    hsvLog.post(() -> hsvLog.scrollTo(0, 0));
+                    svLog.postDelayed(() -> svLog.fullScroll(ScrollView.FOCUS_DOWN), 100);
+                    hsvLog.postDelayed(() -> hsvLog.fullScroll(ScrollView.FOCUS_LEFT), 100);
                     break;
                 case 2:
                     boolean bool = (boolean) o;
                     if (bool) {
-                        getMagiskManager().toast(targetFile.toString(), Toast.LENGTH_LONG);
+                        MagiskManager.toast(targetFile.getPath(), Toast.LENGTH_LONG);
                     } else {
-                        getMagiskManager().toast(R.string.logs_save_failed, Toast.LENGTH_LONG);
+                        MagiskManager.toast(R.string.logs_save_failed, Toast.LENGTH_LONG);
                     }
                     break;
             }
@@ -205,9 +202,8 @@ public class MagiskLogFragment extends Fragment {
             return true;
         }
 
-        @Override
-        public String toString() {
-            return builder.toString();
+        public CharSequence getCharSequence() {
+            return builder;
         }
     }
 

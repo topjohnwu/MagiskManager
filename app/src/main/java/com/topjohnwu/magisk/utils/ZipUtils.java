@@ -1,10 +1,10 @@
 package com.topjohnwu.magisk.utils;
 
-import android.content.Context;
 import android.content.res.AssetManager;
 
-import com.topjohnwu.jarsigner.JarMap;
-import com.topjohnwu.jarsigner.SignAPK;
+import com.topjohnwu.crypto.JarMap;
+import com.topjohnwu.crypto.SignAPK;
+import com.topjohnwu.magisk.MagiskManager;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -15,9 +15,6 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
 
 public class ZipUtils {
-    // File name in assets
-    private static final String PUBLIC_KEY_NAME = "public.certificate.x509.pem";
-    private static final String PRIVATE_KEY_NAME = "private.key.pk8";
 
     static {
         System.loadLibrary("zipadjust");
@@ -32,7 +29,6 @@ public class ZipUtils {
     }
 
     public static void unzip(InputStream zip, File folder, String path, boolean junkPath) throws Exception {
-        byte data[] = new byte[4096];
         try {
             JarInputStream zipfile = new JarInputStream(zip);
             JarEntry entry;
@@ -49,13 +45,9 @@ public class ZipUtils {
                 }
                 File dest = new File(folder, name);
                 dest.getParentFile().mkdirs();
-                FileOutputStream out = new FileOutputStream(dest);
-                int count;
-                while ((count = zipfile.read(data)) != -1) {
-                    out.write(data, 0, count);
+                try (FileOutputStream out = new FileOutputStream(dest)) {
+                    Utils.inToOut(zipfile, out);
                 }
-                out.flush();
-                out.close();
             }
         } catch(Exception e) {
             e.printStackTrace();
@@ -63,18 +55,18 @@ public class ZipUtils {
         }
     }
 
-    public static void signZip(Context context, InputStream is, File output, boolean minSign) throws Exception {
-        signZip(context, new JarMap(is, false), output, minSign);
+    public static void signZip(InputStream is, File output, boolean minSign) throws Exception {
+        signZip(new JarMap(is, false), output, minSign);
     }
 
-    public static void signZip(Context context, File input, File output, boolean minSign) throws Exception {
-        signZip(context, new JarMap(input, false), output, minSign);
+    public static void signZip(File input, File output, boolean minSign) throws Exception {
+        signZip(new JarMap(input, false), output, minSign);
     }
 
-    public static void signZip(Context context, JarMap input, File output, boolean minSign) throws Exception {
-        AssetManager assets = context.getAssets();
+    public static void signZip(JarMap input, File output, boolean minSign) throws Exception {
+        AssetManager assets = MagiskManager.get().getAssets();
         SignAPK.signZip(
-                assets.open(PUBLIC_KEY_NAME), assets.open(PRIVATE_KEY_NAME),
+                assets.open(Const.PUBLIC_KEY_NAME), assets.open(Const.PRIVATE_KEY_NAME),
                 input, output, minSign);
     }
 }

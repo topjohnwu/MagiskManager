@@ -17,26 +17,20 @@
 
     <string name="checking_for_updates">Sprawdzanie aktualizacji…</string>
     <string name="magisk_update_available">Magisk v%1$s dostępny!</string>
-    <string name="cannot_check_updates">Nie można sprawdzić dostępności aktualizacji, brak internetu</string>
-    <string name="root_error">Root dostępny, ale dostęp nie przyznany</string>
-    <string name="not_rooted">Brak Roota</string>
     <string name="safetyNet_check_text">Dotknij aby sprawdzić SafetyNet</string>
     <string name="checking_safetyNet_status">Sprawdzanie statusu SafetyNet…</string>
     <string name="safetyNet_check_success">Sprawdzanie SafetyNet z Powodzeniem</string>
-    <string name="safetyNet_network_loss">Brak połączenia z internetem</string>
+    <string name="safetyNet_api_error">Bład SafetyNet API</string>
+	<string name="safetyNet_network_loss">Brak połączenia z internetem</string>
     <string name="safetyNet_service_disconnected">Usługa została zamknięta</string>
     <string name="safetyNet_res_invalid">Usługa nie odpowiada</string>
 
     <!--Install Fragment-->
-    <string name="auto_detect">(Auto) %1$s</string>
-    <string name="cannot_auto_detect">(Nie można automatycznie wykryć)</string>
-    <string name="boot_image_title">Lokalizacja Boot Image</string>
-    <string name="detect_button">Wykryj</string>
     <string name="advanced_settings_title">Zaawansowane Ustawienia</string>
     <string name="keep_force_encryption">Keep force encryption</string>
     <string name="keep_dm_verity">Keep dm-verity</string>
-    <string name="current_magisk_title">Zainstalowana Wersja Magisk: %1$s</string>
-    <string name="install_magisk_title">Ostatnia Wersja Magisk: %1$s</string>
+    <string name="current_magisk_title">Zainstalowana Wersja: %1$s</string>
+    <string name="install_magisk_title">Ostatnia Wersja: %1$s</string>
     <string name="uninstall">Odinstaluj</string>
     <string name="uninstall_magisk_title">Odinstaluj Magisk</string>
 	<string name="uninstall_magisk_msg">Wszystkie moduły będą wyłączone/usunięte.Root zostanie usunięty i przywrócone szyfrowanie danych, jeśli nie są te dane obecnie szyfrowane</string>
@@ -58,7 +52,7 @@
     <string name="not_installed">Nie zainstalowany</string>
 
     <!--Log Fragment-->
-    <string name="menuSaveToSd">Zapisz na SD</string>
+    <string name="menuSaveLog">Zapisz log</string>
     <string name="menuReload">Załaduj ponownie</string>
     <string name="menuClearLog">Wyczyść Log</string>
     <string name="logs_cleared">Log wyczyszczony</string>
@@ -87,8 +81,6 @@
     <string name="repo_install_msg">Czy chcesz zainstalować  %1$s ?</string>
     <string name="download">Pobierz</string>
     <string name="download_file_error">Błąd pobierania pliku</string>
-    <string name="install_error">Błąd instalacji!</string>
-    <string name="invalid_zip">Ten zip nie jest Modułem Magisk!!</string>
     <string name="reboot">Restart</string>
     <string name="downloading_toast">Pobieranie %1$s</string>
     <string name="magisk_update_title">Nowa Wersja Magisk Dostępna!</string>
@@ -102,13 +94,15 @@
     <string name="zip_download_msg">Pobieranie pliku zip (%1$d%%) …</string>
 	<string name="zip_process_title">Przetwarzanie</string>
 	<string name="zip_process_msg">Przetwarzanie pliku zip …</string>
-	<string name="manual_boot_image">Proszę ręcznie wybrać boot image!</string>
     <string name="manager_update_title">Nowa Wersja Magisk Manager Jest Dostępna!</string>
     <string name="manager_download_install">Naciśnij aby pobrać i zainstalować</string>
+    <string name="dtbo_patched_title">DTBO został wgrany!</string>
+    <string name="dtbo_patched_reboot">Magisk Manager wgrał dtbo.img, uruchom ponownie</string>
     <string name="magisk_updates">Aktualizacja Magisk</string>
     <string name="flashing">Flashowanie</string>
     <string name="hide_manager_toast">Ukryj Magisk Manager…</string>
-    <string name="hide_manager_fail_toast">Błąd ukrycia Magisk Manager</string>
+    <string name="hide_manager_toast2">To może chwilę potrwać…</string>
+	<string name="hide_manager_fail_toast">Błąd Menadżera Hide Magisk</string>
     <string name="download_zip_only">Pobierz Tylko Zip</string>
     <string name="patch_boot_file">Patchowanie Pliku Boot Image</string>
     <string name="direct_install">Bezpośrednia instalacja (Zalecane)</string>
@@ -118,11 +112,13 @@
     <string name="boot_file_patch_msg">Wybierz stock boot image w formacie .img lub .img.tar</string>
     <string name="complete_uninstall">Odinstalowywanie Zakończone</string>
     <string name="restore_stock_boot">Przywróć Stockowy Boot</string>
-    <string name="restore_done">Przywracanie zakonczone!</string>
+    <string name="restore_done">Przywracanie zakończone!</string>
     <string name="restore_fail">Stock backup nie istnieje!</string>
     <string name="uninstall_toast">Odinstalowanie Magisk Manager w ciągu 5 sekund, proszę następnie ręcznie ponownie uruchomić urządzenie</string>
-   
-    <!--Settings Activity -->
+    <string name="proprietary_title">Pobierz Własny Kod</string>
+    <string name="proprietary_notice">Magisk Manager to FOSS, więc nie zawiera zastrzeżonego kodu API SafetyNet. \n\nCzy zezwolić Magisk Managerowi na pobranie rozszerzenia (zawierającego GoogleApiClient) do sprawdzeń SafetyNet?</string>
+    
+	<!--Settings Activity -->
     <string name="settings_general_category">Ogólne</string>
     <string name="settings_dark_theme_title">Ciemny Motyw</string>
     <string name="settings_dark_theme_summary">Włącz ciemny motyw</string>
@@ -131,17 +127,16 @@
     <string name="settings_clear_cache_title">Wyczyść Pamięć Repozytorium</string>
     <string name="settings_clear_cache_summary">Wymusza na aplikacji odświeżenie online repozytorium</string>
     <string name="settings_hide_manager_title">Ukryj Magisk Manager</string>
-    <string name="settings_hide_manager_summary">Tymczasowo ukryj Magisk Manager.\nSpowoduje to zainstalowanie nowej aplikacji o nazwie \"Pokaż Magisk Manager\"</string>
-    <string name="language">Język</string>
+    <string name="settings_hide_manager_summary">Przepakowanie Magisk Manager z losową nazwą pakietu</string>
+	<string name="language">Język</string>
     <string name="system_default">(Domyślny Systemu)</string>
     <string name="settings_update">Aktualizacja Ustawień</string>
     <string name="settings_update_channel_title">Aktualizacja Kanału</string>
     <string name="settings_update_stable">Stabilna</string>
     <string name="settings_update_beta">Beta</string>
-    <string name="settings_boot_format_title">Poprawiony format wyjścia rozruchowego</string>
-    <string name="settings_boot_format_summary">Wybierz format wyjściowy pliku boot image.\nWybierz .img do programu za pośrednictwem fastboot/download mode; wybierz .img.tar za pomocą ODINA.</string>
-    
-	<string name="settings_core_only_title">Tylko Tryb Rdzeni Magisk</string>
+    <string name="settings_boot_format_title">Poprawny format wyjścia rozruchowego</string>
+    <string name="settings_boot_format_summary">Wybierz format pliku boot image.\nWybierz .img dla wgrywania poprzez Fastboot/Download Mode; wybierz .img.tar dla ODINA.</string>
+    <string name="settings_core_only_title">Tylko Tryb Rdzeni Magisk</string>
     <string name="settings_core_only_summary">Włącz tylko podstawowe funkcje, wszystkie moduły nie zostaną załadowane. MagiskSU, MagiskHide i systemless hosts nadal będą włączone</string>
     <string name="settings_magiskhide_summary">Włącz Hide Magisk dla wykrytych aplikacji</string>
     <string name="settings_hosts_title">Włącz systemless hosts</string>
@@ -172,7 +167,7 @@
     <string name="user_indepenent_summary">Każdy użytkownik ma swoje własne odrębne ustawienia dostępu</string>
     <string name="multiuser_hint_owner_request">Żądanie zostało wysłane do właściciela urządzenia. Proszę przejść do właściciela i udzielić pozwolenia</string>
 
-    <string name="mount_namespace_mode">Montuj Tryb Nazw</string>
+    <string name="mount_namespace_mode">Montuj Tryb Odstępu Nazw</string>
     <string name="settings_ns_global">Globalna Nazwa</string>
     <string name="settings_ns_requester">Dziedziczenie Nazw</string>
     <string name="settings_ns_isolate">Izolacja Nazw</string>

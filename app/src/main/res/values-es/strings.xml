@@ -14,9 +14,7 @@
 
     <string name="checking_for_updates">Comprobando actualizaciones…</string>
     <string name="magisk_update_available">¡Disponible Magisk v%1$s!</string>
-    <string name="cannot_check_updates">No se pueden comprobar actualizaciones ¿No tiene internet?</string>
-    <string name="root_error">Rooteado pero sin permiso root, ¿No lo permitiste?</string>
-    <string name="not_rooted">No rooteado</string>
+    <string name="invalid_update_channel">Canal de actualización inválido</string>
     <string name="safetyNet_check_text">Toque para empezar la comprobación de SafetyNet</string>
     <string name="checking_safetyNet_status">Comprobando estado de SafetyNet…</string>
     <string name="safetyNet_check_success">La comprobación de SafetyNet fue exitosa</string>
@@ -26,15 +24,11 @@
     <string name="safetyNet_res_invalid">La respuesta no es válida</string>
 
     <!--Install Fragment-->
-    <string name="auto_detect">(Auto) %1$s</string>
-    <string name="cannot_auto_detect">(No se puede detectar automáticamente)</string>
-    <string name="boot_image_title">Ubicación de la imagen boot</string>
-    <string name="detect_button">Detectar</string>
     <string name="advanced_settings_title">Ajustes avanzados</string>
     <string name="keep_force_encryption">Mantener cifrado forzado</string>
     <string name="keep_dm_verity">Mantener dm-verity</string>
-    <string name="current_magisk_title">Versión de Magisk instalada: %1$s</string>
-    <string name="install_magisk_title">Última versión de Magisk: %1$s</string>
+    <string name="current_magisk_title">Versión instalada: %1$s</string>
+    <string name="install_magisk_title">Última versión: %1$s</string>
     <string name="uninstall">Desinstalar</string>
     <string name="uninstall_magisk_msg">Todos los módulos serán desactivados / eliminados. El acceso Root se eliminará y, posiblemente, encriptará los datos si los datos no están cifrados actualmente.</string>
     <string name="uninstall_magisk_title">Desinstalar Magisk</string>
@@ -56,7 +50,7 @@
     <string name="not_installed">No Instalado</string>
 
     <!--Log Fragment-->
-    <string name="menuSaveToSd">Guardar en la SD</string>
+    <string name="menuSaveLog">Guardar registro</string>
     <string name="menuReload">Recargar</string>
     <string name="menuClearLog">Limpiar registro ahora</string>
     <string name="logs_cleared">Registro limpiado correctamente</string>
@@ -85,8 +79,6 @@
     <string name="repo_install_msg">¿Quieres instalar %1$s ahora?</string>
     <string name="download">Descargar</string>
     <string name="download_file_error">Error descargando archivo</string>
-    <string name="install_error">¡Error en la instalación!</string>
-    <string name="invalid_zip">¡El zip no es un módulo Magisk!</string>
     <string name="reboot">Reiniciar</string>
     <string name="zip_process_msg">Procesando archivo zip …</string>
     <string name="downloading_toast">Descargando %1$s</string>
@@ -100,12 +92,14 @@
     <string name="zip_download_title">Descargando</string>
     <string name="zip_download_msg">Descargando el archivo zip (%1$d%%) …</string>
     <string name="zip_process_title">Procesando</string>
-    <string name="manual_boot_image">¡Selecciona manualmente una imagen boot!</string>
     <string name="manager_update_title">Nueva actualización de Magisk Manager disponible!</string>
     <string name="manager_download_install">Pulse para descargar e instalar</string>
+    <string name="dtbo_patched_title">DTBO fue parchado!</string>
+    <string name="dtbo_patched_reboot">Magisk Manager ha parcheado dtbo.img, por favor reinicia</string>
     <string name="magisk_updates">Actualización de Magisk</string>
     <string name="flashing">Flasheando</string>
     <string name="hide_manager_toast">Ocultando Magisk Manager...</string>
+    <string name="hide_manager_toast2">Esto podría tomar un tiempo...</string>
     <string name="hide_manager_fail_toast">La Ocultación de Magisk Manager ha fallado…</string>
     <string name="download_zip_only">Descargar sólo el archivo ZIP</string>
     <string name="patch_boot_file">Parcheo de la imagen boot</string>
@@ -120,8 +114,8 @@
     <string name="restore_fail">¡El respaldo de la imagen boot Stock no existe!</string>
     <string name="uninstall_toast">Desinstalación de Magisk Manager en 5 segundos, por favor después reinicie manualmente </string>
     <string name="proprietary_title">Descargar Código Propietario</string>
-    <string name="proprietary_notice">Magisk Manager es un Software Libre por lo que no contiene el código API de SafetyNet (Código Propietario de Google).\n\n ¿Puede permitir que Magisk Manager descargue una extensión (contiene el GoogleApiClient) para los cheques de SafetyNet?</string>
- 
+    <string name="proprietary_notice">Magisk Manager es un Software Libre por lo que no contiene el código API de SafetyNet (Código Propietario de Google).\n\n ¿Puede permitir que Magisk Manager descargue una extensión (contiene el GoogleApiClient) para la comprobación de SafetyNet?</string>
+    <string name="su_db_corrupt">La base de datos SU está dañada, se creará nueva base de datos</string>
     
     <!--Settings Activity -->
     <string name="settings_general_category">General</string>
@@ -132,13 +126,15 @@
     <string name="settings_clear_cache_title">Limpiar caché del repositorio</string>
     <string name="settings_clear_cache_summary">Limpiar la información en caché para los repositorios en línea, fuerza a la aplicación a actualizar en línea</string>
     <string name="settings_hide_manager_title">Ocultar Magisk Manager</string>
-    <string name="settings_hide_manager_summary">Ocultar temporalmente Magisk Manager.\nEsto instalará una nueva aplicación llamada \"Unhide Magisk Manager\"</string>  
+    <string name="settings_hide_manager_summary">Re-empaquetar Magisk Manager con un nombre de paquete al azar</string>
     <string name="language">Idioma</string>
     <string name="system_default">(Idioma del sistema)</string>
     <string name="settings_update">Ajustes de Actualización</string>
     <string name="settings_update_channel_title">Canal de Actualización</string>
     <string name="settings_update_stable">Estable</string>
     <string name="settings_update_beta">Beta</string>
+    <string name="settings_update_custom">Personalizado</string>
+    <string name="settings_update_custom_msg">Insertar una URL personalizada</string>
     <string name="settings_boot_format_title">Parchear imagen boot por tipo de formato</string>
     <string name="settings_boot_format_summary">Seleccionar el formato de salida para parchear la imagen boot.\nEscoja .img para flashear mediante fastboot/download mode; escoja .img.tar para flashear con ODIN.</string>
     

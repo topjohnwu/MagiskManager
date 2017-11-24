@@ -1,10 +1,9 @@
 package com.topjohnwu.magisk.asyncs;
 
-import android.content.Context;
-
 import com.topjohnwu.magisk.BuildConfig;
 import com.topjohnwu.magisk.MagiskManager;
-import com.topjohnwu.magisk.utils.Utils;
+import com.topjohnwu.magisk.utils.Const;
+import com.topjohnwu.magisk.utils.ShowUI;
 import com.topjohnwu.magisk.utils.WebService;
 
 import org.json.JSONException;
@@ -12,37 +11,30 @@ import org.json.JSONObject;
 
 public class CheckUpdates extends ParallelTask<Void, Void, Void> {
 
-    public static final int STABLE_CHANNEL = 0;
-    public static final int BETA_CHANNEL = 1;
+    private boolean showNotification;
 
-    private static final String STABLE_URL = "https://raw.githubusercontent.com/topjohnwu/MagiskManager/update/stable.json";
-    private static final String BETA_URL = "https://raw.githubusercontent.com/topjohnwu/MagiskManager/update/beta.json";
-
-    private boolean showNotification = false;
-
-    public CheckUpdates(Context context) {
-        super(context);
+    public CheckUpdates() {
+        this(false);
     }
 
-    public CheckUpdates(Context context, boolean b) {
-        super(context);
+    public CheckUpdates(boolean b) {
         showNotification = b;
     }
 
     @Override
     protected Void doInBackground(Void... voids) {
-        MagiskManager mm = getMagiskManager();
-        if (mm == null) return null;
-        String jsonStr;
+        MagiskManager mm = MagiskManager.get();
+        String jsonStr = "";
         switch (mm.updateChannel) {
-            case STABLE_CHANNEL:
-                jsonStr = WebService.getString(STABLE_URL);
+            case Const.Value.STABLE_CHANNEL:
+                jsonStr = WebService.getString(Const.Url.STABLE_URL);
                 break;
-            case BETA_CHANNEL:
-                jsonStr = WebService.getString(BETA_URL);
+            case Const.Value.BETA_CHANNEL:
+                jsonStr = WebService.getString(Const.Url.BETA_URL);
                 break;
-            default:
-                jsonStr = null;
+            case Const.Value.CUSTOM_CHANNEL:
+                jsonStr = WebService.getString(mm.customChannelUrl);
+                break;
         }
         try {
             JSONObject json = new JSONObject(jsonStr);
@@ -61,13 +53,12 @@ public class CheckUpdates extends ParallelTask<Void, Void, Void> {
 
     @Override
     protected void onPostExecute(Void v) {
-        MagiskManager mm = getMagiskManager();
-        if (mm == null) return;
+        MagiskManager mm = MagiskManager.get();
         if (showNotification && mm.updateNotification) {
             if (BuildConfig.VERSION_CODE < mm.remoteManagerVersionCode) {
-                Utils.showManagerUpdateNotification(mm);
+                ShowUI.managerUpdateNotification();
             } else if (mm.magiskVersionCode < mm.remoteMagiskVersionCode) {
-                Utils.showMagiskUpdateNotification(mm);
+                ShowUI.magiskUpdateNotification();
             }
         }
         mm.updateCheckDone.publish();

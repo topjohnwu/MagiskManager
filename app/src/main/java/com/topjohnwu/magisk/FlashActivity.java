@@ -4,22 +4,29 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
+import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.topjohnwu.magisk.asyncs.FlashZip;
 import com.topjohnwu.magisk.asyncs.InstallMagisk;
 import com.topjohnwu.magisk.components.Activity;
-import com.topjohnwu.magisk.container.AdaptiveList;
+import com.topjohnwu.magisk.container.CallbackList;
+import com.topjohnwu.magisk.utils.Const;
 import com.topjohnwu.magisk.utils.Shell;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,28 +34,45 @@ import butterknife.OnClick;
 
 public class FlashActivity extends Activity {
 
-    public static final String SET_ACTION = "action";
-    public static final String SET_BOOT = "boot";
-    public static final String SET_ENC = "enc";
-    public static final String SET_VERITY = "verity";
-
-    public static final String FLASH_ZIP = "flash";
-    public static final String PATCH_BOOT = "patch";
-    public static final String FLASH_MAGISK = "magisk";
-
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.flash_logs) RecyclerView flashLogs;
-    @BindView(R.id.button_panel) LinearLayout buttonPanel;
-    @BindView(R.id.reboot) Button reboot;
+    @BindView(R.id.txtLog) TextView flashLogs;
+    @BindView(R.id.button_panel) public LinearLayout buttonPanel;
+    @BindView(R.id.reboot) public Button reboot;
+    @BindView(R.id.scrollView) ScrollView sv;
+
+    private List<String> logs;
 
     @OnClick(R.id.no_thanks)
-    public void dismiss() {
+    void dismiss() {
         finish();
     }
 
     @OnClick(R.id.reboot)
-    public void reboot() {
-        getShell().su_raw("reboot");
+    void reboot() {
+        Shell.su_raw("/system/bin/reboot");
+    }
+
+    @OnClick(R.id.save_logs)
+    void saveLogs() {
+        Calendar now = Calendar.getInstance();
+        String filename = String.format(Locale.US,
+                "install_log_%04d%02d%02d_%02d:%02d:%02d.log",
+                now.get(Calendar.YEAR), now.get(Calendar.MONTH) + 1,
+                now.get(Calendar.DAY_OF_MONTH), now.get(Calendar.HOUR_OF_DAY),
+                now.get(Calendar.MINUTE), now.get(Calendar.SECOND));
+
+        File logFile = new File(Const.EXTERNAL_PATH + "/logs", filename);
+        logFile.getParentFile().mkdirs();
+        try (FileWriter writer = new FileWriter(logFile)) {
+            for (String s : logs) {
+                writer.write(s);
+                writer.write('\n');
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+        MagiskManager.toast(logFile.getPath(), Toast.LENGTH_LONG);
     }
 
     @Override
@@ -56,7 +80,6 @@ public class FlashActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flash);
         ButterKnife.bind(this);
-        AdaptiveList<String> rootShellOutput = new AdaptiveList<>(flashLogs);
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
         if (ab != null) {
@@ -67,44 +90,34 @@ public class FlashActivity extends Activity {
         if (!Shell.rootAccess())
             reboot.setVisibility(View.GONE);
 
-        flashLogs.setAdapter(new FlashLogAdapter(rootShellOutput));
+        logs = new ArrayList<>();
+        List<String> console = new CallbackList<String>() {
+            @Override
+            public synchronized void onAddElement(String e) {
+                logs.add(e);
+                flashLogs.setText(TextUtils.join("\n", this));
+                sv.postDelayed(() -> sv.fullScroll(ScrollView.FOCUS_DOWN), 10);
+            }
+        };
 
         // We must receive a Uri of the target zip
         Intent intent = getIntent();
         Uri uri = intent.getData();
 
-        boolean keepEnc = intent.getBooleanExtra(SET_ENC, false);
-        boolean keepVerity = intent.getBooleanExtra(SET_VERITY, false);
+        boolean keepEnc = intent.getBooleanExtra(Const.Key.FLASH_SET_ENC, false);
+        boolean keepVerity = intent.getBooleanExtra(Const.Key.FLASH_SET_VERITY, false);
 
-        switch (getIntent().getStringExtra(SET_ACTION)) {
-            case FLASH_ZIP:
-                new FlashZip(this, uri, rootShellOutput)
-                        .setCallBack(() -> buttonPanel.setVisibility(View.VISIBLE))
+        switch (intent.getStringExtra(Const.Key.FLASH_ACTION)) {
+            case Const.Value.FLASH_ZIP:
+                new FlashZip(this, uri, console, logs).exec();
+                break;
+            case Const.Value.PATCH_BOOT:
+                new InstallMagisk(this, console, logs, uri, keepEnc, keepVerity, (Uri) intent.getParcelableExtra(Const.Key.FLASH_SET_BOOT))
                         .exec();
                 break;
-            case PATCH_BOOT:
-                new InstallMagisk(this, rootShellOutput, uri, keepEnc, keepVerity, (Uri) intent.getParcelableExtra(SET_BOOT))
-                        .setCallBack(() -> buttonPanel.setVisibility(View.VISIBLE))
+            case Const.Value.FLASH_MAGISK:
+                new InstallMagisk(this, console, logs, uri, keepEnc, keepVerity, intent.getStringExtra(Const.Key.FLASH_SET_BOOT))
                         .exec();
-                break;
-            case FLASH_MAGISK:
-                String boot = intent.getStringExtra(SET_BOOT);
-                if (getMagiskManager().remoteMagiskVersionCode < 1370) {
-                    // Use legacy installation method
-                    getShell().su_raw(
-                            "echo \"BOOTIMAGE=" + boot + "\" > /dev/.magisk",
-                            "echo \"KEEPFORCEENCRYPT=" + keepEnc + "\" >> /dev/.magisk",
-                            "echo \"KEEPVERITY=" + keepVerity + "\" >> /dev/.magisk"
-                    );
-                    new FlashZip(this, uri, rootShellOutput)
-                            .setCallBack(() -> buttonPanel.setVisibility(View.VISIBLE))
-                            .exec();
-                } else {
-                    // Use new installation method
-                    new InstallMagisk(this, rootShellOutput, uri, keepEnc, keepVerity, boot)
-                            .setCallBack(() -> buttonPanel.setVisibility(View.VISIBLE))
-                            .exec();
-                }
                 break;
         }
     }
@@ -113,41 +126,4 @@ public class FlashActivity extends Activity {
     public void onBackPressed() {
         // Prevent user accidentally press back button
     }
-
-    private static class FlashLogAdapter extends RecyclerView.Adapter<ViewHolder> {
-
-        private List<String> mList;
-
-        FlashLogAdapter(List<String> list) {
-            mList = list;
-        }
-
-        @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.list_item_flashlog, parent, false);
-            return new ViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
-            holder.text.setText(mList.get(position));
-        }
-
-        @Override
-        public int getItemCount() {
-            return mList.size();
-        }
-    }
-
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-
-        @BindView(R.id.textView) TextView text;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-        }
-    }
-
 }

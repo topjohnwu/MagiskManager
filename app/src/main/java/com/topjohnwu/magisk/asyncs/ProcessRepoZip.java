@@ -5,13 +5,15 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Environment;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
 
 import com.topjohnwu.magisk.FlashActivity;
+import com.topjohnwu.magisk.MagiskManager;
 import com.topjohnwu.magisk.R;
 import com.topjohnwu.magisk.container.InputStreamWrapper;
+import com.topjohnwu.magisk.utils.Const;
 import com.topjohnwu.magisk.utils.Shell;
 import com.topjohnwu.magisk.utils.Utils;
 import com.topjohnwu.magisk.utils.WebService;
@@ -37,43 +39,38 @@ public class ProcessRepoZip extends ParallelTask<Void, Object, Boolean> {
     private String mLink;
     private File mFile;
     private int progress = 0, total = -1;
-
-    private static final int UPDATE_DL_PROG = 0;
-    private static final int SHOW_PROCESSING = 1;
+    private Handler mHandler;
 
     public ProcessRepoZip(Activity context, String link, String filename, boolean install) {
         super(context);
         mLink = link;
-        mFile = new File(Environment.getExternalStorageDirectory() + "/MagiskManager", filename);
+        mFile = new File(Const.EXTERNAL_PATH, filename);
         mInstall = install;
+        mHandler = new Handler();
     }
 
-    private void removeTopFolder(InputStream in, File output) throws IOException {
-        JarInputStream source = new JarInputStream(in);
-        JarOutputStream dest = new JarOutputStream(new BufferedOutputStream(new FileOutputStream(output)));
+    private void removeTopFolder(File input, File output) throws IOException {
         JarEntry entry;
-        String path;
-        int size;
-        byte buffer[] = new byte[4096];
-        while ((entry = source.getNextJarEntry()) != null) {
-            // Remove the top directory from the path
-            path = entry.getName().substring(entry.getName().indexOf("/") + 1);
-            // If it's the top folder, ignore it
-            if (path.isEmpty()) {
-                continue;
-            }
-            // Don't include placeholder
-            if (path.equals("system/placeholder")) {
-                continue;
-            }
-            dest.putNextEntry(new JarEntry(path));
-            while((size = source.read(buffer)) != -1) {
-                dest.write(buffer, 0, size);
+        try (
+            JarInputStream in = new JarInputStream(new BufferedInputStream(new FileInputStream(input)));
+            JarOutputStream out = new JarOutputStream(new BufferedOutputStream(new FileOutputStream(output)))
+        ) {
+            String path;
+            while ((entry = in.getNextJarEntry()) != null) {
+                // Remove the top directory from the path
+                path = entry.getName().substring(entry.getName().indexOf("/") + 1);
+                // If it's the top folder, ignore it
+                if (path.isEmpty()) {
+                    continue;
+                }
+                // Don't include placeholder
+                if (path.equals("system/placeholder")) {
+                    continue;
+                }
+                out.putNextEntry(new JarEntry(path));
+                Utils.inToOut(in, out);
             }
         }
-        source.close();
-        dest.close();
-        in.close();
     }
 
     @Override
@@ -84,27 +81,10 @@ public class ProcessRepoZip extends ParallelTask<Void, Object, Boolean> {
     }
 
     @Override
-    protected void onProgressUpdate(Object... values) {
-        int mode = (int) values[0];
-        switch (mode) {
-            case UPDATE_DL_PROG:
-                int add = (int) values[1];
-                progress += add;
-                progressDialog.setMessage(getActivity().getString(R.string.zip_download_msg, 100 * progress / total));
-                break;
-            case SHOW_PROCESSING:
-                progressDialog.setTitle(R.string.zip_process_title);
-                progressDialog.setMessage(getActivity().getString(R.string.zip_process_msg));
-                break;
-        }
-    }
-
-    @Override
     protected Boolean doInBackground(Void... params) {
         Activity activity = getActivity();
         if (activity == null) return null;
         try {
-
             // Request zip from Internet
             HttpURLConnection conn;
             do {
@@ -117,37 +97,37 @@ public class ProcessRepoZip extends ParallelTask<Void, Object, Boolean> {
                     break;
             } while (true);
 
-            InputStream in = new BufferedInputStream(new ProgressInputStream(conn.getInputStream()));
-
             // Temp files
             File temp1 = new File(activity.getCacheDir(), "1.zip");
             File temp2 = new File(temp1.getParentFile(), "2.zip");
             temp1.getParentFile().mkdir();
 
-            // First remove top folder in Github source zip, Web -> temp1
-            removeTopFolder(in, temp1);
-
-            conn.disconnect();
-            publishProgress(SHOW_PROCESSING);
-
-            // Then sign the zip for the first time, temp1 -> temp2
-            ZipUtils.signZip(activity, temp1, temp2, false);
-
-            // Adjust the zip to prevent unzip issues, temp2 -> temp1
-            ZipUtils.zipAdjust(temp2.getPath(), temp1.getPath());
-
-            // Finally, sign the whole zip file again, temp1 -> temp2
-            ZipUtils.signZip(activity, temp1, temp2, true);
-
-            // Write it to the target zip, temp2 -> file
-            try (OutputStream out = new BufferedOutputStream(new FileOutputStream(mFile));
-                 InputStream source = new BufferedInputStream(new FileInputStream(temp2))
+            // First download the zip, Web -> temp1
+            try (
+                InputStream in = new BufferedInputStream(new ProgressInputStream(conn.getInputStream()));
+                OutputStream out = new BufferedOutputStream(new FileOutputStream(temp1))
             ) {
-                byte[] buffer = new byte[4096];
-                int length;
-                while ((length = source.read(buffer)) > 0)
-                    out.write(buffer, 0, length);
+                Utils.inToOut(in, out);
+                in.close();
             }
+            conn.disconnect();
+
+            mHandler.post(() -> {
+                progressDialog.setTitle(R.string.zip_process_title);
+                progressDialog.setMessage(getActivity().getString(R.string.zip_process_msg));
+            });
+
+            // First remove top folder in Github source zip, temp1 -> temp2
+            removeTopFolder(temp1, temp2);
+
+            // Then sign the zip for the first time, temp2 -> temp1
+            ZipUtils.signZip(temp2, temp1, false);
+
+            // Adjust the zip to prevent unzip issues, temp1 -> temp2
+            ZipUtils.zipAdjust(temp1.getPath(), temp2.getPath());
+
+            // Finally, sign the whole zip file again, temp2 -> target
+            ZipUtils.signZip(temp2, mFile, true);
 
             // Delete temp files
             temp1.delete();
@@ -165,17 +145,17 @@ public class ProcessRepoZip extends ParallelTask<Void, Object, Boolean> {
         Activity activity = getActivity();
         if (activity == null) return;
         progressDialog.dismiss();
-        Uri uri = Uri.fromFile(mFile);
         if (result) {
+            Uri uri = Uri.fromFile(mFile);
             if (Shell.rootAccess() && mInstall) {
-                Intent intent = new Intent(getActivity(), FlashActivity.class);
-                intent.setData(uri).putExtra(FlashActivity.SET_ACTION, FlashActivity.FLASH_ZIP);
+                Intent intent = new Intent(activity, FlashActivity.class);
+                intent.setData(uri).putExtra(Const.Key.FLASH_ACTION, Const.Value.FLASH_ZIP);
                 activity.startActivity(intent);
             } else {
                 Utils.showUriSnack(activity, uri);
             }
         } else {
-            Utils.getMagiskManager(activity).toast(R.string.process_error, Toast.LENGTH_LONG);
+            MagiskManager.toast(R.string.process_error, Toast.LENGTH_LONG);
         }
         super.onPostExecute(result);
     }
@@ -193,10 +173,18 @@ public class ProcessRepoZip extends ParallelTask<Void, Object, Boolean> {
             super(in);
         }
 
+        private void updateDlProgress(int step) {
+            progress += step;
+            progressDialog.setMessage(getActivity().getString(R.string.zip_download_msg, (int) (100 * (double) progress / total + 0.5)));
+        }
+
         @Override
         public synchronized int read() throws IOException {
-            publishProgress(UPDATE_DL_PROG, 1);
-            return super.read();
+            int b = super.read();
+            if (b > 0) {
+                mHandler.post(() -> updateDlProgress(1));
+            }
+            return b;
         }
 
         @Override
@@ -207,7 +195,9 @@ public class ProcessRepoZip extends ParallelTask<Void, Object, Boolean> {
         @Override
         public synchronized int read(@NonNull byte[] b, int off, int len) throws IOException {
             int read = super.read(b, off, len);
-            publishProgress(UPDATE_DL_PROG, read);
+            if (read > 0) {
+                mHandler.post(() -> updateDlProgress(read));
+            }
             return read;
         }
     }

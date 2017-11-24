@@ -1,8 +1,12 @@
 package com.topjohnwu.magisk.components;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.annotation.Keep;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -10,12 +14,15 @@ import android.view.WindowManager;
 
 import com.topjohnwu.magisk.MagiskManager;
 import com.topjohnwu.magisk.R;
-import com.topjohnwu.magisk.utils.Shell;
 import com.topjohnwu.magisk.utils.Topic;
+import com.topjohnwu.magisk.utils.Utils;
 
 public class Activity extends AppCompatActivity {
 
-    private Runnable permissionGrantCallback;
+    private AssetManager swappedAssetManager = null;
+    private Resources swappedResources = null;
+    private Resources.Theme swappedTheme = null;
+    private ActivityResultListener activityResultListener;
 
     public Activity() {
         super();
@@ -42,24 +49,32 @@ public class Activity extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        MagiskManager mm = getMagiskManager();
         if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            if (permissionGrantCallback != null) {
-                permissionGrantCallback.run();
+            if (mm.permissionGrantCallback != null) {
+                mm.permissionGrantCallback.run();
             }
         }
-        permissionGrantCallback = null;
+        mm.permissionGrantCallback = null;
     }
 
-    public void setPermissionGrantCallback(Runnable callback) {
-        permissionGrantCallback = callback;
+    @Override
+    public Resources.Theme getTheme() {
+        return swappedTheme == null ? super.getTheme() : swappedTheme;
+    }
+
+    @Override
+    public AssetManager getAssets() {
+        return swappedAssetManager == null ? super.getAssets() : swappedAssetManager;
+    }
+
+    @Override
+    public Resources getResources() {
+        return swappedResources == null ? super.getResources() : swappedResources;
     }
 
     public MagiskManager getMagiskManager() {
         return (MagiskManager) super.getApplicationContext();
-    }
-
-    public Shell getShell() {
-        return Shell.getShell(this);
     }
 
     protected void setFloating() {
@@ -74,6 +89,40 @@ public class Activity extends AppCompatActivity {
             getWindow().setAttributes(params);
             setFinishOnTouchOutside(true);
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (activityResultListener != null)
+            activityResultListener.onActivityResult(requestCode, resultCode, data);
+        activityResultListener = null;
+    }
+
+    public void startActivityForResult(Intent intent, int requestCode, ActivityResultListener listener) {
+        activityResultListener = listener;
+        super.startActivityForResult(intent, requestCode);
+    }
+
+    @Keep
+    public void swapResources(String dexPath, int resId) {
+        swappedAssetManager = Utils.getAssets(dexPath);
+        if (swappedAssetManager == null)
+            return;
+        Resources res = super.getResources();
+        swappedResources = new Resources(swappedAssetManager, res.getDisplayMetrics(), res.getConfiguration());
+        swappedTheme = swappedResources.newTheme();
+        swappedTheme.applyStyle(resId, true);
+    }
+
+    @Keep
+    public void restoreResources() {
+        swappedAssetManager = null;
+        swappedResources = null;
+        swappedTheme = null;
+    }
+
+    public interface ActivityResultListener {
+        void onActivityResult(int requestCode, int resultCode, Intent data);
     }
 
 }

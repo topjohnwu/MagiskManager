@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.topjohnwu.magisk.components.Activity;
+import com.topjohnwu.magisk.utils.Const;
 import com.topjohnwu.magisk.utils.Shell;
 import com.topjohnwu.magisk.utils.Topic;
 import com.topjohnwu.magisk.utils.Utils;
@@ -38,11 +40,27 @@ public class MainActivity extends Activity
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
-        getMagiskManager().startup();
 
-        prefs = getMagiskManager().prefs;
+        MagiskManager mm = getMagiskManager();
 
-        if (getMagiskManager().isDarkTheme) {
+        if (!mm.hasInit) {
+            Intent intent = new Intent(this, SplashActivity.class);
+            String section = getIntent().getStringExtra(Const.Key.OPEN_SECTION);
+            if (section != null) {
+                intent.putExtra(Const.Key.OPEN_SECTION, section);
+            }
+            startActivity(intent);
+            finish();
+        }
+
+        String perm = getIntent().getStringExtra(Const.Key.INTENT_PERM);
+        if (perm != null) {
+            ActivityCompat.requestPermissions(this, new String[] { perm }, 0);
+        }
+
+        prefs = mm.prefs;
+
+        if (mm.isDarkTheme) {
             setTheme(R.style.AppTheme_Dark);
         }
         super.onCreate(savedInstanceState);
@@ -70,10 +88,9 @@ public class MainActivity extends Activity
         toggle.syncState();
 
         if (savedInstanceState == null)
-            navigate(getIntent().getStringExtra(MagiskManager.INTENT_SECTION));
+            navigate(getIntent().getStringExtra(Const.Key.OPEN_SECTION));
 
         navigationView.setNavigationItemSelectedListener(this);
-
     }
 
     @Override
@@ -112,17 +129,18 @@ public class MainActivity extends Activity
     }
 
     public void checkHideSection() {
+        MagiskManager mm = getMagiskManager();
         Menu menu = navigationView.getMenu();
         menu.findItem(R.id.magiskhide).setVisible(
-                Shell.rootAccess() && getMagiskManager().magiskVersionCode >= 1300
-                        && prefs.getBoolean("magiskhide", false));
+                Shell.rootAccess() && mm.magiskVersionCode >= 1300
+                        && prefs.getBoolean(Const.Key.MAGISKHIDE, false));
         menu.findItem(R.id.modules).setVisible(
-                Shell.rootAccess() && getMagiskManager().magiskVersionCode >= 0);
-        menu.findItem(R.id.downloads).setVisible(Utils.checkNetworkStatus(this) &&
-                Shell.rootAccess() && getMagiskManager().magiskVersionCode >= 0);
+                Shell.rootAccess() && mm.magiskVersionCode >= 0);
+        menu.findItem(R.id.downloads).setVisible(Utils.checkNetworkStatus() &&
+                Shell.rootAccess() && mm.magiskVersionCode >= 0);
+        menu.setGroupVisible(R.id.second_group, !mm.coreOnly);
         menu.findItem(R.id.log).setVisible(Shell.rootAccess());
-        menu.findItem(R.id.superuser).setVisible(
-                Shell.rootAccess() && getMagiskManager().isSuClient);
+        menu.findItem(R.id.superuser).setVisible(Shell.rootAccess());
     }
 
     public void navigate(String item) {
@@ -176,7 +194,7 @@ public class MainActivity extends Activity
                 displayFragment(new ReposFragment(), "downloads", true);
                 break;
             case R.id.magiskhide:
-                displayFragment(new MagiskHideFragment(), "magiskhide", true);
+                displayFragment(new MagiskHideFragment(), Const.Key.MAGISKHIDE, true);
                 break;
             case R.id.log:
                 displayFragment(new LogFragment(), "log", false);

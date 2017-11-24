@@ -22,6 +22,7 @@ import com.topjohnwu.magisk.R;
 import com.topjohnwu.magisk.asyncs.ParallelTask;
 import com.topjohnwu.magisk.components.Activity;
 import com.topjohnwu.magisk.container.Policy;
+import com.topjohnwu.magisk.utils.Const;
 
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -30,12 +31,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class SuRequestActivity extends Activity {
-
-    public static final int PROMPT = 0;
-    public static final int AUTO_DENY = 1;
-    public static final int AUTO_ALLOW = 2;
-
-    private static final int[] timeoutList = {0, -1, 10, 20, 30, 60};
 
     @BindView(R.id.su_popup) LinearLayout suPopup;
     @BindView(R.id.timeout) Spinner timeout;
@@ -48,7 +43,7 @@ public class SuRequestActivity extends Activity {
     private String socketPath;
     private LocalSocket socket;
     private PackageManager pm;
-    private MagiskManager magiskManager;
+    private MagiskManager mm;
 
     private boolean hasTimeout;
     private Policy policy;
@@ -60,7 +55,7 @@ public class SuRequestActivity extends Activity {
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
 
         pm = getPackageManager();
-        magiskManager = getMagiskManager();
+        mm = getMagiskManager();
 
         Intent intent = getIntent();
         socketPath = intent.getStringExtra("socket");
@@ -85,14 +80,14 @@ public class SuRequestActivity extends Activity {
     }
 
     private void showRequest() {
-        switch (magiskManager.suResponseType) {
-            case AUTO_DENY:
+        switch (mm.suResponseType) {
+            case Const.Value.SU_AUTO_DENY:
                 handleAction(Policy.DENY, 0);
                 return;
-            case AUTO_ALLOW:
+            case Const.Value.SU_AUTO_ALLOW:
                 handleAction(Policy.ALLOW, 0);
                 return;
-            case PROMPT:
+            case Const.Value.SU_PROMPT:
             default:
         }
 
@@ -114,7 +109,7 @@ public class SuRequestActivity extends Activity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         timeout.setAdapter(adapter);
 
-        timer = new CountDownTimer(magiskManager.suRequestTimeout * 1000, 1000) {
+        timer = new CountDownTimer(mm.suRequestTimeout * 1000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 deny_btn.setText(getString(R.string.deny_with_str, "(" + millisUntilFinished / 1000 + ")"));
@@ -169,14 +164,14 @@ public class SuRequestActivity extends Activity {
     }
 
     void handleAction(int action) {
-        handleAction(action, timeoutList[timeout.getSelectedItemPosition()]);
+        handleAction(action, Const.Value.timeoutList[timeout.getSelectedItemPosition()]);
     }
 
     void handleAction(int action, int time) {
         policy.policy = action;
         if (time >= 0) {
             policy.until = (time == 0) ? 0 : (System.currentTimeMillis() / 1000 + time * 60);
-            magiskManager.suDB.addPolicy(policy);
+            mm.suDB.addPolicy(policy);
         }
         handleAction();
     }
@@ -216,7 +211,7 @@ public class SuRequestActivity extends Activity {
                 }
 
                 int uid = payload.getAsInteger("uid");
-                policy = magiskManager.suDB.getPolicy(uid);
+                policy = mm.suDB.getPolicy(uid);
                 if (policy == null) {
                     policy = new Policy(uid, pm);
                 }

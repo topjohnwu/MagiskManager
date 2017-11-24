@@ -5,6 +5,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +17,12 @@ import android.widget.TextView;
 import com.topjohnwu.magisk.R;
 import com.topjohnwu.magisk.asyncs.ParallelTask;
 import com.topjohnwu.magisk.components.SnackbarMaker;
+import com.topjohnwu.magisk.utils.Const;
 import com.topjohnwu.magisk.utils.Shell;
 import com.topjohnwu.magisk.utils.Topic;
 import com.topjohnwu.magisk.utils.Utils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -31,23 +32,11 @@ import butterknife.ButterKnife;
 
 public class ApplicationAdapter extends RecyclerView.Adapter<ApplicationAdapter.ViewHolder> {
 
-    public static final List<String> BLACKLIST =  Arrays.asList(
-            "android",
-            "com.topjohnwu.magisk",
-            "com.google.android.gms"
-    );
-
-    private static final List<String> SNLIST =  Arrays.asList(
-            "com.google.android.apps.walletnfcrel",
-            "com.nianticlabs.pokemongo"
-    );
-
     private List<ApplicationInfo> mOriginalList, mList;
     private List<String> mHideList;
     private PackageManager pm;
     private ApplicationFilter filter;
     private Topic magiskHideDone;
-    private Shell shell;
 
     public ApplicationAdapter(Context context) {
         mOriginalList = mList = Collections.emptyList();
@@ -55,8 +44,11 @@ public class ApplicationAdapter extends RecyclerView.Adapter<ApplicationAdapter.
         filter = new ApplicationFilter();
         pm = context.getPackageManager();
         magiskHideDone = Utils.getMagiskManager(context).magiskHideDone;
-        shell = Shell.getShell(context);
         new LoadApps().exec();
+    }
+
+    private boolean lowercaseContains(CharSequence string, CharSequence nonNullLowercaseSearch) {
+        return !TextUtils.isEmpty(string) && string.toString().toLowerCase().contains(nonNullLowercaseSearch);
     }
 
     @Override
@@ -77,7 +69,7 @@ public class ApplicationAdapter extends RecyclerView.Adapter<ApplicationAdapter.
         holder.itemView.setOnClickListener(null);
         holder.checkBox.setOnCheckedChangeListener(null);
 
-        if (SNLIST.contains(info.packageName)) {
+        if (Const.SN_DEFAULTLIST.contains(info.packageName)) {
             holder.checkBox.setChecked(true);
             holder.checkBox.setEnabled(false);
             holder.itemView.setOnClickListener(v ->
@@ -89,10 +81,10 @@ public class ApplicationAdapter extends RecyclerView.Adapter<ApplicationAdapter.
             holder.checkBox.setChecked(mHideList.contains(info.packageName));
             holder.checkBox.setOnCheckedChangeListener((v, isChecked) -> {
                 if (isChecked) {
-                    Utils.addMagiskHide(shell, info.packageName);
+                    Shell.su_raw("magiskhide --add " + info.packageName);
                     mHideList.add(info.packageName);
                 } else {
-                    Utils.rmMagiskHide(shell, info.packageName);
+                    Shell.su_raw("magiskhide --rm " + info.packageName);
                     mHideList.remove(info.packageName);
                 }
             });
@@ -135,8 +127,8 @@ public class ApplicationAdapter extends RecyclerView.Adapter<ApplicationAdapter.
                 mList = new ArrayList<>();
                 String filter = constraint.toString().toLowerCase();
                 for (ApplicationInfo info : mOriginalList) {
-                    if (Utils.lowercaseContains(info.loadLabel(pm), filter)
-                            || Utils.lowercaseContains(info.packageName, filter)) {
+                    if (lowercaseContains(info.loadLabel(pm), filter)
+                            || lowercaseContains(info.packageName, filter)) {
                         mList.add(info);
                     }
                 }
@@ -157,13 +149,13 @@ public class ApplicationAdapter extends RecyclerView.Adapter<ApplicationAdapter.
             mOriginalList = pm.getInstalledApplications(0);
             for (Iterator<ApplicationInfo> i = mOriginalList.iterator(); i.hasNext(); ) {
                 ApplicationInfo info = i.next();
-                if (ApplicationAdapter.BLACKLIST.contains(info.packageName) || !info.enabled) {
+                if (Const.SN_BLACKLIST.contains(info.packageName) || !info.enabled) {
                     i.remove();
                 }
             }
             Collections.sort(mOriginalList, (a, b) -> a.loadLabel(pm).toString().toLowerCase()
                     .compareTo(b.loadLabel(pm).toString().toLowerCase()));
-            mHideList = Utils.listMagiskHide(shell);
+            mHideList = Shell.su("magiskhide --ls");
             return null;
         }
 

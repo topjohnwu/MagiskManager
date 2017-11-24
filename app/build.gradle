@@ -1,15 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.2"
+    compileSdkVersion 27
+    buildToolsVersion "27.0.1"
 
     defaultConfig {
         applicationId "com.topjohnwu.magisk"
         minSdkVersion 21
-        targetSdkVersion 26
-        versionCode 57
-        versionName "5.4.0"
+        targetSdkVersion 27
+        versionCode 64
+        versionName "5.4.3"
         ndk {
             moduleName 'zipadjust'
             abiFilters 'x86', 'x86_64', 'armeabi-v7a', 'arm64-v8a'
@@ -45,20 +45,20 @@ android {
         disable 'MissingTranslation'
     }
 }
+
 repositories {
     jcenter()
+    google()
     maven { url "https://jitpack.io" }
-    maven { url "https://maven.google.com" }
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation project(':common')
-    implementation project(':jarsigner')
-    implementation 'com.android.support:recyclerview-v7:26.1.0'
-    implementation 'com.android.support:cardview-v7:26.1.0'
-    implementation 'com.android.support:design:26.1.0'
-    implementation 'com.android.support:support-v4:26.1.0'
+    implementation project(':crypto')
+    implementation 'com.android.support:recyclerview-v7:27.0.1'
+    implementation 'com.android.support:cardview-v7:27.0.1'
+    implementation 'com.android.support:design:27.0.1'
+    implementation 'com.android.support:support-v4:27.0.1'
     implementation 'com.jakewharton:butterknife:8.8.1'
     implementation 'com.atlassian.commonmark:commonmark:0.10.0'
     implementation 'org.kamranzafar:jtar:2.3'

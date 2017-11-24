@@ -5,19 +5,16 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.topjohnwu.magisk.asyncs.CheckSafetyNet;
@@ -25,13 +22,10 @@ import com.topjohnwu.magisk.asyncs.CheckUpdates;
 import com.topjohnwu.magisk.components.AlertDialogBuilder;
 import com.topjohnwu.magisk.components.ExpandableView;
 import com.topjohnwu.magisk.components.Fragment;
-import com.topjohnwu.magisk.components.SnackbarMaker;
 import com.topjohnwu.magisk.utils.Shell;
+import com.topjohnwu.magisk.utils.ShowUI;
 import com.topjohnwu.magisk.utils.Topic;
 import com.topjohnwu.magisk.utils.Utils;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindColor;
 import butterknife.BindView;
@@ -42,12 +36,13 @@ import butterknife.Unbinder;
 public class MagiskFragment extends Fragment
         implements Topic.Subscriber, SwipeRefreshLayout.OnRefreshListener, ExpandableView {
 
-    public static final int CAUSE_SERVICE_DISCONNECTED = 0x00001;
-    public static final int CAUSE_NETWORK_LOST = 0x00010;
-    public static final int RESPONSE_ERR = 0x00100;
+    private static final int CAUSE_SERVICE_DISCONNECTED = 0x01;
+    private static final int CAUSE_NETWORK_LOST = 0x02;
+    private static final int RESPONSE_ERR = 0x04;
+    private static final int CONNECTION_FAIL = 0x08;
 
-    public static final int BASIC_PASS = 0x01000;
-    public static final int CTS_PASS = 0x10000;
+    private static final int BASIC_PASS = 0x10;
+    private static final int CTS_PASS = 0x20;
 
     private Container expandableContainer = new Container();
 
@@ -57,15 +52,12 @@ public class MagiskFragment extends Fragment
 
     @BindView(R.id.swipeRefreshLayout) SwipeRefreshLayout mSwipeRefreshLayout;
 
-    @BindView(R.id.magisk_update_card) CardView magiskUpdateCard;
+    @BindView(R.id.magisk_update) RelativeLayout magiskUpdate;
     @BindView(R.id.magisk_update_icon) ImageView magiskUpdateIcon;
     @BindView(R.id.magisk_update_status) TextView magiskUpdateText;
     @BindView(R.id.magisk_update_progress) ProgressBar magiskUpdateProgress;
-
     @BindView(R.id.magisk_status_icon) ImageView magiskStatusIcon;
     @BindView(R.id.magisk_version) TextView magiskVersionText;
-    @BindView(R.id.root_status_icon) ImageView rootStatusIcon;
-    @BindView(R.id.root_status) TextView rootStatusText;
 
     @BindView(R.id.safetyNet_card) CardView safetyNetCard;
     @BindView(R.id.safetyNet_refresh) ImageView safetyNetRefreshIcon;
@@ -77,9 +69,6 @@ public class MagiskFragment extends Fragment
     @BindView(R.id.basic_status_icon) ImageView basicStatusIcon;
     @BindView(R.id.basic_status) TextView basicStatusText;
 
-    @BindView(R.id.bootimage_card) CardView bootImageCard;
-    @BindView(R.id.block_spinner) Spinner spinner;
-    @BindView(R.id.detect_bootimage) Button detectButton;
     @BindView(R.id.install_option_card) CardView installOptionCard;
     @BindView(R.id.keep_force_enc) CheckBox keepEncChkbox;
     @BindView(R.id.keep_verity) CheckBox keepVerityChkbox;
@@ -123,18 +112,18 @@ public class MagiskFragment extends Fragment
 
         // Show Manager update first
         if (mm.remoteManagerVersionCode > BuildConfig.VERSION_CODE) {
-            Utils.showManagerInstallDialog(getActivity());
+            ShowUI.managerInstallDialog(getActivity());
             return;
         }
 
         ((NotificationManager) mm.getSystemService(Context.NOTIFICATION_SERVICE)).cancelAll();
-        Utils.showMagiskInstallDialog(this,
+        ShowUI.magiskInstallDialog(getActivity(),
                 keepEncChkbox.isChecked(), keepVerityChkbox.isChecked());
     }
 
     @OnClick(R.id.uninstall_button)
     void uninstall() {
-        Utils.showUninstallDialog(this);
+        ShowUI.uninstallDialog(getActivity());
     }
 
     @Nullable
@@ -157,7 +146,7 @@ public class MagiskFragment extends Fragment
 
     @Override
     public void onRefresh() {
-        mm.getMagiskInfo();
+        mm.loadMagiskInfo();
         updateUI();
 
         magiskUpdateText.setText(R.string.checking_for_updates);
@@ -175,8 +164,8 @@ public class MagiskFragment extends Fragment
         shownDialog = false;
 
         // Trigger state check
-        if (Utils.checkNetworkStatus(mm)) {
-            new CheckUpdates(getActivity()).exec();
+        if (Utils.checkNetworkStatus()) {
+            new CheckUpdates().exec();
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
         }
@@ -207,35 +196,15 @@ public class MagiskFragment extends Fragment
         return expandableContainer;
     }
 
-    public String getSelectedBootImage() {
-        if (Shell.rootAccess()) {
-            if (mm.bootBlock != null) {
-                return mm.bootBlock;
-            } else {
-                int idx = spinner.getSelectedItemPosition();
-                if (idx > 0)  {
-                    return mm.blockList.get(idx - 1);
-                } else {
-                    SnackbarMaker.make(getActivity(),
-                            R.string.manual_boot_image, Snackbar.LENGTH_LONG).show();
-                    return null;
-                }
-            }
-        } else {
-            return null;
-        }
-    }
-
     private void updateUI() {
         ((MainActivity) getActivity()).checkHideSection();
 
-        boolean hasNetwork = Utils.checkNetworkStatus(getActivity());
+        boolean hasNetwork = Utils.checkNetworkStatus();
         boolean hasRoot = Shell.rootAccess();
         boolean isUpToDate = mm.magiskVersionCode > 1300;
 
-        magiskUpdateCard.setVisibility(hasNetwork ? View.VISIBLE : View.GONE);
+        magiskUpdate.setVisibility(hasNetwork ? View.VISIBLE : View.GONE);
         safetyNetCard.setVisibility(hasNetwork ? View.VISIBLE : View.GONE);
-        bootImageCard.setVisibility(hasNetwork && hasRoot ? View.VISIBLE : View.GONE);
         installOptionCard.setVisibility(hasNetwork ? View.VISIBLE : View.GONE);
         uninstallButton.setVisibility(isUpToDate && hasRoot ? View.VISIBLE : View.GONE);
 
@@ -253,43 +222,6 @@ public class MagiskFragment extends Fragment
 
         magiskStatusIcon.setImageResource(image);
         magiskStatusIcon.setColorFilter(color);
-
-        switch (Shell.rootStatus) {
-            case 0:
-                color = colorBad;
-                image = R.drawable.ic_cancel;
-                rootStatusText.setText(R.string.not_rooted);
-                break;
-            case 1:
-                if (mm.suVersion != null) {
-                    color = colorOK;
-                    image = R.drawable.ic_check_circle;
-                    rootStatusText.setText(mm.suVersion);
-                    break;
-                }
-            case -1:
-            default:
-                color = colorNeutral;
-                image = R.drawable.ic_help;
-                rootStatusText.setText(R.string.root_error);
-        }
-
-        rootStatusIcon.setImageResource(image);
-        rootStatusIcon.setColorFilter(color);
-
-        List<String> items = new ArrayList<>();
-        if (mm.bootBlock != null) {
-            items.add(getString(R.string.auto_detect, mm.bootBlock));
-            spinner.setEnabled(false);
-        } else {
-            items.add(getString(R.string.cannot_auto_detect));
-            if (mm.blockList != null)
-                items.addAll(mm.blockList);
-        }
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_spinner_item, items);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
     }
 
     private void updateCheckUI() {
@@ -298,20 +230,20 @@ public class MagiskFragment extends Fragment
         if (mm.remoteMagiskVersionCode < 0) {
             color = colorNeutral;
             image = R.drawable.ic_help;
-            magiskUpdateText.setText(R.string.cannot_check_updates);
+            magiskUpdateText.setText(R.string.invalid_update_channel);
+            installButton.setVisibility(View.GONE);
         } else {
             color = colorOK;
             image = R.drawable.ic_check_circle;
             magiskUpdateText.setText(getString(R.string.install_magisk_title, "v" + mm.remoteMagiskVersionString));
-        }
-
-        installButton.setVisibility(View.VISIBLE);
-        if (mm.remoteManagerVersionCode > BuildConfig.VERSION_CODE) {
-            installText.setText(getString(R.string.update, getString(R.string.app_name)));
-        } else if (mm.magiskVersionCode > 0 && mm.remoteMagiskVersionCode > mm.magiskVersionCode) {
-            installText.setText(getString(R.string.update, getString(R.string.magisk)));
-        } else {
-            installText.setText(R.string.install);
+            installButton.setVisibility(View.VISIBLE);
+            if (mm.remoteManagerVersionCode > BuildConfig.VERSION_CODE) {
+                installText.setText(getString(R.string.update, getString(R.string.app_name)));
+            } else if (mm.magiskVersionCode > 0 && mm.remoteMagiskVersionCode > mm.magiskVersionCode) {
+                installText.setText(getString(R.string.update, getString(R.string.magisk)));
+            } else {
+                installText.setText(R.string.install);
+            }
         }
 
         if (!shownDialog && (mm.remoteMagiskVersionCode > mm.magiskVersionCode
@@ -330,9 +262,7 @@ public class MagiskFragment extends Fragment
     private void updateSafetyNetUI(int response) {
         safetyNetProgress.setVisibility(View.GONE);
         safetyNetRefreshIcon.setVisibility(View.VISIBLE);
-        if (response < 0) {
-            safetyNetStatusText.setText(R.string.safetyNet_api_error);
-        } else if ((response & 0x111) == 0) {
+        if ((response & 0x0F) == 0) {
             safetyNetStatusText.setText(R.string.safetyNet_check_success);
 
             boolean b;
@@ -357,8 +287,11 @@ public class MagiskFragment extends Fragment
                     resid = R.string.safetyNet_service_disconnected;
                     break;
                 case RESPONSE_ERR:
-                default:
                     resid = R.string.safetyNet_res_invalid;
+                    break;
+                case CONNECTION_FAIL:
+                default:
+                    resid = R.string.safetyNet_api_error;
                     break;
             }
             safetyNetStatusText.setText(resid);
