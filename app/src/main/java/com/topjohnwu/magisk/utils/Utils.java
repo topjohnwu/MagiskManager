@@ -29,7 +29,10 @@ import com.topjohnwu.magisk.components.SnackbarMaker;
 import com.topjohnwu.magisk.receivers.DownloadReceiver;
 
 import java.io.File;
+import java.io.FileInputStream; // checkFileDigest
+import java.io.FileNotFoundException; // checkFileDigest
 import java.io.IOException;
+import java.io.IOException; // checkFileDigest
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -37,6 +40,9 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+
+import java.security.MessageDigest; // checkFileDigest
+import java.security.NoSuchAlgorithmException; // checkFileDigest
 
 public class Utils {
 
@@ -64,12 +70,68 @@ public class Utils {
         return Shell.su(command);
     }
 
+    public static boolean checkFileDigest(File file, String digestType, String digest) {
+        if ( (file == null) || (digest == null) || (digestType == null) || !file.exists() || digest.trim().isEmpty() )
+            return false;
+
+        MessageDigest fileDigest; // Tested with "MD5" and "SHA1"
+        try {
+            fileDigest = MessageDigest.getInstance(digestType);
+        } catch (NoSuchAlgorithmException nsae) { return false; }
+
+        FileInputStream stream;
+        try {
+            stream = new FileInputStream(file);
+        } catch (FileNotFoundException fnfe) { return false; }
+
+        fileDigest.reset();
+
+        byte[] readbuffer = new byte[32 * 1024];
+
+        boolean readDone=false;
+        try {
+            int nread = 0;
+            while ( (nread = stream.read(readbuffer)) != -1 ) {
+                fileDigest.update(readbuffer, 0, nread);
+            }
+            readDone=true;
+        } catch (IOException ioe) { }
+
+        try {
+            stream.close();
+        } catch (IOException ioe) { return false; }
+
+        if (!readDone)
+            return false;
+
+        byte[] b = fileDigest.digest();
+
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < b.length; i++) {
+            sb.append(Integer.toString(((b[i] & 0xff) | 0x100), 16).substring(1));
+        }
+
+        return sb.toString().equalsIgnoreCase(digest.trim());
+    }
+
     public static void dlAndReceive(Context context, DownloadReceiver receiver, String link, String filename) {
+    {
+        dlAndReceive(context, receiver, link, filename, null, null);
+    }
+
+    public static void dlAndReceive(Context context, DownloadReceiver receiver, String link, String filename, String digestType, String digest) {
         if (isDownloading)
             return;
 
         runWithPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE, () -> {
             File file = new File(Const.EXTERNAL_PATH, filename);
+
+            if (checkFileDigest(filename, digestType, digest))
+            {
+                Uri uri = Uri.parse(link);
+                receiver.onDownloadDone(uri);
+                return;
+            }
 
             if ((!file.getParentFile().exists() && !file.getParentFile().mkdirs())
                     || (file.exists() && !file.delete())) {
