@@ -79,7 +79,7 @@
     <string name="ok">OK</string>
     <string name="close">Chiudi</string>
     <string name="repo_install_title">Installazione di %1$s</string>
-    <string name="repo_install_msg">Vuoi installare %1$s ?</string>
+    <string name="repo_install_msg">Vuoi installare %1$s?</string>
     <string name="download">Download</string>
     <string name="download_file_error">Errore nel download del file</string>
     <string name="reboot">Riavvia</string>
