@@ -105,7 +105,7 @@
     <string name="flashing">Flashowanie</string>
     <string name="hide_manager_toast">Ukryj Magisk Manager…</string>
     <string name="hide_manager_toast2">To może chwilę potrwać…</string>
-	<string name="hide_manager_fail_toast">Błąd Menadżera Hide Magisk</string>
+	<string name="hide_manager_fail_toast">Błąd Ukrycia Magisk Managera</string>
     <string name="download_zip_only">Pobierz Tylko Zip</string>
     <string name="patch_boot_file">Patchowanie Pliku Boot Image</string>
     <string name="direct_install">Bezpośrednia instalacja (Zalecane)</string>
