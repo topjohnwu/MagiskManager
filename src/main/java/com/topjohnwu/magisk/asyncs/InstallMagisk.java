@@ -188,8 +188,9 @@ public class InstallMagisk extends ParallelTask<Void, Void, Boolean> {
             // Patch boot image
             shell.run(console, logs,
                     "cd " + install,
-                    "KEEPFORCEENCRYPT=" + mKeepEnc + " KEEPVERITY=" + mKeepVerity + " HIGHCOMP=" + highCompression +
-                    " sh update-binary indep boot_patch.sh " + boot + " || echo 'Failed!'");
+                    Utils.fmt("KEEPFORCEENCRYPT=%b KEEPVERITY=%b HIGHCOMP=%b " +
+                                    "sh update-binary indep boot_patch.sh %s || echo 'Failed!'",
+                            mKeepEnc, mKeepVerity, highCompression, boot));
 
             if (TextUtils.equals(console.get(console.size() - 1), "Failed!"))
                 return false;
@@ -243,13 +244,12 @@ public class InstallMagisk extends ParallelTask<Void, Void, Boolean> {
                     console.add("*********************************");
                     break;
                 case DIRECT_MODE:
-                    // Direct flash boot image and patch dtbo if possible
+                    String binPath = mm.remoteMagiskVersionCode >= 1464 ? "/data/adb/magisk" : "/data/magisk";
                     Shell.getShell().run(console, logs,
-                            "rm -rf /data/magisk/*",
-                            "mkdir -p /data/magisk 2>/dev/null",
-                            "mv -f " + install + "/* /data/magisk",
-                            "rm -rf " + install,
-                            "flash_boot_image " + patched_boot + " " + mBootLocation,
+                            Utils.fmt("rm -rf %s/*; mkdir -p %s; chmod 700 /data/adb", binPath, binPath),
+                            Utils.fmt("cp -af %s/* %s; rm -rf %s", install, binPath, install),
+                            Utils.fmt("flash_boot_image %s %s", patched_boot, mBootLocation),
+                            mm.remoteMagiskVersionCode >= 1464 ? "[ -L /data/magisk.img ] || cp /data/magisk.img /data/adb/magisk.img" : "",
                             "patch_dtbo_image");
                     break;
                 default:

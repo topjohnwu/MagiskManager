@@ -1,6 +1,7 @@
 package com.topjohnwu.magisk.utils;
 
 import android.os.Environment;
+import android.os.Process;
 
 import java.io.File;
 import java.util.Arrays;
@@ -25,7 +26,7 @@ public class Const {
     public static final String TMP_FOLDER_PATH = "/dev/tmp";
     public static final String MAGISK_LOG = "/cache/magisk.log";
     public static final File EXTERNAL_PATH = new File(Environment.getExternalStorageDirectory(), "MagiskManager");
-    public static final String MANAGER_CONFIGS = "/data/.tmp.magisk.config";
+    public static final String MANAGER_CONFIGS = ".tmp.magisk.config";
 
     public static String BUSYBOX_PATH() {
         if (Utils.itemExist("/sbin/.core/busybox/busybox")) {
@@ -62,6 +63,8 @@ public class Const {
             "com.google.android.apps.walletnfcrel",
             "com.nianticlabs.pokemongo"
     );
+
+    public static final int USER_ID = Process.myUid() / 100000;
 
     public static class ID {
         public static final int UPDATE_SERVICE_ID = 1;
