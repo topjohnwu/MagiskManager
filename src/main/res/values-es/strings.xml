@@ -64,7 +64,7 @@
     <string name="app_developers">Desarrolladores principales</string>
     <string name="app_developers_"><![CDATA[Aplicación creada por <a href="https://github.com/topjohnwu">topjohnwu</a> en colaboración con <a href="https://github.com/d8ahazard">Digitalhigh</a> y <a href="https://github.com/dvdandroid">Dvdandroid</a>.]]></string>
     <string name="app_changelog">Registro de cambios</string>
-    <string name="translators">dark-basic, Gawenda, netizen, Deiki, Nosi></string>
+    <string name="translators">dark-basic, Gawenda, netizen, Deiki, Nosi</string>
     <string name="app_version">Versión</string>
     <string name="app_source_code">Código fuente</string>
     <string name="donation">Donar</string>
