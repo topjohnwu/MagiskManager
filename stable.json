@@ -1,8 +1,8 @@
 {
   "app": {
-    "version": "5.4.3",
-    "versionCode": "64",
-    "link": "https://github.com/topjohnwu/MagiskManager/releases/download/v5.4.3/MagiskManager-v5.4.3.apk"
+    "version": "5.5.0",
+    "versionCode": "80",
+    "link": "https://github.com/topjohnwu/MagiskManager/releases/download/v5.5.0/MagiskManager-v5.5.0.apk"
   },
   "magisk": {
     "version": "14.0",
