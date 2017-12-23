@@ -44,7 +44,7 @@
     <string name="author">Loodud %1$s poolt</string>
     <string name="reboot_recovery">Taaskäivita taastusesse</string>
     <string name="reboot_bootloader">Taaskäivita käivitushaldurisse</string>
-    <string name="reboot_download">Taaskäivita allalaadimiseks</string>
+    <string name="reboot_download">Taaskäivita allalaadimisrežiimi</string>
 
     <!--Repo Fragment-->
     <string name="update_available">Uuendus saadaval</string>
