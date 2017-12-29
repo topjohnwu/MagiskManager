@@ -183,7 +183,7 @@
     <string name="global_summary">Alle Root-Sitzungen benutzen den global angelegten Namensraum</string>
     <string name="requester_summary">Root-Sitzungen erben den Namensraum des Abfragenden</string>
     <string name="isolate_summary">Jede Root-Sitzung hat ihren isolierten Namensraum</string>
-	<string name="android_o_not_support">Android 8.0+ wird nicht unterstützt</string>
+    <string name="android_o_not_support">Android 8.0+ wird nicht unterstützt</string>
 
     <!--Superuser-->
     <string name="su_request_title">Superuser-Anfrage</string>
