@@ -96,9 +96,9 @@ public class ShowUI {
         notificationManager.notify(Const.ID.DTBO_NOTIFICATION_ID, builder.build());
     }
 
-    public static void magiskInstallDialog(Activity activity, boolean enc, boolean verity) {
+    public static void magiskInstallDialog(Activity activity) {
         MagiskManager mm = Utils.getMagiskManager(activity);
-        String filename = Utils.getLegalFilename("Magisk-v" + mm.remoteMagiskVersionString + ".zip");
+        String filename = Utils.fmt("Magisk-v%s.zip", mm.remoteMagiskVersionString);
         new AlertDialogBuilder(activity)
             .setTitle(mm.getString(R.string.repo_install_title, mm.getString(R.string.magisk)))
             .setMessage(mm.getString(R.string.repo_install_msg, filename))
@@ -145,8 +145,6 @@ public class ShowUI {
                                                             intent.setData(uri)
                                                                 .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                                                                 .putExtra(Const.Key.FLASH_SET_BOOT, data.getData())
-                                                                .putExtra(Const.Key.FLASH_SET_ENC, enc)
-                                                                .putExtra(Const.Key.FLASH_SET_VERITY, verity)
                                                                 .putExtra(Const.Key.FLASH_ACTION, Const.Value.PATCH_BOOT);
                                                             mm.startActivity(intent);
                                                         }
@@ -175,8 +173,6 @@ public class ShowUI {
                                             Intent intent = new Intent(mm, FlashActivity.class);
                                             intent.setData(uri)
                                                 .putExtra(Const.Key.FLASH_SET_BOOT, boot)
-                                                .putExtra(Const.Key.FLASH_SET_ENC, enc)
-                                                .putExtra(Const.Key.FLASH_SET_VERITY, verity)
                                                 .putExtra(Const.Key.FLASH_ACTION, Const.Value.FLASH_MAGISK);
                                             activity.startActivity(intent);
                                         }
@@ -203,8 +199,6 @@ public class ShowUI {
                                             Intent intent = new Intent(mm, FlashActivity.class);
                                             intent.setData(uri)
                                                     .putExtra(Const.Key.FLASH_SET_BOOT, boot)
-                                                    .putExtra(Const.Key.FLASH_SET_ENC, enc)
-                                                    .putExtra(Const.Key.FLASH_SET_VERITY, verity)
                                                     .putExtra(Const.Key.FLASH_ACTION, Const.Value.FLASH_MAGISK);
                                             activity.startActivity(intent);
                                         }
@@ -236,11 +230,9 @@ public class ShowUI {
         new AlertDialogBuilder(activity)
             .setTitle(mm.getString(R.string.repo_install_title, mm.getString(R.string.app_name)))
             .setMessage(mm.getString(R.string.repo_install_msg,
-                    Utils.getLegalFilename("MagiskManager-v" +
-                            mm.remoteManagerVersionString + ".apk")))
+                    Utils.fmt("MagiskManager-v%s.apk", mm.remoteManagerVersionString)))
             .setCancelable(true)
             .setPositiveButton(R.string.install, (d, i) -> {
-                Utils.dumpPrefs();
                 Utils.runWithPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE, () -> {
                     Intent intent = new Intent(mm, ManagerUpdate.class);
                     intent.putExtra(Const.Key.INTENT_SET_LINK, mm.managerLink);

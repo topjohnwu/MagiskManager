@@ -91,7 +91,7 @@ public class MagiskFragment extends Fragment
             new CheckSafetyNet(getActivity()).exec();
             collapse();
         };
-        if (mm.snetVersion < 0) {
+        if (!CheckSafetyNet.dexPath.exists()) {
             // Show dialog
             new AlertDialogBuilder(getActivity())
                     .setTitle(R.string.proprietary_title)
@@ -117,8 +117,7 @@ public class MagiskFragment extends Fragment
         }
 
         ((NotificationManager) mm.getSystemService(Context.NOTIFICATION_SERVICE)).cancelAll();
-        ShowUI.magiskInstallDialog(getActivity(),
-                keepEncChkbox.isChecked(), keepVerityChkbox.isChecked());
+        ShowUI.magiskInstallDialog(getActivity());
     }
 
     @OnClick(R.id.uninstall_button)
@@ -139,7 +138,9 @@ public class MagiskFragment extends Fragment
         setupExpandable();
 
         keepVerityChkbox.setChecked(mm.keepVerity);
+        keepVerityChkbox.setOnCheckedChangeListener((view, checked) -> mm.keepVerity = checked);
         keepEncChkbox.setChecked(mm.keepEnc);
+        keepEncChkbox.setOnCheckedChangeListener((view, checked) -> mm.keepEnc = checked);
 
         mSwipeRefreshLayout.setOnRefreshListener(this);
         updateUI();

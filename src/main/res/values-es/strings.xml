@@ -25,7 +25,7 @@
     <!--Install Fragment-->
     <string name="advanced_settings_title">Ajustes avanzados</string>
     <string name="keep_force_encryption">Mantener cifrado forzado</string>
-    <string name="keep_dm_verity">Mantener dm-verity</string>
+    <string name="keep_dm_verity">Mantener AVB 2.0/dm-verity</string>
     <string name="current_magisk_title">Versión instalada: %1$s</string>
     <string name="install_magisk_title">Última versión: %1$s</string>
     <string name="uninstall">Desinstalar</string>
@@ -50,6 +50,10 @@
     <string name="update_available">Actualización disponible</string>
     <string name="installed">Instalado</string>
     <string name="not_installed">No Instalado</string>
+    <string name="updated_on">Actualizando en: %1$s</string>
+    <string name="sorting_order">Orden de Clasificación</string>
+    <string name="sort_by_name">Ordenar por nombre</string>
+    <string name="sort_by_update">Ordenar según la última actualización</string>
 
     <!--Log Fragment-->
     <string name="menuSaveLog">Guardar registro</string>
@@ -61,10 +65,8 @@
 
     <!--About Activity-->
     <string name="about">Acerca de</string>
-    <string name="app_developers">Desarrolladores principales</string>
-    <string name="app_developers_"><![CDATA[Aplicación creada por <a href="https://github.com/topjohnwu">topjohnwu</a> en colaboración con <a href="https://github.com/d8ahazard">Digitalhigh</a> y <a href="https://github.com/dvdandroid">Dvdandroid</a>.]]></string>
     <string name="app_changelog">Registro de cambios</string>
-    <string name="translators">Gawenda, netizen, Deiki, Nosi>, dark-basic</string>
+    <string name="translators">dark-basic, Gawenda, netizen, Deiki, Nosi</string>
     <string name="app_version">Versión</string>
     <string name="app_source_code">Código fuente</string>
     <string name="donation">Donar</string>
@@ -111,7 +113,8 @@
     <string name="no_boot_file_patch_support">La versión de Magisk no admite el parcheo de la imagen boot</string>
     <string name="boot_file_patch_msg">Seleccione el volcado de la imagen boot en formato .img o .img.tar</string>
     <string name="complete_uninstall">Desinstalación completa</string>
-    <string name="restore_stock_boot">Restaurar imagen boot Stock</string>
+    <string name="restore_img">Restaurar imágenes</string>
+    <string name="uninstall_app">Desinstalar Aplicación</string>
     <string name="restore_done">¡Restauración Terminada!</string>
     <string name="restore_fail">¡El respaldo de la imagen boot Stock no existe!</string>
     <string name="uninstall_toast">Desinstalación de Magisk Manager en 5 segundos, por favor después reinicie manualmente </string>

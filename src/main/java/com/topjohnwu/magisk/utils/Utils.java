@@ -54,6 +54,17 @@ public class Utils {
         Shell.su_raw(fmt("mkdir -p `dirname '%s'` 2>/dev/null; touch '%s' 2>/dev/null", path, path));
     }
 
+    public static boolean javaCreateFile(File path) {
+        path.getParentFile().mkdirs();
+        try {
+            path.createNewFile();
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public static void removeItem(Object path) {
         Shell.su_raw(fmt("rm -rf %s 2>/dev/null", path));
     }
@@ -62,13 +73,13 @@ public class Utils {
         return Shell.su(fmt("cat %s | sed '$a\\ ' | sed '$d'", path));
     }
 
-    public static String checkMD5(Object path) {
-        List<String> ret = Shell.su(fmt("md5sum %s", path));
-        return isValidShellResponse(ret) ? ret.get(0).split("\\s+")[0] : null;
+    public static String checkInode(Object path) {
+        List<String> ret = Shell.su(fmt("ls -i %s", path));
+        return isValidShellResponse(ret) ? ret.get(0).trim().split("\\s+")[0] : path.toString();
     }
 
     public static void uninstallPkg(String pkg) {
-        Shell.su_raw(fmt("find /data/user*/*/%s -exec umount -l {} 2>/dev/null \\;; pm uninstall %s", pkg, pkg));
+        Shell.su(fmt("umount -l /data/user*/*/%s/*/*.db 2>/dev/null; pm uninstall %s", pkg, pkg));
     }
 
     public static void dlAndReceive(Context context, DownloadReceiver receiver, String link, String filename) {
@@ -76,7 +87,7 @@ public class Utils {
             return;
 
         runWithPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE, () -> {
-            File file = new File(Const.EXTERNAL_PATH, filename);
+            File file = new File(Const.EXTERNAL_PATH, getLegalFilename(filename));
 
             if ((!file.getParentFile().exists() && !file.getParentFile().mkdirs())
                     || (file.exists() && !file.delete())) {
@@ -87,14 +98,12 @@ public class Utils {
             Toast.makeText(context, context.getString(R.string.downloading_toast, filename), Toast.LENGTH_LONG).show();
             isDownloading = true;
 
-            DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+            DownloadManager.Request request = new DownloadManager
+                    .Request(Uri.parse(link))
+                    .setDestinationUri(Uri.fromFile(file));
 
-            if (link != null) {
-                DownloadManager.Request request = new DownloadManager.Request(Uri.parse(link));
-                request.setDestinationUri(Uri.fromFile(file));
-                receiver.setDownloadID(downloadManager.enqueue(request));
-            }
-            receiver.setFilename(filename);
+            DownloadManager dm = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+            receiver.setDownloadID(dm.enqueue(request)).setFile(file);
             context.getApplicationContext().registerReceiver(receiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
         });
     }
@@ -217,11 +226,11 @@ public class Utils {
         }
     }
 
-    public static File getDatabasePath(String dbName) {
-        return getDatabasePath(MagiskManager.get(), dbName);
+    public static File getDB(String dbName) {
+        return getDB(MagiskManager.get(), dbName);
     }
 
-    public static File getDatabasePath(Context context, String dbName) {
+    public static File getDB(Context context, String dbName) {
         return new File(context.getFilesDir().getParent() + "/databases", dbName);
     }
 
@@ -265,7 +274,9 @@ public class Utils {
 
     public static void dumpPrefs() {
         Gson gson = new Gson();
-        String json = gson.toJson(MagiskManager.get().prefs.getAll(), new TypeToken<Map<String, ?>>(){}.getType());
+        Map<String, ?> prefs = MagiskManager.get().prefs.getAll();
+        prefs.remove("App Restrictions");
+        String json = gson.toJson(prefs, new TypeToken<Map<String, ?>>(){}.getType());
         Shell.su(fmt("for usr in /data/user/*; do echo '%s' > ${usr}/%s; done", json, Const.MANAGER_CONFIGS));
     }
 
@@ -273,7 +284,6 @@ public class Utils {
         String config = fmt("/data/user/%d/%s", Const.USER_ID, Const.MANAGER_CONFIGS);
         List<String> ret = readFile(config);
         if (isValidShellResponse(ret)) {
-            removeItem(config);
             SharedPreferences.Editor editor = MagiskManager.get().prefs.edit();
             String json = ret.get(0);
             Gson gson = new Gson();
@@ -285,13 +295,14 @@ public class Utils {
                     editor.putString(entry.getKey(), (String) value);
                 } else if (value instanceof Boolean) {
                     editor.putBoolean(entry.getKey(), (boolean) value);
-                } else if (value instanceof Integer) {
-                    editor.putInt(entry.getKey(), (int) value);
+                } else if (value instanceof Number) {
+                    editor.putInt(entry.getKey(), ((Number) value).intValue());
                 }
             }
             editor.remove(Const.Key.ETAG_KEY);
             editor.apply();
             MagiskManager.get().loadConfig();
+            removeItem(config);
         }
     }
 

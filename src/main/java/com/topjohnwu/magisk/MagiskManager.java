@@ -49,9 +49,8 @@ public class MagiskManager extends Application {
     public int remoteManagerVersionCode = -1;
     public String managerLink;
     public String bootBlock = null;
-    public int snetVersion;
-    public boolean keepVerity;
-    public boolean keepEnc;
+    public boolean keepVerity = false;
+    public boolean keepEnc = false;
 
     // Data
     public Map<String, Module> moduleMap;
@@ -76,6 +75,7 @@ public class MagiskManager extends Application {
     public int updateChannel;
     public String bootFormat;
     public String customChannelUrl;
+    public int repoOrder;
 
     // Global resources
     public SharedPreferences prefs;
@@ -106,16 +106,7 @@ public class MagiskManager extends Application {
             } catch (PackageManager.NameNotFoundException ignored) { /* Expected */ }
         }
 
-        suDB = new SuDatabaseHelper(true);
-
-        if (getPackageName().equals(Const.ORIG_PKG_NAME)) {
-            String pkg = suDB.getStrings(Const.Key.SU_REQUESTER, null);
-            if (pkg != null) {
-                suDB.setStrings(Const.Key.SU_REQUESTER, null);
-                Utils.uninstallPkg(pkg);
-            }
-        }
-
+        suDB = SuDatabaseHelper.getSuDB(false);
         repoDB = new RepoDatabaseHelper(this);
         defaultLocale = Locale.getDefault();
         setLocale();
@@ -154,8 +145,30 @@ public class MagiskManager extends Application {
         updateNotification = prefs.getBoolean(Const.Key.UPDATE_NOTIFICATION, true);
         updateChannel = Utils.getPrefsInt(prefs, Const.Key.UPDATE_CHANNEL, Const.Value.STABLE_CHANNEL);
         bootFormat = prefs.getString(Const.Key.BOOT_FORMAT, ".img");
-        snetVersion = prefs.getInt(Const.Key.SNET_VER, -1);
         customChannelUrl = prefs.getString(Const.Key.CUSTOM_CHANNEL, "");
+        repoOrder = prefs.getInt(Const.Key.REPO_ORDER, Const.Value.ORDER_NAME);
+    }
+
+    public void writeConfig() {
+        prefs.edit()
+                .putBoolean(Const.Key.DARK_THEME, isDarkTheme)
+                .putBoolean(Const.Key.MAGISKHIDE, magiskHide)
+                .putBoolean(Const.Key.UPDATE_NOTIFICATION, updateNotification)
+                .putBoolean(Const.Key.HOSTS, Utils.itemExist(Const.MAGISK_HOST_FILE()))
+                .putBoolean(Const.Key.COREONLY, Utils.itemExist(Const.MAGISK_DISABLE_FILE))
+                .putBoolean(Const.Key.SU_REAUTH, suReauth)
+                .putString(Const.Key.SU_REQUEST_TIMEOUT, String.valueOf(suRequestTimeout))
+                .putString(Const.Key.SU_AUTO_RESPONSE, String.valueOf(suResponseType))
+                .putString(Const.Key.SU_NOTIFICATION, String.valueOf(suNotificationType))
+                .putString(Const.Key.ROOT_ACCESS, String.valueOf(suAccessState))
+                .putString(Const.Key.SU_MULTIUSER_MODE, String.valueOf(multiuserMode))
+                .putString(Const.Key.SU_MNT_NS, String.valueOf(suNamespaceMode))
+                .putString(Const.Key.UPDATE_CHANNEL, String.valueOf(updateChannel))
+                .putString(Const.Key.LOCALE, localeConfig)
+                .putString(Const.Key.BOOT_FORMAT, bootFormat)
+                .putInt(Const.Key.UPDATE_SERVICE_VER, Const.UPDATE_SERVICE_VER)
+                .putInt(Const.Key.REPO_ORDER, repoOrder)
+                .apply();
     }
 
     public static void toast(String msg, int duration) {
@@ -195,27 +208,41 @@ public class MagiskManager extends Application {
             magiskHide = true;
         }
 
+        ret = Shell.su("echo \"$BOOTIMAGE\"");
+        if (Utils.isValidShellResponse(ret))
+            bootBlock = ret.get(0);
+
+        if (suDB != null && !SuDatabaseHelper.verified) {
+            suDB.close();
+            suDB = SuDatabaseHelper.getSuDB(true);
+        }
+    }
+
+    public void getDefaultInstallFlags() {
+        List<String> ret;
+        ret = Shell.su("echo \"$DTBOIMAGE\"");
+        if (Utils.isValidShellResponse(ret))
+            keepVerity = true;
+
         ret = Shell.su(
                 "getvar KEEPVERITY",
                 "echo $KEEPVERITY");
         try {
-            keepVerity = Utils.isValidShellResponse(ret) && Boolean.parseBoolean(ret.get(0));
-        } catch (NumberFormatException e) {
-            keepVerity = false;
-        }
+            if (Utils.isValidShellResponse(ret))
+                keepVerity = Boolean.parseBoolean(ret.get(0));
+        } catch (NumberFormatException ignored) {}
+
+        ret = Shell.sh("getprop ro.crypto.state");
+        if (Utils.isValidShellResponse(ret) && ret.get(0).equals("encrypted"))
+            keepEnc = true;
+
         ret = Shell.su(
                 "getvar KEEPFORCEENCRYPT",
                 "echo $KEEPFORCEENCRYPT");
         try {
-            keepEnc = Utils.isValidShellResponse(ret) && Boolean.parseBoolean(ret.get(0));
-        } catch (NumberFormatException e) {
-            keepEnc = false;
-        }
-
-        if (suDB != null) {
-            suDB.close();
-            suDB = new SuDatabaseHelper();
-        }
+            if (Utils.isValidShellResponse(ret))
+                keepEnc = Boolean.parseBoolean(ret.get(0));
+        } catch (NumberFormatException ignored) {}
     }
 
     public void setPermissionGrantCallback(Runnable callback) {

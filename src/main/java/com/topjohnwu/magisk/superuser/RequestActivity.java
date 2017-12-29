@@ -62,6 +62,7 @@ public class RequestActivity extends Activity {
 
         pm = getPackageManager();
         mm = Utils.getMagiskManager(this);
+        mm.suDB.cleanup();
 
         Intent intent = getIntent();
         socketPath = intent.getStringExtra("socket");
@@ -131,6 +132,7 @@ public class RequestActivity extends Activity {
             handleAction(Policy.ALLOW);
             timer.cancel();
         });
+        grant_btn.requestFocus();
         deny_btn.setOnClickListener(v -> {
             handleAction(Policy.DENY);
             timer.cancel();

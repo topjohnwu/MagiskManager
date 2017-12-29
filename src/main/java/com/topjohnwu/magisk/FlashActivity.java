@@ -56,7 +56,7 @@ public class FlashActivity extends Activity {
     void saveLogs() {
         Calendar now = Calendar.getInstance();
         String filename = String.format(Locale.US,
-                "install_log_%04d%02d%02d_%02d:%02d:%02d.log",
+                "install_log_%04d%02d%02d_%02d%02d%02d.log",
                 now.get(Calendar.YEAR), now.get(Calendar.MONTH) + 1,
                 now.get(Calendar.DAY_OF_MONTH), now.get(Calendar.HOUR_OF_DAY),
                 now.get(Calendar.MINUTE), now.get(Calendar.SECOND));
@@ -109,19 +109,16 @@ public class FlashActivity extends Activity {
         Intent intent = getIntent();
         Uri uri = intent.getData();
 
-        boolean keepEnc = intent.getBooleanExtra(Const.Key.FLASH_SET_ENC, false);
-        boolean keepVerity = intent.getBooleanExtra(Const.Key.FLASH_SET_VERITY, false);
-
         switch (intent.getStringExtra(Const.Key.FLASH_ACTION)) {
             case Const.Value.FLASH_ZIP:
                 new FlashZip(this, uri, console, logs).exec();
                 break;
             case Const.Value.PATCH_BOOT:
-                new InstallMagisk(this, console, logs, uri, keepEnc, keepVerity, (Uri) intent.getParcelableExtra(Const.Key.FLASH_SET_BOOT))
+                new InstallMagisk(this, console, logs, uri, (Uri) intent.getParcelableExtra(Const.Key.FLASH_SET_BOOT))
                         .exec();
                 break;
             case Const.Value.FLASH_MAGISK:
-                new InstallMagisk(this, console, logs, uri, keepEnc, keepVerity, intent.getStringExtra(Const.Key.FLASH_SET_BOOT))
+                new InstallMagisk(this, console, logs, uri, intent.getStringExtra(Const.Key.FLASH_SET_BOOT))
                         .exec();
                 break;
         }

@@ -20,8 +20,6 @@ import com.topjohnwu.magisk.utils.Const;
 import com.topjohnwu.magisk.utils.Shell;
 import com.topjohnwu.magisk.utils.Utils;
 
-import java.util.List;
-
 public class SplashActivity extends Activity {
 
     @Override
@@ -35,6 +33,10 @@ public class SplashActivity extends Activity {
 
         MagiskManager mm = getMagiskManager();
 
+        mm.loadMagiskInfo();
+        mm.getDefaultInstallFlags();
+        Utils.loadPrefs();
+
         // Dynamic detect all locales
         new LoadLocale().exec();
 
@@ -44,9 +46,6 @@ public class SplashActivity extends Activity {
                     getString(R.string.magisk_updates), NotificationManager.IMPORTANCE_DEFAULT);
             getSystemService(NotificationManager.class).createNotificationChannel(channel);
         }
-
-        mm.loadMagiskInfo();
-        Utils.loadPrefs();
 
         LoadModules loadModuleTask = new LoadModules();
 
@@ -62,13 +61,8 @@ public class SplashActivity extends Activity {
         // Magisk working as expected
         if (Shell.rootAccess() && mm.magiskVersionCode > 0) {
 
-            List<String> ret = Shell.su("echo \"$BOOTIMAGE\"");
-            if (Utils.isValidShellResponse(ret)) {
-                mm.bootBlock = ret.get(0);
-            }
-
             // Add update checking service
-            if (Const.Value.UPDATE_SERVICE_VER > mm.prefs.getInt(Const.Key.UPDATE_SERVICE_VER, -1)) {
+            if (Const.UPDATE_SERVICE_VER > mm.prefs.getInt(Const.Key.UPDATE_SERVICE_VER, -1)) {
                 ComponentName service = new ComponentName(this, UpdateCheckService.class);
                 JobInfo info = new JobInfo.Builder(Const.ID.UPDATE_SERVICE_ID, service)
                         .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
@@ -86,24 +80,7 @@ public class SplashActivity extends Activity {
         }
 
         // Write back default values
-        mm.prefs.edit()
-                .putBoolean(Const.Key.DARK_THEME, mm.isDarkTheme)
-                .putBoolean(Const.Key.MAGISKHIDE, mm.magiskHide)
-                .putBoolean(Const.Key.UPDATE_NOTIFICATION, mm.updateNotification)
-                .putBoolean(Const.Key.HOSTS, Utils.itemExist(Const.MAGISK_HOST_FILE()))
-                .putBoolean(Const.Key.COREONLY, Utils.itemExist(Const.MAGISK_DISABLE_FILE))
-                .putBoolean(Const.Key.SU_REAUTH, mm.suReauth)
-                .putString(Const.Key.SU_REQUEST_TIMEOUT, String.valueOf(mm.suRequestTimeout))
-                .putString(Const.Key.SU_AUTO_RESPONSE, String.valueOf(mm.suResponseType))
-                .putString(Const.Key.SU_NOTIFICATION, String.valueOf(mm.suNotificationType))
-                .putString(Const.Key.ROOT_ACCESS, String.valueOf(mm.suAccessState))
-                .putString(Const.Key.SU_MULTIUSER_MODE, String.valueOf(mm.multiuserMode))
-                .putString(Const.Key.SU_MNT_NS, String.valueOf(mm.suNamespaceMode))
-                .putString(Const.Key.UPDATE_CHANNEL, String.valueOf(mm.updateChannel))
-                .putString(Const.Key.LOCALE, mm.localeConfig)
-                .putString(Const.Key.BOOT_FORMAT, mm.bootFormat)
-                .putInt(Const.Key.UPDATE_SERVICE_VER, Const.Value.UPDATE_SERVICE_VER)
-                .apply();
+        mm.writeConfig();
 
         mm.hasInit = true;
 

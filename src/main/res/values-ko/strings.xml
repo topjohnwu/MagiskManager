@@ -20,7 +20,7 @@
     <!--Install Fragment-->
     <string name="advanced_settings_title">고급 설정</string>
     <string name="keep_force_encryption">강제 암호화 유지</string>
-    <string name="keep_dm_verity">dm-verity 유지</string>
+    <string name="keep_dm_verity">AVB 2.0/dm-verity 유지</string>
     <string name="current_magisk_title">설치된버전: %1$s</string>
     <string name="install_magisk_title">최신버전: %1$s</string>
     <string name="uninstall">제거</string>
@@ -51,8 +51,6 @@
 
     <!--About Activity-->
     <string name="about">정보</string>
-    <string name="app_developers">주요 개발자</string>
-    <string name="app_developers_"><![CDATA[<a href="https://github.com/d8ahazard">Digitalhigh</a>와 <a href="https://github.com/dvdandroid">Dvdandroid</a>의 도움으로 <a href="https://github.com/topjohnwu">topjohnwu</a>가 앱을 개발하였습니다.]]></string>
     <string name="app_changelog">앱 변경 사항</string>
     <string name="translators">lilymaniac</string>
     <string name="app_version">앱 버전</string>

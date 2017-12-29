@@ -3,6 +3,8 @@ package com.topjohnwu.magisk.utils;
 import android.os.Environment;
 import android.os.Process;
 
+import com.topjohnwu.magisk.MagiskManager;
+
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
@@ -28,6 +30,11 @@ public class Const {
     public static final File EXTERNAL_PATH = new File(Environment.getExternalStorageDirectory(), "MagiskManager");
     public static final String MANAGER_CONFIGS = ".tmp.magisk.config";
 
+    // Versions
+    public static final int UPDATE_SERVICE_VER = 1;
+    public static final int SNET_VER = 7;
+    public static final int MIN_MODULE_VER = 1400;
+
     public static String BUSYBOX_PATH() {
         if (Utils.itemExist("/sbin/.core/busybox/busybox")) {
             return "/sbin/.core/busybox";
@@ -51,9 +58,9 @@ public class Const {
     }
 
     /* A list of apps that should not be shown as hide-able */
-    public static final List<String> SN_BLACKLIST =  Arrays.asList(
+    public static final List<String> HIDE_BLACKLIST =  Arrays.asList(
             "android",
-            "com.topjohnwu.magisk",
+            MagiskManager.get().getPackageName(),
             "com.google.android.gms"
     );
 
@@ -82,12 +89,12 @@ public class Const {
     public static class Url {
         public static final String STABLE_URL = "https://raw.githubusercontent.com/topjohnwu/MagiskManager/update/stable.json";
         public static final String BETA_URL = "https://raw.githubusercontent.com/topjohnwu/MagiskManager/update/beta.json";
-        public static final String SNET_URL = "https://github.com/topjohnwu/MagiskManager/raw/43745edac091dd8b5ba5f6076006677d1d6c5899/snet.apk";
+        public static final String SNET_URL = "https://github.com/topjohnwu/MagiskManager/raw/a82a5e5a49285df65da91d2e8b24f4783841b515/snet.apk";
         public static final String REPO_URL = "https://api.github.com/users/Magisk-Modules-Repo/repos?per_page=100&page=%d";
         public static final String FILE_URL = "https://raw.githubusercontent.com/Magisk-Modules-Repo/%s/master/%s";
         public static final String ZIP_URL = "https://github.com/Magisk-Modules-Repo/%s/archive/master.zip";
         public static final String DONATION_URL = "https://www.paypal.me/topjohnwu";
-        public static final String XDA_THREAD = "http://forum.xda-developers.com/showthread.php?t=3432382";
+        public static final String XDA_THREAD = "http://forum.xda-developers.com/showthread.php?t=3473445";
         public static final String SOURCE_CODE_URL = "https://github.com/topjohnwu/MagiskManager";
     }
 
@@ -110,16 +117,12 @@ public class Const {
         public static final String INTENT_PERM = "perm_dialog";
         public static final String FLASH_ACTION = "action";
         public static final String FLASH_SET_BOOT = "boot";
-        public static final String FLASH_SET_ENC = "enc";
-        public static final String FLASH_SET_VERITY = "verity";
-
 
         // others
         public static final String UPDATE_NOTIFICATION = "notification";
         public static final String UPDATE_CHANNEL = "update_channel";
         public static final String CUSTOM_CHANNEL = "custom_channel";
         public static final String BOOT_FORMAT = "boot_format";
-        public static final String SNET_VER = "snet_version";
         public static final String UPDATE_SERVICE_VER = "update_service_version";
         public static final String APP_VER = "app_version";
         public static final String MAGISKHIDE = "magiskhide";
@@ -130,6 +133,7 @@ public class Const {
         public static final String ETAG_KEY = "ETag";
         public static final String LINK_KEY = "Link";
         public static final String IF_NONE_MATCH = "If-None-Match";
+        public static final String REPO_ORDER = "repo_order";
     }
 
 
@@ -159,8 +163,7 @@ public class Const {
         public static final String PATCH_BOOT = "patch";
         public static final String FLASH_MAGISK = "magisk";
         public static final int[] timeoutList = {0, -1, 10, 20, 30, 60};
-        public static final int UPDATE_SERVICE_VER = 1;
-        public static final int SNET_VER = 5;
-        public static final int MIN_MODULE_VER = 1400;
+        public static final int ORDER_NAME = 0;
+        public static final int ORDER_DATE = 1;
     }
 }

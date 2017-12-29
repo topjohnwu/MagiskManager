@@ -108,7 +108,7 @@ public class ApplicationAdapter extends RecyclerView.Adapter<ApplicationAdapter.
 
         @BindView(R.id.app_icon) ImageView appIcon;
         @BindView(R.id.app_name) TextView appName;
-        @BindView(R.id.app_package) TextView appPackage;
+        @BindView(R.id.package_name) TextView appPackage;
         @BindView(R.id.checkbox) CheckBox checkBox;
 
         ViewHolder(View itemView) {
@@ -149,7 +149,7 @@ public class ApplicationAdapter extends RecyclerView.Adapter<ApplicationAdapter.
             mOriginalList = pm.getInstalledApplications(0);
             for (Iterator<ApplicationInfo> i = mOriginalList.iterator(); i.hasNext(); ) {
                 ApplicationInfo info = i.next();
-                if (Const.SN_BLACKLIST.contains(info.packageName) || !info.enabled) {
+                if (Const.HIDE_BLACKLIST.contains(info.packageName) || !info.enabled) {
                     i.remove();
                 }
             }

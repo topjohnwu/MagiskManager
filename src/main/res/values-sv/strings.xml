@@ -24,7 +24,7 @@
     <!--Install Fragment-->
     <string name="advanced_settings_title">Advancerade inställningar</string>
     <string name="keep_force_encryption">Fortsätt tvinga kryptering</string>
-    <string name="keep_dm_verity">Behåll dm-verity</string>
+    <string name="keep_dm_verity">Behåll AVB 2.0/dm-verity</string>
     <string name="current_magisk_title">Installerad: %1$s</string>
     <string name="install_magisk_title">Senaste: %1$s</string>
     <string name="uninstall">Avinstallera</string>
@@ -56,8 +56,6 @@
 
     <!--About Activity-->
     <string name="about">Om</string>
-    <string name="app_developers">Huvudutvecklare</string>
-    <string name="app_developers_"><![CDATA[Appen skapades av <a href="https://github.com/topjohnwu">topjohnwu</a> i samarbete med <a href="https://github.com/d8ahazard">Digitalhigh</a> och <a href="https://github.com/dvdandroid">Dvdandroid</a>.]]></string>
     <string name="app_changelog">Ändringslogg</string>
     <string name="translators" />
     <string name="app_version">Version</string>
