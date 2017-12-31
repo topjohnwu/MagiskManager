@@ -41,6 +41,10 @@ public class SuDatabaseHelper extends SQLiteOpenHelper {
     private PackageManager pm;
     private SQLiteDatabase mDb;
 
+    private static void unmntDB() {
+        Shell.su(Utils.fmt("umount -l /data/user*/*/%s/*/*.db", MagiskManager.get().getPackageName()));
+    }
+
     private static Context initDB(boolean verify) {
         Context context, de = null;
         MagiskManager ce = MagiskManager.get();
@@ -58,7 +62,7 @@ public class SuDatabaseHelper extends SQLiteOpenHelper {
 
         File db = Utils.getDB(context, DB_NAME);
         if (!verify) {
-            if (db.length() == 0) {
+            if (db.exists() && db.length() == 0) {
                 ce.loadMagiskInfo();
                 // Continue verification
             } else {
@@ -70,16 +74,20 @@ public class SuDatabaseHelper extends SQLiteOpenHelper {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             if (ce.magiskVersionCode < 1410) {
                 if (context == de) {
+                    unmntDB();
                     ce.moveDatabaseFrom(de, DB_NAME);
                     context = ce;
                 }
             } else {
                 if (context == ce) {
+                    unmntDB();
                     de.moveDatabaseFrom(ce, DB_NAME);
                     context = de;
                 }
             }
         }
+        // Context might be updated
+        db = Utils.getDB(context, DB_NAME);
 
         if (!Shell.rootAccess())
             return context;
@@ -100,7 +108,7 @@ public class SuDatabaseHelper extends SQLiteOpenHelper {
             // New global su db
             Shell.su(Utils.fmt("mkdir %s 2>/dev/null; chmod 700 %s", GLOBAL_DB.getParent(), GLOBAL_DB.getParent()));
             if (!Utils.itemExist(GLOBAL_DB)) {
-                Utils.javaCreateFile(db);
+                context.openOrCreateDatabase(DB_NAME, 0, null).close();
                 Shell.su(Utils.fmt("cp -af %s %s; rm -f %s*", db, GLOBAL_DB, db));
             }
             verified = TextUtils.equals(Utils.checkInode(GLOBAL_DB), Utils.checkInode(db));
@@ -117,12 +125,17 @@ public class SuDatabaseHelper extends SQLiteOpenHelper {
         return context;
     }
 
-    public SuDatabaseHelper() {
-        this(true);
-    }
-
-    public SuDatabaseHelper(boolean verify) {
-        this(initDB(verify));
+    public static SuDatabaseHelper getSuDB(boolean verify) {
+        try {
+            return new SuDatabaseHelper(initDB(verify));
+        } catch(Exception e) {
+            // Try to catch runtime exceptions and remove all db for retry
+            unmntDB();
+            Shell.su(Utils.fmt("rm -rf /data/user*/*/magisk.db /data/adb/magisk.db /data/user*/*/%s/databases"),
+                    MagiskManager.get().getPackageName());
+            e.printStackTrace();
+            return new SuDatabaseHelper(initDB(false));
+        }
     }
 
     private SuDatabaseHelper(Context context) {

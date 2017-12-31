@@ -28,7 +28,7 @@ public class RepoDatabaseHelper extends SQLiteOpenHelper {
 
         // Clear bad repos
         mDb.delete(TABLE_NAME, "minMagisk<?",
-                new String[] { String.valueOf(Const.Value.MIN_MODULE_VER) });
+                new String[] { String.valueOf(Const.MIN_MODULE_VER) });
     }
 
     @Override
@@ -95,9 +95,17 @@ public class RepoDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public Cursor getRepoCursor() {
+        String orderBy = null;
+        switch (mm.repoOrder) {
+            case Const.Value.ORDER_NAME:
+                orderBy = "name COLLATE NOCASE";
+                break;
+            case Const.Value.ORDER_DATE:
+                orderBy = "last_update DESC";
+        }
         return mDb.query(TABLE_NAME, null, "minMagisk<=?",
                 new String[] { String.valueOf(mm.magiskVersionCode) },
-                null, null, "name COLLATE NOCASE");
+                null, null, orderBy);
     }
 
     public List<String> getRepoIDList() {
