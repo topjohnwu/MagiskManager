@@ -155,6 +155,8 @@
     <string name="request_timeout_summary">%1$s secunde</string>
     <string name="settings_su_reauth_title">Reautentificare după actualizare</string>
     <string name="settings_su_reauth_summary">Reautentificare permisiuni pentru superuser după o actualizare a aplicației</string>
+    <string name="settings_su_fingerprint_title">Activați autentificarea cu amprenta digitală</string>
+    <string name="settings_su_fingerprint_summary">Utilizați scanerul de amprentă pentru a permite solicitările superuser</string>
  
     <string name="multiuser_mode">Mod Multiutilizator</string>
     <string name="settings_owner_only">Numai proprietarul dispozitivului</string>
@@ -201,6 +203,7 @@
     <string name="su_revoke_msg">Confirmați revocarea drepturilor pentru %1$s?</string>
     <string name="toast">Mesaj</string>
     <string name="none">Nimic</string>
+    <string name="auth_fail">Autentificare eşuată</string>
 
     <!--Superuser logs-->
     <string name="pid">PID:\u0020</string>
