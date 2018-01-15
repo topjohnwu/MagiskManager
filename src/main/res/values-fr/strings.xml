@@ -164,7 +164,7 @@
     <string name="deny">Refuser</string>
     <string name="prompt">Demander</string>
     <string name="grant">Accepter</string>
-    <string name="su_warning">Accepter un accès complet à votre appareil.\nRefuser si vous n\'êtes pas sûr!</string>
+    <string name="su_warning">Accepter un accès complet à votre appareil.\nRefuser si vous n\'êtes pas sûr !</string>
     <string name="forever">Toujours</string>
     <string name="once">Une fois</string>
     <string name="tenmin">10 min</string>
@@ -173,7 +173,7 @@
     <string name="sixtymin">60 min</string>
     <string name="su_allow_toast">%1$s a obtenu les droits Superuser</string>
     <string name="su_deny_toast">%1$s n\'a pas obtenu les droits Superuser</string>
-    <string name="no_apps_found">Aucun application trouvée</string>
+    <string name="no_apps_found">Aucune application trouvée</string>
     <string name="su_snack_grant">Les droits Superuser de %1$s sont accordés</string>
     <string name="su_snack_deny">Les droits Superuser de %1$s sont refusés</string>
     <string name="su_snack_notif_on">Les notifications pour %1$s sont activées</string>
