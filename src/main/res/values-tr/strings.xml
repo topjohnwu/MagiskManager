@@ -160,8 +160,10 @@
     <string name="request_timeout">İstek Zaman Aşımı</string>
     <string name="superuser_notification">Yetkili Kullanıcı Bildirimi</string>
     <string name="request_timeout_summary">%1$s saniye</string>
-    <string name="settings_su_reauth_title">Yükseltmeden sonra yeniden kimlik doğrulaması yapın</string>
+    <string name="settings_su_reauth_title">Yükseltmeden sonra yeniden kimlik doğrulama</string>
     <string name="settings_su_reauth_summary">Uygulama yükseltmeleri sonrasında yetkili kullanıcı izinlerini yeniden doğrulama</string>
+    <string name="settings_su_fingerprint_title">Parmak İzi Kimlik Doğrulamayı Etkinleştir</string>
+    <string name="settings_su_fingerprint_summary">Yetkili kullanıcı isteklerine izin vermek için parmak izi tarayıcısını kullan</string>
 
     <string name="multiuser_mode">Çok Kullanıcılı Mod</string>
     <string name="settings_owner_only">Yalnızca Cihaz Sahibi</string>
@@ -208,6 +210,7 @@
     <string name="su_revoke_msg">%1$s hakları geri alınsın mı?</string>
     <string name="toast">Pencere</string>
     <string name="none">Hiçbiri</string>
+    <string name="auth_fail">Kimlik Doğrulama Başarısız</string>
 
     <!--Superuser logs-->
     <string name="pid">PID:\u0020</string>
