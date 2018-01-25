@@ -143,6 +143,7 @@
 	<string name="settings_boot_format_summary">Sélectionner le format de l\'image boot patchée finale.\nChoisir .img pour flasher via fastboot/mode download ; choisir .img.tar pour flasher via ODIN.</string>
 	<string name="settings_su_reauth_title">Ré-authentifier après mise à jour</string>
 	<string name="settings_su_reauth_summary">Ré-authentifier les permissions superuser après les mises à jour d\'une application</string>
+	<string name="settings_su_fingerprint_title">Activer l\'authentification par empreinte</string>
 	<string name="multiuser_mode">Mode multi-utilisateurs</string>
 	<string name="settings_owner_only">Appareil du propriétaire uniquement</string>
 	<string name="settings_owner_manage">Appareil du propriétaire géré</string>
