@@ -1,26 +1,19 @@
 package com.topjohnwu.magisk.utils;
 
-import android.content.res.AssetManager;
-
-import com.topjohnwu.crypto.JarMap;
-import com.topjohnwu.crypto.SignAPK;
-import com.topjohnwu.magisk.MagiskManager;
+import com.topjohnwu.utils.JarMap;
+import com.topjohnwu.utils.SignAPK;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 public class ZipUtils {
-
-    static {
-        System.loadLibrary("zipadjust");
-    }
-
-    public native static void zipAdjust(String filenameIn, String filenameOut);
 
     public static void unzip(File zip, File folder, String path, boolean junkPath) throws Exception {
         InputStream in = new BufferedInputStream(new FileInputStream(zip));
@@ -55,18 +48,25 @@ public class ZipUtils {
         }
     }
 
-    public static void signZip(InputStream is, File output, boolean minSign) throws Exception {
-        signZip(new JarMap(is, false), output, minSign);
+    public static void signZip(InputStream is, File output) throws Exception {
+        try (JarMap map = new JarMap(is, false)) {
+            signZip(map, output);
+        }
     }
 
-    public static void signZip(File input, File output, boolean minSign) throws Exception {
-        signZip(new JarMap(input, false), output, minSign);
+    public static void signZip(File input, File output) throws Exception {
+        try (JarMap map = new JarMap(input, false)) {
+            signZip(map, output);
+        }
     }
 
-    public static void signZip(JarMap input, File output, boolean minSign) throws Exception {
-        AssetManager assets = MagiskManager.get().getAssets();
-        SignAPK.signZip(
-                assets.open(Const.PUBLIC_KEY_NAME), assets.open(Const.PRIVATE_KEY_NAME),
-                input, output, minSign);
+    public static void signZip(JarMap input, File output) throws Exception {
+        try (BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(output))) {
+            signZip(input, out);
+        }
+    }
+
+    public static void signZip(JarMap input, OutputStream output) throws Exception {
+        SignAPK.signZip(null, null, input, output);
     }
 }

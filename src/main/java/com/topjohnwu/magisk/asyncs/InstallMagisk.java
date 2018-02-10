@@ -7,7 +7,6 @@ import android.os.Build;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.topjohnwu.crypto.SignBoot;
 import com.topjohnwu.magisk.FlashActivity;
 import com.topjohnwu.magisk.MagiskManager;
 import com.topjohnwu.magisk.container.TarEntry;
@@ -15,6 +14,7 @@ import com.topjohnwu.magisk.utils.Const;
 import com.topjohnwu.magisk.utils.Utils;
 import com.topjohnwu.magisk.utils.ZipUtils;
 import com.topjohnwu.superuser.Shell;
+import com.topjohnwu.utils.SignBoot;
 
 import org.kamranzafar.jtar.TarInputStream;
 import org.kamranzafar.jtar.TarOutputStream;
@@ -70,7 +70,7 @@ public class InstallMagisk extends ParallelTask<Void, Void, Boolean> {
                         mm.createDeviceProtectedStorageContext() :
                         mm).getFilesDir().getParent()
                 , "install");
-        Shell.sh_raw("rm -rf " + install);
+        Shell.Async.sh("rm -rf " + install);
 
         List<String> abis = Arrays.asList(Build.SUPPORTED_ABIS);
         String arch;
@@ -102,13 +102,13 @@ public class InstallMagisk extends ParallelTask<Void, Void, Boolean> {
                 console.add("! Cannot unzip zip");
                 throw e;
             }
-            Shell.sh("chmod 755 " + install + "/*");
+            Shell.Sync.sh("chmod 755 " + install + "/*");
 
             File boot = new File(install, "boot.img");
             boolean highCompression = false;
             switch (mode) {
                 case PATCH_MODE:
-                    console.add("- Use boot image: " + boot);
+                    console.add("- Use boot/ramdisk image: " + boot);
                     // Copy boot image to local
                     try (
                         InputStream in = mm.getContentResolver().openInputStream(mBootImg);
@@ -140,7 +140,7 @@ public class InstallMagisk extends ParallelTask<Void, Void, Boolean> {
                     }
                     break;
                 case DIRECT_MODE:
-                    console.add("- Use boot image: " + mBootLocation);
+                    console.add("- Use boot/ramdisk image: " + mBootLocation);
                     if (mm.remoteMagiskVersionCode >= 1463) {
                         List<String> ret = new ArrayList<>();
                          Shell.getShell().run(ret, logs,
@@ -154,7 +154,7 @@ public class InstallMagisk extends ParallelTask<Void, Void, Boolean> {
                         }
                     }
                     if (boot.createNewFile()) {
-                        Shell.su("cat " + mBootLocation + " > " + boot);
+                        Shell.Sync.su("cat " + mBootLocation + " > " + boot);
                     } else {
                         console.add("! Dump boot image failed");
                         return false;
@@ -168,7 +168,7 @@ public class InstallMagisk extends ParallelTask<Void, Void, Boolean> {
             try (InputStream in = new FileInputStream(boot)) {
                 isSigned = SignBoot.verifySignature(in, null);
                 if (isSigned) {
-                    console.add("- Signed boot image detected");
+                    console.add("- Boot image is signed with AVB 1.0");
                 }
             } catch (Exception e) {
                 console.add("! Unable to check signature");
@@ -178,7 +178,7 @@ public class InstallMagisk extends ParallelTask<Void, Void, Boolean> {
             // Force non-root shell
             Shell shell;
             if (Shell.rootAccess())
-                shell = Shell.newShell("sh");
+                shell = Shell.newInstance("sh");
             else
                 shell = Shell.getShell();
 
@@ -192,7 +192,7 @@ public class InstallMagisk extends ParallelTask<Void, Void, Boolean> {
             if (TextUtils.equals(console.get(console.size() - 1), "Failed!"))
                 return false;
 
-            shell.run("mv -f new-boot.img ../",
+            shell.run(null, null, "mv -f new-boot.img ../",
                     "mv bin/busybox busybox",
                     "rm -rf bin *.img update-binary",
                     "cd /");
@@ -200,18 +200,16 @@ public class InstallMagisk extends ParallelTask<Void, Void, Boolean> {
             File patched_boot = new File(install.getParent(), "new-boot.img");
 
             if (isSigned) {
-                console.add("- Signing boot image");
+                console.add("- Signing boot image with test keys");
                 File signed = new File(install.getParent(), "signed.img");
                 AssetManager assets = mm.getAssets();
                 try (
                         InputStream in = new FileInputStream(patched_boot);
-                        OutputStream out = new BufferedOutputStream(new FileOutputStream(signed));
-                        InputStream keyIn = assets.open(Const.PRIVATE_KEY_NAME);
-                        InputStream certIn = assets.open(Const.PUBLIC_KEY_NAME)
+                        OutputStream out = new BufferedOutputStream(new FileOutputStream(signed))
                 ) {
-                    SignBoot.doSignature("/boot", in, out, keyIn, certIn);
+                    SignBoot.doSignature("/boot", in, out, null, null);
                 }
-                shell.run_raw("mv -f " + signed + " " + patched_boot);
+                shell.run(null, null, "mv -f " + signed + " " + patched_boot);
             }
 
             switch (mode) {

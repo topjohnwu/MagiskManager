@@ -4,13 +4,13 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.widget.Toast;
 
-import com.topjohnwu.crypto.JarMap;
 import com.topjohnwu.magisk.MagiskManager;
 import com.topjohnwu.magisk.R;
 import com.topjohnwu.magisk.utils.Const;
 import com.topjohnwu.magisk.utils.Utils;
 import com.topjohnwu.magisk.utils.ZipUtils;
 import com.topjohnwu.superuser.Shell;
+import com.topjohnwu.utils.JarMap;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -123,7 +123,7 @@ public class HideManager extends ParallelTask<Void, Void, Boolean> {
             apk.getOutputStream(je).write(xml);
 
             // Sign the APK
-            ZipUtils.signZip(apk, repack, false);
+            ZipUtils.signZip(apk, repack);
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -131,7 +131,7 @@ public class HideManager extends ParallelTask<Void, Void, Boolean> {
 
         // Install the application
 
-        List<String> ret = Shell.su(Utils.fmt("pm install %s >/dev/null && echo true || echo false", repack));
+        List<String> ret = Shell.Sync.su(Utils.fmt("pm install %s >/dev/null && echo true || echo false", repack));
         repack.delete();
         if (!Utils.isValidShellResponse(ret) || !Boolean.parseBoolean(ret.get(0)))
             return false;

@@ -17,8 +17,6 @@ public class Const {
     public static final String MAGISKHIDE_PROP = "persist.magisk.hide";
 
     // APK content
-    public static final String PUBLIC_KEY_NAME = "public.certificate.x509.pem";
-    public static final String PRIVATE_KEY_NAME = "private.key.pk8";
     public static final String UNINSTALLER = "magisk_uninstaller.sh";
     public static final String UTIL_FUNCTIONS= "util_functions.sh";
     public static final String ANDROID_MANIFEST = "AndroidManifest.xml";
@@ -26,6 +24,7 @@ public class Const {
     public static final String SU_KEYSTORE_KEY = "su_key";
 
     // Paths
+    private static String MAGISK_PATH = null;
     public static final String MAGISK_DISABLE_FILE = "/cache/.disable_magisk";
     public static final String BUSYBOX_PATH = "/sbin/.core/busybox";
     public static final String TMP_FOLDER_PATH = "/dev/tmp";
@@ -38,14 +37,17 @@ public class Const {
     public static final int SNET_VER = 7;
     public static final int MIN_MODULE_VER = 1400;
 
-    public static String MAGISK_PATH() {
-        if (Utils.itemExist("/sbin/.core/img")) {
-            return "/sbin/.core/img";
-        } else if (Utils.itemExist("/dev/magisk/img")) {
-            return "/dev/magisk/img";
-        } else {
-            return "/magisk";
+    public synchronized static String MAGISK_PATH() {
+        if (MAGISK_PATH == null) {
+            if (Utils.itemExist("/sbin/.core/img")) {
+                MAGISK_PATH = "/sbin/.core/img";
+            } else if (Utils.itemExist("/dev/magisk/img")) {
+                MAGISK_PATH = "/dev/magisk/img";
+            } else {
+                MAGISK_PATH = "/magisk";
+            }
         }
+        return MAGISK_PATH;
     }
 
     public static String MAGISK_HOST_FILE() {
