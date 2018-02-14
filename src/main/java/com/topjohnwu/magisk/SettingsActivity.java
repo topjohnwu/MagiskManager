@@ -1,6 +1,7 @@
 package com.topjohnwu.magisk;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,12 +22,14 @@ import android.widget.Toast;
 import com.topjohnwu.magisk.asyncs.CheckUpdates;
 import com.topjohnwu.magisk.asyncs.HideManager;
 import com.topjohnwu.magisk.components.Activity;
+import com.topjohnwu.magisk.receivers.ManagerUpdate;
 import com.topjohnwu.magisk.utils.Const;
 import com.topjohnwu.magisk.utils.FingerprintHelper;
 import com.topjohnwu.magisk.utils.Topic;
 import com.topjohnwu.magisk.utils.Utils;
 import com.topjohnwu.superuser.Shell;
 
+import java.io.IOException;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -98,6 +101,7 @@ public class SettingsActivity extends Activity implements Topic.Subscriber {
             PreferenceCategory magiskCategory = (PreferenceCategory) findPreference("magisk");
             PreferenceCategory suCategory = (PreferenceCategory) findPreference("superuser");
             Preference hideManager = findPreference("hide");
+            Preference restoreManager = findPreference("restore");
             findPreference("clear").setOnPreferenceClickListener((pref) -> {
                 prefs.edit().remove(Const.Key.ETAG_KEY).apply();
                 mm.repoDB.clearRepo();
@@ -151,6 +155,38 @@ public class SettingsActivity extends Activity implements Topic.Subscriber {
                 suCategory.removePreference(fingerprint);
             }
 
+            if (mm.magiskVersionCode >= 1440) {
+                if (mm.getPackageName().equals(Const.ORIG_PKG_NAME)) {
+                    hideManager.setOnPreferenceClickListener((pref) -> {
+                        Utils.runWithPermission(getActivity(),
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                () -> new HideManager(getActivity()).exec());
+                        return true;
+                    });
+                    generalCatagory.removePreference(restoreManager);
+                } else {
+                    if (Utils.checkNetworkStatus()) {
+                        restoreManager.setOnPreferenceClickListener((pref) -> {
+                            Utils.runWithPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE, () -> {
+                                Intent intent = new Intent(mm, ManagerUpdate.class);
+                                intent.putExtra(Const.Key.INTENT_SET_LINK, mm.managerLink);
+                                intent.putExtra(Const.Key.INTENT_SET_FILENAME,
+                                        Utils.fmt("MagiskManager-v%s(%d).apk",
+                                        mm.remoteManagerVersionString, mm.remoteManagerVersionCode));
+                                mm.sendBroadcast(intent);
+                            });
+                            return true;
+                        });
+                    } else {
+                        generalCatagory.removePreference(restoreManager);
+                    }
+                    generalCatagory.removePreference(hideManager);
+                }
+            } else {
+                generalCatagory.removePreference(restoreManager);
+                generalCatagory.removePreference(hideManager);
+            }
+
             if (mm.getPackageName().equals(Const.ORIG_PKG_NAME) && mm.magiskVersionCode >= 1440) {
                 hideManager.setOnPreferenceClickListener((pref) -> {
                     Utils.runWithPermission(getActivity(),
@@ -158,6 +194,7 @@ public class SettingsActivity extends Activity implements Topic.Subscriber {
                             () -> new HideManager(getActivity()).exec());
                     return true;
                 });
+                generalCatagory.removePreference(restoreManager);
             } else {
                 generalCatagory.removePreference(hideManager);
             }
@@ -223,9 +260,11 @@ public class SettingsActivity extends Activity implements Topic.Subscriber {
                     break;
                 case Const.Key.COREONLY:
                     if (prefs.getBoolean(key, false)) {
-                        Utils.createFile(Const.MAGISK_DISABLE_FILE);
+                        try {
+                            Const.MAGISK_DISABLE_FILE.createNewFile();
+                        } catch (IOException ignored) {}
                     } else {
-                        Utils.removeItem(Const.MAGISK_DISABLE_FILE);
+                        Const.MAGISK_DISABLE_FILE.delete();
                     }
                     Toast.makeText(getActivity(), R.string.settings_reboot_toast, Toast.LENGTH_LONG).show();
                     break;

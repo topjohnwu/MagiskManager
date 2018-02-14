@@ -23,6 +23,7 @@ import com.topjohnwu.magisk.receivers.DownloadReceiver;
 import com.topjohnwu.magisk.receivers.ManagerUpdate;
 import com.topjohnwu.magisk.receivers.RebootReceiver;
 import com.topjohnwu.superuser.Shell;
+import com.topjohnwu.superuser.ShellUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -58,10 +59,12 @@ public class ShowUI {
 
     public static void managerUpdateNotification() {
         MagiskManager mm = MagiskManager.get();
+        String filename = Utils.fmt("MagiskManager-v%s(%d).apk",
+                mm.remoteManagerVersionString, mm.remoteManagerVersionCode);
 
         Intent intent = new Intent(mm, ManagerUpdate.class);
         intent.putExtra(Const.Key.INTENT_SET_LINK, mm.managerLink);
-        intent.putExtra(Const.Key.INTENT_SET_VERSION, mm.remoteManagerVersionString);
+        intent.putExtra(Const.Key.INTENT_SET_FILENAME, filename);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(mm,
                 Const.ID.APK_UPDATE_NOTIFICATION_ID, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -99,7 +102,8 @@ public class ShowUI {
 
     public static void magiskInstallDialog(Activity activity) {
         MagiskManager mm = Utils.getMagiskManager(activity);
-        String filename = Utils.fmt("Magisk-v%s.zip", mm.remoteMagiskVersionString);
+        String filename = Utils.fmt("Magisk-v%s(%d).zip",
+                mm.remoteMagiskVersionString, mm.remoteMagiskVersionCode);
         new AlertDialogBuilder(activity)
             .setTitle(mm.getString(R.string.repo_install_title, mm.getString(R.string.magisk)))
             .setMessage(mm.getString(R.string.repo_install_msg, filename))
@@ -111,11 +115,11 @@ public class ShowUI {
                 if (Shell.rootAccess()) {
                     options.add(mm.getString(R.string.direct_install));
                 }
-                List<String> res = Shell.Sync.su("echo $SLOT");
-                if (Utils.isValidShellResponse(res)) {
+                String s = Utils.cmd("echo $SLOT");
+                if (s != null) {
                     options.add(mm.getString(R.string.install_second_slot));
                 }
-                char[] slot = Utils.isValidShellResponse(res) ? res.get(0).toCharArray() : null;
+                char[] slot = s == null ? null : s.toCharArray();
                 new AlertDialog.Builder(activity)
                     .setTitle(R.string.select_method)
                     .setItems(
@@ -185,12 +189,11 @@ public class ShowUI {
                                     if (slot[1] == 'a') slot[1] = 'b';
                                     else slot[1] = 'a';
                                     // Then find the boot image again
-                                    List<String> ret = Shell.Sync.su(
-                                            "SLOT=" + String.valueOf(slot),
-                                            "find_boot_image",
+                                    boot = Utils.cmd(
+                                            "SLOT=" + String.valueOf(slot) +
+                                            "; find_boot_image;" +
                                             "echo \"$BOOTIMAGE\""
                                     );
-                                    boot = Utils.isValidShellResponse(ret) ? ret.get(ret.size() - 1) : null;
                                     Shell.Async.su("mount_partitions");
                                     if (boot == null)
                                         return;
@@ -206,12 +209,7 @@ public class ShowUI {
                                     };
                                 default:
                             }
-                            Utils.dlAndReceive(
-                                    activity,
-                                    receiver,
-                                    mm.magiskLink,
-                                    filename
-                            );
+                            Utils.dlAndReceive(activity, receiver, mm.magiskLink, filename);
                         }
                     ).show();
             })
@@ -228,16 +226,17 @@ public class ShowUI {
 
     public static void managerInstallDialog(Activity activity) {
         MagiskManager mm = Utils.getMagiskManager(activity);
+        String filename = Utils.fmt("MagiskManager-v%s(%d).apk",
+                mm.remoteManagerVersionString, mm.remoteManagerVersionCode);
         new AlertDialogBuilder(activity)
             .setTitle(mm.getString(R.string.repo_install_title, mm.getString(R.string.app_name)))
-            .setMessage(mm.getString(R.string.repo_install_msg,
-                    Utils.fmt("MagiskManager-v%s.apk", mm.remoteManagerVersionString)))
+            .setMessage(mm.getString(R.string.repo_install_msg, filename))
             .setCancelable(true)
             .setPositiveButton(R.string.install, (d, i) -> {
                 Utils.runWithPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE, () -> {
                     Intent intent = new Intent(mm, ManagerUpdate.class);
                     intent.putExtra(Const.Key.INTENT_SET_LINK, mm.managerLink);
-                    intent.putExtra(Const.Key.INTENT_SET_VERSION, mm.remoteManagerVersionString);
+                    intent.putExtra(Const.Key.INTENT_SET_FILENAME, filename);
                     mm.sendBroadcast(intent);
                 });
             })
@@ -253,14 +252,14 @@ public class ShowUI {
             .setPositiveButton(R.string.complete_uninstall, (d, i) -> {
                 ByteArrayOutputStream uninstaller = new ByteArrayOutputStream();
                 try (InputStream in = mm.getAssets().open(Const.UNINSTALLER)) {
-                    Utils.inToOut(in, uninstaller);
+                    ShellUtils.pump(in, uninstaller);
                 } catch (IOException e) {
                     e.printStackTrace();
                     return;
                 }
                 ByteArrayOutputStream utils = new ByteArrayOutputStream();
                 try (InputStream in = mm.getAssets().open(Const.UTIL_FUNCTIONS)) {
-                    Utils.inToOut(in, utils);
+                    ShellUtils.pump(in, utils);
                 } catch (IOException e) {
                     e.printStackTrace();
                     return;
