@@ -163,7 +163,7 @@
     <string name="settings_su_reauth_title">Повторная аутентификация</string>
     <string name="settings_su_reauth_summary">Повторный запрос прав Суперпользователя после обновления приложения</string>
     <string name="settings_su_fingerprint_title">Аутентификация по отпечатку пальца</string>
-    <string name="settings_su_fingerprint_summary">Использовать сканнер отпечатков пальцев для аунтификации</string>
+    <string name="settings_su_fingerprint_summary">Использовать сканнер отпечатков пальцев для аутентификации</string>
 
 
     <string name="multiuser_mode">Многопользовательский режим</string>
