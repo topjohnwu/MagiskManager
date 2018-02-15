@@ -124,6 +124,8 @@
     <string name="settings_clear_cache_summary">Ștergeți informațiile memorate în cache, forțează actualizarea aplicației online</string>
     <string name="settings_hide_manager_title">Ascundeţi Magisk Manager</string>
     <string name="settings_hide_manager_summary">Reîmpachetare Magisk Manager cu nume de pachet aleatoriu</string>
+    <string name="settings_restore_manager_title">Restabilire Magisk Manager</string>
+    <string name="settings_restore_manager_summary">Restabilire Magisk Manager cu pachetul original</string>
     <string name="language">Limbă</string>
     <string name="system_default">(Implicit)</string>
     <string name="settings_update">Setări actualizare</string>
