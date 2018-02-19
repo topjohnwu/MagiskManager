@@ -1,5 +1,8 @@
 package com.topjohnwu.magisk;
 
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -14,6 +17,7 @@ import android.widget.Toast;
 import com.topjohnwu.magisk.container.Module;
 import com.topjohnwu.magisk.database.RepoDatabaseHelper;
 import com.topjohnwu.magisk.database.SuDatabaseHelper;
+import com.topjohnwu.magisk.services.UpdateCheckService;
 import com.topjohnwu.magisk.utils.Const;
 import com.topjohnwu.magisk.utils.Topic;
 import com.topjohnwu.magisk.utils.Utils;
@@ -101,8 +105,10 @@ public class MagiskManager extends Shell.ContainerApp {
         Shell.setInitializer(new Shell.Initializer() {
             @Override
             public void onRootShellInit(@NonNull Shell shell) {
-                try (InputStream in = MagiskManager.get().getAssets().open(Const.UTIL_FUNCTIONS)) {
-                    shell.loadInputStream(null, null, in);
+                try (InputStream utils = MagiskManager.get().getAssets().open(Const.UTIL_FUNCTIONS);
+                     InputStream sudb = getResources().openRawResource(R.raw.sudb)) {
+                    shell.loadInputStream(null, null, utils);
+                    shell.loadInputStream(null, null, sudb);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -205,7 +211,8 @@ public class MagiskManager extends Shell.ContainerApp {
         try {
             magiskVersionString = Utils.cmd("magisk -v").split(":")[0];
             magiskVersionCode = Integer.parseInt(Utils.cmd("magisk -V"));
-            String s = Utils.cmd((magiskVersionCode > 1435 ? "resetprop -p " : "getprop ") + Const.MAGISKHIDE_PROP);
+            String s = Utils.cmd((magiskVersionCode > 1435 ? "resetprop -p " : "getprop ")
+                    + Const.MAGISKHIDE_PROP);
             magiskHide = s == null || Integer.parseInt(s) != 0;
         } catch (Exception ignored) {}
 
@@ -222,5 +229,24 @@ public class MagiskManager extends Shell.ContainerApp {
 
     public void setPermissionGrantCallback(Runnable callback) {
         permissionGrantCallback = callback;
+    }
+
+    public void setupUpdateCheck() {
+        JobScheduler scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+
+        if (prefs.getBoolean(Const.Key.CHECK_UPDATES, true)) {
+            if (scheduler.getAllPendingJobs().isEmpty() ||
+                    Const.UPDATE_SERVICE_VER > prefs.getInt(Const.Key.UPDATE_SERVICE_VER, -1)) {
+                ComponentName service = new ComponentName(this, UpdateCheckService.class);
+                JobInfo info = new JobInfo.Builder(Const.ID.UPDATE_SERVICE_ID, service)
+                        .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+                        .setPersisted(true)
+                        .setPeriodic(8 * 60 * 60 * 1000)
+                        .build();
+                scheduler.schedule(info);
+            }
+        } else {
+            scheduler.cancel(Const.UPDATE_SERVICE_VER);
+        }
     }
 }

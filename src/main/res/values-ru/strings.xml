@@ -127,7 +127,7 @@
 
     <!--Settings Activity -->
     <string name="settings_general_category">Основные</string>
-    <string name="settings_dark_theme_title">Темная тема</string>
+    <string name="settings_dark_theme_title">Тёмная тема</string>
     <string name="settings_dark_theme_summary">Включить темное оформление</string>
     <string name="settings_notification_title">Уведомление об обновлении</string>
     <string name="settings_notification_summary">Показывать уведомления о выходе новой версии</string>
