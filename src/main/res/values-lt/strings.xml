@@ -87,7 +87,7 @@
     <string name="downloading_toast">Atsisiunčiamas %1$s</string>
     <string name="magisk_update_title">Naujas Magisk atnaujinimas egzistuoja!</string>
     <string name="settings_reboot_toast">Nustatymų įgalinimui prašome perkrauti telefoną</string>
-    <string name="release_notes">Šios versijos naujos įpatybės</string>
+    <string name="release_notes">Šios versijos pakeitimai</string>
     <string name="repo_cache_cleared">Repo failai išvalyti</string>
     <string name="safetyNet_hide_notice">Ši programėlė naudoja SafetyNet\nMagiskHide tai automatiškai sutvarko</string>
     <string name="process_error">Proceso klaida</string>
