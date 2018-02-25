@@ -176,8 +176,10 @@ public class InstallMagisk extends ParallelTask<Void, Void, Boolean> {
                                     "sh update-binary indep boot_patch.sh %s || echo 'Failed!'",
                             mm.keepEnc, mm.keepVerity, highCompression, boot));
 
-            if (TextUtils.equals(console.get(console.size() - 1), "Failed!"))
+            if (TextUtils.equals(console.get(console.size() - 1), "Failed!")) {
+                Shell.Sync.sh("rm -rf " + install);
                 return false;
+            }
 
             Shell.Sync.sh("mv -f new-boot.img ../",
                     "mv bin/busybox busybox",
