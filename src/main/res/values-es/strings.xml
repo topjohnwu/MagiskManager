@@ -137,6 +137,8 @@
     <string name="language">Idioma</string>
     <string name="system_default">(Idioma del sistema)</string>
     <string name="settings_update">Ajustes de Actualización</string>
+    <string name="settings_check_update_title">Comprobar Actualizaciones</string>
+    <string name="settings_check_update_summary">Comprobar periódicamente en segundo plano si existen actualizaciones</string>
     <string name="settings_update_channel_title">Canal de Actualización</string>
     <string name="settings_update_stable">Estable</string>
     <string name="settings_update_beta">Beta</string>
@@ -147,7 +149,7 @@
     
     <string name="settings_core_only_summary">Habilitar sólo funciones principales, no se cargarán todos los módulos. MagiskSU, MagiskHide, y archivo hosts fuera de la partición de sistema seguirán habilitados</string>
     <string name="settings_magiskhide_summary">Ocultar Magisk de varias detecciones</string>
-    <string name="settings_hosts_title">Habilitar archivo hosts fuera de la partición de sistema</string>
+    <string name="settings_hosts_title">Habilitar Systemless Hosts</string>
     <string name="settings_hosts_summary">Soporte para aplicaciones de bloqueo de publicidad fuera de la partición de sistema</string>
 
     <string name="settings_su_app_adb">Aplicaciones y ADB</string>
@@ -165,8 +167,8 @@
     <string name="request_timeout_summary">%1$s segundos</string>
     <string name="settings_su_reauth_title">Re-autenticación</string>
     <string name="settings_su_reauth_summary">Pedir permisos de superusuario nuevamente si una aplicación es actualizada o reinstalada</string>
-    <string name="settings_su_fingerprint_title">Habilitar la autenticación de huellas digitales</string>
-    <string name="settings_su_fingerprint_summary">Utilice el escáner de huellas digitales para permitir las solicitudes de superusuario</string>
+    <string name="settings_su_fingerprint_title">Habilitar autenticación de Huella Dactilar</string>
+    <string name="settings_su_fingerprint_summary">Utilice el sensor de Huella Dactilar para permitir las solicitudes de superusuario</string>
  
     
     <string name="multiuser_mode">Modo MultiUsuario</string> 
@@ -186,6 +188,7 @@
     <string name="requester_summary">Las sesiones de root heredarán las peticiones Namespace</string>
     <string name="isolate_summary">Cada sesión root tendrá su propia Namespace</string>
     <string name="android_o_not_support">No es compatible con Android 8.0+</string>
+    <string name="disable_fingerprint">No se establecieron huellas dactilares o no existe soporte del dispositivo</string>
 
     <!--Superuser-->
     <string name="su_request_title">Petición de superusuario</string>
