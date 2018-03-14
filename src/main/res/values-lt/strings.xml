@@ -4,7 +4,7 @@
     <!--Welcome Activity-->
     <string name="modules">Papildiniai</string>
     <string name="downloads">Atsisiuntimai</string>
-    <string name="superuser">Supervartotojas]]</string>
+    <string name="superuser">Supervartotojas</string>
     <string name="log">Surašymai</string>
     <string name="settings">Nustatymai</string>
     <string name="install">Instaliuoti</string>
