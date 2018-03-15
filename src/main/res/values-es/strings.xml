@@ -35,7 +35,7 @@
     
     <!--Module Fragment-->
     <string name="no_info_provided">(No hay información)</string>
-    <string name="no_modules_found">No se han encontrado módulos</string>
+    <string name="no_modules_found">No se encontraron módulos</string>
     <string name="update_file_created">El módulo se actualizará en el siguiente reinicio</string>
     <string name="remove_file_created">El módulo se eliminará en el siguiente reinicio</string>
     <string name="remove_file_deleted">El módulo no se eliminará en el siguiente reinicio</string>
