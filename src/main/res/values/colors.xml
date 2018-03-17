@@ -3,8 +3,8 @@
 
     <color name="primary">#009688</color>
     <color name="primary_dark">#00796B</color>
-    <color name="accent">#FFC107</color>
-    <color name="accentFallback">#FBC02D</color>
+    <color name="accent">#A901DB</color>
+    <color name="accentFallback">#8A0886</color>
     <color name="icon_grey">#757575</color>
 
     <color name="red500">#F44336</color>
