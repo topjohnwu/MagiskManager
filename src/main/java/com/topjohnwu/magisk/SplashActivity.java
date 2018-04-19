@@ -11,6 +11,8 @@ import com.topjohnwu.magisk.asyncs.LoadModules;
 import com.topjohnwu.magisk.asyncs.ParallelTask;
 import com.topjohnwu.magisk.asyncs.UpdateRepos;
 import com.topjohnwu.magisk.components.Activity;
+import com.topjohnwu.magisk.database.RepoDatabaseHelper;
+import com.topjohnwu.magisk.receivers.ShortcutReceiver;
 import com.topjohnwu.magisk.utils.Const;
 import com.topjohnwu.magisk.utils.Utils;
 import com.topjohnwu.superuser.Shell;
@@ -23,6 +25,7 @@ public class SplashActivity extends Activity {
 
         MagiskManager mm = getMagiskManager();
 
+        mm.repoDB = new RepoDatabaseHelper(this);
         mm.loadMagiskInfo();
         mm.getDefaultInstallFlags();
         Utils.loadPrefs();
@@ -36,6 +39,9 @@ public class SplashActivity extends Activity {
                     getString(R.string.magisk_updates), NotificationManager.IMPORTANCE_DEFAULT);
             getSystemService(NotificationManager.class).createNotificationChannel(channel);
         }
+
+        // Setup shortcuts
+        sendBroadcast(new Intent(this, ShortcutReceiver.class));
 
         LoadModules loadModuleTask = new LoadModules();
 

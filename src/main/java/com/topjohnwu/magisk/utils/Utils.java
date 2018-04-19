@@ -52,7 +52,7 @@ public class Utils {
     }
 
     public static void uninstallPkg(String pkg) {
-        Shell.Sync.su("sudb_clean " + Const.USER_ID, "pm uninstall " + pkg);
+        Shell.Sync.su("db_clean " + Const.USER_ID, "pm uninstall " + pkg);
     }
 
     public static void dlAndReceive(Context context, DownloadReceiver receiver, String link, String filename) {
@@ -202,7 +202,7 @@ public class Utils {
 
     public static void patchDTBO() {
         MagiskManager mm = MagiskManager.get();
-        if (mm.magiskVersionCode >= 1446 && !mm.keepVerity) {
+        if (mm.magiskVersionCode >= Const.MAGISK_VER.DTBO_SUPPORT && !mm.keepVerity) {
             if (ShellUtils.fastCmdResult(Shell.getShell(), "patch_dtbo_image")) {
                 ShowUI.dtboPatchedNotification();
             }
