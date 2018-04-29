@@ -92,7 +92,6 @@
     <string name="settings_reboot_toast">Redémarrer afin d\'appliquer les réglages</string>
     <string name="release_notes">Notes de version</string>
     <string name="repo_cache_cleared">Cache du dépôt éffacé</string>
-    <string name="safetyNet_hide_notice">Cette application utilise SafetyNet\nDéjà masqué par MagiskHide par défaut</string>
     <string name="process_error">Erreur du processus</string>
     <string name="internal_storage">Le zip est enregistré dans:\n[Stockage Interne]%1$s</string>
     <string name="zip_download_title">Téléchargement</string>
@@ -124,8 +123,10 @@
     <string name="proprietary_title">Télécharger Code Propriétaire</string>
     <string name="proprietary_notice">Magisk Manager est Libre, il ne contient pas le code API SafetyNet propriétaire de Google. \ N \ nAutorisez vous le Gestionnaire Magisk à télécharger une extension (contenant GoogleApiClient) pour les contrôles SafetyNet? </String>
     <string name = "su_db_corrupt"> La base de données SU est corrompue, une nouvelle base de donnée va être re-créé</string>
-    
-<!--Settings Activity -->
+    <string name="cannot_check_sn_title">Vérification SafetyNet impossible</string>
++   <string name="cannot_check_sn_notice">En raison de certains changements dans les services Google Play, il n\'est pas possible de vérifier SafetyNet via Magisk Manager reconstruit</string>
+ 
+    <!--Settings Activity -->
     <string name="settings_general_category">Général</string>
     <string name="settings_dark_theme_title">Thème sombre</string>
     <string name="settings_dark_theme_summary">Activer le thème sombre</string>
