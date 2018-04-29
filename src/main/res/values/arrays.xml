@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="allow_timeout">
-        <item>@string/forever</item>
         <item>@string/once</item>
         <item>@string/tenmin</item>
         <item>@string/twentymin</item>
         <item>@string/thirtymin</item>
         <item>@string/sixtymin</item>
+        <item>@string/forever</item>
     </string-array>
 
     <string-array name="su_access">
