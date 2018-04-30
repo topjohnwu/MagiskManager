@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import com.topjohnwu.magisk.asyncs.CheckUpdates;
 import com.topjohnwu.magisk.components.AlertDialogBuilder;
 import com.topjohnwu.magisk.components.ExpandableView;
 import com.topjohnwu.magisk.components.Fragment;
+import com.topjohnwu.magisk.utils.Const;
 import com.topjohnwu.magisk.utils.ShowUI;
 import com.topjohnwu.magisk.utils.Topic;
 import com.topjohnwu.magisk.utils.Utils;
@@ -91,7 +93,14 @@ public class MagiskFragment extends Fragment
             new CheckSafetyNet(getActivity()).exec();
             collapse();
         };
-        if (!CheckSafetyNet.dexPath.exists()) {
+        if (!TextUtils.equals(mm.getPackageName(), Const.ORIG_PKG_NAME)) {
+            new AlertDialogBuilder(getActivity())
+                    .setTitle(R.string.cannot_check_sn_title)
+                    .setMessage(R.string.cannot_check_sn_notice)
+                    .setCancelable(true)
+                    .setPositiveButton(R.string.ok, null)
+                    .show();
+        } else if (!CheckSafetyNet.dexPath.exists()) {
             // Show dialog
             new AlertDialogBuilder(getActivity())
                     .setTitle(R.string.proprietary_title)
@@ -159,8 +168,8 @@ public class MagiskFragment extends Fragment
 
         safetyNetStatusText.setText(R.string.safetyNet_check_text);
 
-        mm.safetyNetDone.hasPublished = false;
-        mm.updateCheckDone.hasPublished = false;
+        mm.safetyNetDone.reset();
+        mm.updateCheckDone.reset();
         mm.remoteMagiskVersionString = null;
         mm.remoteMagiskVersionCode = -1;
         collapse();
@@ -176,11 +185,11 @@ public class MagiskFragment extends Fragment
     }
 
     @Override
-    public void onTopicPublished(Topic topic, Object result) {
+    public void onTopicPublished(Topic topic) {
         if (topic == mm.updateCheckDone) {
             updateCheckUI();
         } else if (topic == mm.safetyNetDone) {
-            updateSafetyNetUI((int) result);
+            updateSafetyNetUI((int) topic.getResults()[0]);
         }
     }
 
@@ -205,7 +214,7 @@ public class MagiskFragment extends Fragment
 
         boolean hasNetwork = Utils.checkNetworkStatus();
         boolean hasRoot = Shell.rootAccess();
-        boolean isUpToDate = mm.magiskVersionCode > 1300;
+        boolean isUpToDate = mm.magiskVersionCode > Const.MAGISK_VER.UNIFIED;
 
         magiskUpdate.setVisibility(hasNetwork ? View.VISIBLE : View.GONE);
         safetyNetCard.setVisibility(hasNetwork ? View.VISIBLE : View.GONE);

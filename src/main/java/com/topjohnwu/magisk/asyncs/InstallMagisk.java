@@ -42,6 +42,7 @@ public class InstallMagisk extends ParallelTask<Void, Void, Boolean> {
     private List<String> console, logs;
     private String mBootLocation;
     private int mode;
+    private File install;
 
     private InstallMagisk(Activity context, List<String> console, List<String> logs, Uri zip) {
         super(context);
@@ -66,20 +67,28 @@ public class InstallMagisk extends ParallelTask<Void, Void, Boolean> {
     protected Boolean doInBackground(Void... voids) {
         MagiskManager mm = MagiskManager.get();
 
-        File install = new File(
+        install = new File(
                 (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N ?
-                        mm.createDeviceProtectedStorageContext() :
-                        mm).getFilesDir().getParent()
+                        mm.createDeviceProtectedStorageContext() : mm)
+                        .getFilesDir().getParent()
                 , "install");
         Shell.Sync.sh("rm -rf " + install);
 
         List<String> abis = Arrays.asList(Build.SUPPORTED_ABIS);
         String arch;
-        if (abis.contains("x86_64")) arch = "x64";
-        else if (abis.contains("arm64-v8a")) arch = "arm64";
-        else if (abis.contains("x86")) arch = "x86";
-        else arch = "arm";
-        console.add("- Device platform: " + arch);
+
+        if (mm.remoteMagiskVersionCode >= Const.MAGISK_VER.SEPOL_REFACTOR) {
+            // 32-bit only
+            if (abis.contains("x86")) arch = "x86";
+            else arch = "arm";
+        } else {
+            if (abis.contains("x86_64")) arch = "x64";
+            else if (abis.contains("arm64-v8a")) arch = "arm64";
+            else if (abis.contains("x86")) arch = "x86";
+            else arch = "arm";
+        }
+
+        console.add("- Device platform: " + Build.SUPPORTED_ABIS[0]);
 
         try {
             // Unzip files
@@ -181,7 +190,7 @@ public class InstallMagisk extends ParallelTask<Void, Void, Boolean> {
 
             Shell.Sync.sh("mv -f new-boot.img ../",
                     "mv bin/busybox busybox",
-                    "rm -rf bin *.img update-binary",
+                    "rm -rf magisk.apk bin *.img update-binary",
                     "cd /");
 
             SuFile patched_boot = new SuFile(install.getParent(), "new-boot.img");
@@ -249,6 +258,7 @@ public class InstallMagisk extends ParallelTask<Void, Void, Boolean> {
     protected void onPostExecute(Boolean result) {
         FlashActivity activity = (FlashActivity) getActivity();
         if (!result) {
+            Shell.Async.sh("rm -rf " + install);
             console.add("! Installation failed");
             activity.reboot.setVisibility(View.GONE);
         }

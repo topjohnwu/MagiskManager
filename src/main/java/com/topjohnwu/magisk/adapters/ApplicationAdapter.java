@@ -3,7 +3,6 @@ package com.topjohnwu.magisk.adapters;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -16,7 +15,6 @@ import android.widget.TextView;
 
 import com.topjohnwu.magisk.R;
 import com.topjohnwu.magisk.asyncs.ParallelTask;
-import com.topjohnwu.magisk.components.SnackbarMaker;
 import com.topjohnwu.magisk.utils.Const;
 import com.topjohnwu.magisk.utils.Topic;
 import com.topjohnwu.magisk.utils.Utils;
@@ -65,30 +63,17 @@ public class ApplicationAdapter extends RecyclerView.Adapter<ApplicationAdapter.
         holder.appName.setText(info.loadLabel(pm));
         holder.appPackage.setText(info.packageName);
 
-        // Remove all listeners
-        holder.itemView.setOnClickListener(null);
         holder.checkBox.setOnCheckedChangeListener(null);
-
-        if (Const.SN_DEFAULTLIST.contains(info.packageName)) {
-            holder.checkBox.setChecked(true);
-            holder.checkBox.setEnabled(false);
-            holder.itemView.setOnClickListener(v ->
-                SnackbarMaker.make(holder.itemView,
-                        R.string.safetyNet_hide_notice, Snackbar.LENGTH_LONG).show()
-            );
-        } else {
-            holder.checkBox.setEnabled(true);
-            holder.checkBox.setChecked(mHideList.contains(info.packageName));
-            holder.checkBox.setOnCheckedChangeListener((v, isChecked) -> {
-                if (isChecked) {
-                    Shell.Async.su("magiskhide --add " + info.packageName);
-                    mHideList.add(info.packageName);
-                } else {
-                    Shell.Async.su("magiskhide --rm " + info.packageName);
-                    mHideList.remove(info.packageName);
-                }
-            });
-        }
+        holder.checkBox.setChecked(mHideList.contains(info.packageName));
+        holder.checkBox.setOnCheckedChangeListener((v, isChecked) -> {
+            if (isChecked) {
+                Shell.Async.su("magiskhide --add " + info.packageName);
+                mHideList.add(info.packageName);
+            } else {
+                Shell.Async.su("magiskhide --rm " + info.packageName);
+                mHideList.remove(info.packageName);
+            }
+        });
     }
 
     @Override

@@ -92,7 +92,6 @@
     <string name="settings_reboot_toast">Neustarten, um die Änderungen anzuwenden</string>
     <string name="release_notes">Änderungen</string>
     <string name="repo_cache_cleared">Repo-Cache gelöscht</string>
-    <string name="safetyNet_hide_notice">Diese App benutzt SafetyNet, welches standardmäßig von Magisk Hide verwaltet wird</string>
     <string name="process_error">Prozessfehler</string>
     <string name="internal_storage">Die zip-Datei ist gespeichert unter:\n[Interner Speicher]%1$s</string>
     <string name="zip_download_title">Herunterladen</string>
@@ -129,8 +128,6 @@
     <string name="settings_general_category">Allgemein</string>
     <string name="settings_dark_theme_title">Dunkles Theme</string>
     <string name="settings_dark_theme_summary">Dunkles Theme aktivieren</string>
-    <string name="settings_notification_title">Aktualisierungs-Benachrichtigung</string>
-    <string name="settings_notification_summary">Benachrichtigung, wenn eine neue Version verfügbar ist</string>
     <string name="settings_clear_cache_title">Repo-Cache löschen</string>
     <string name="settings_clear_cache_summary">Löscht die zwischengespeicherten Informationen der Online-Repos. Erzwingt eine Online-Aktualisierung</string>
     <string name="settings_hide_manager_title">Magisk Manager verbergen</string>
@@ -140,6 +137,8 @@
     <string name="language">Sprache</string>
     <string name="system_default">(Systemstandard)</string>
     <string name="settings_update">Aktualisierungs-Einstellungen</string>
+    <string name="settings_check_update_title">Prüfe nach Aktualisierungen</string>
+    <string name="settings_check_update_summary">Prüfe regelmäßig im Hintergrund nach Aktualisierungen</string>
     <string name="settings_update_channel_title">Aktualisierungs-Kanal</string>
     <string name="settings_update_stable">Stabil</string>
     <string name="settings_update_beta">Beta</string>
@@ -188,6 +187,7 @@
     <string name="requester_summary">Root-Sitzungen erben den Namensraum des Abfragenden</string>
     <string name="isolate_summary">Jede Root-Sitzung hat ihren isolierten Namensraum</string>
     <string name="android_o_not_support">Android 8.0+ wird nicht unterstützt</string>
+    <string name="disable_fingerprint">Keine Fingerabdrücke gespeichert oder keine Geräteunterstützung</string>
 
     <!--Superuser-->
     <string name="su_request_title">Superuser-Anfrage</string>
@@ -197,7 +197,7 @@
     <string name="grant">Gewähren</string>
     <string name="su_warning">Erlaubt den vollen Zugriff auf das Gerät.\nVerweigere, wenn du dir unsicher bist!</string>
     <string name="forever">Dauerhaft</string>
-    <string name="once">Nur diesmal</string>
+    <string name="once">Einmalig</string>
     <string name="tenmin">10 Min.</string>
     <string name="twentymin">20 Min.</string>
     <string name="thirtymin">30 Min.</string>

@@ -3,6 +3,7 @@ package com.topjohnwu.magisk.utils;
 import android.os.Environment;
 import android.os.Process;
 
+import com.topjohnwu.magisk.BuildConfig;
 import com.topjohnwu.magisk.MagiskManager;
 import com.topjohnwu.superuser.io.SuFile;
 
@@ -13,7 +14,7 @@ import java.util.List;
 public class Const {
 
     public static final String DEBUG_TAG = "MagiskManager";
-    public static final String ORIG_PKG_NAME = "com.topjohnwu.magisk";
+    public static final String ORIG_PKG_NAME = BuildConfig.APPLICATION_ID;
     public static final String SNET_PKG = "com.topjohnwu.snet";
     public static final String MAGISKHIDE_PROP = "persist.magisk.hide";
 
@@ -36,7 +37,10 @@ public class Const {
     // Versions
     public static final int UPDATE_SERVICE_VER = 1;
     public static final int SNET_VER = 7;
-    public static final int MIN_MODULE_VER = 1400;
+
+    public static int MIN_MODULE_VER() {
+        return MagiskManager.get().magiskVersionCode >= 1630 ? 1500 : 1400;
+    }
 
     public synchronized static SuFile MAGISK_PATH() {
         SuFile file;
@@ -64,14 +68,18 @@ public class Const {
             "com.google.android.gms"
     );
 
-    /* A list of apps that already uses SafetyNet
-     * They DO NOT need to be added to hide list */
-    public static final List<String> SN_DEFAULTLIST =  Arrays.asList(
-            "com.google.android.apps.walletnfcrel",
-            "com.nianticlabs.pokemongo"
-    );
-
     public static final int USER_ID = Process.myUid() / 100000;
+
+    public static final class MAGISK_VER {
+        public static final int UNIFIED = 1300;
+        public static final int FBE_AWARE = 1410;
+        public static final int RESETPROP_PERSIST = 1436;
+        public static final int MANAGER_HIDE = 1440;
+        public static final int DTBO_SUPPORT = 1446;
+        public static final int LEGACY_GLOBAL_DB = 1450;
+        public static final int HIDDEN_PATH = 1460;
+        public static final int SEPOL_REFACTOR = 1640;
+    }
 
     public static class ID {
         public static final int UPDATE_SERVICE_ID = 1;

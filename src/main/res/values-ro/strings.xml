@@ -83,7 +83,6 @@
     <string name="settings_reboot_toast">Reporniți pentru a aplica setările</string>
     <string name="release_notes">Note de lansare</string>
     <string name="repo_cache_cleared">Arhive cache eliminate</string>
-    <string name="safetyNet_hide_notice">Această aplicație utilizează SafetyNet\nDeja gestionat de MagiskHide în mod implicit</string>
     <string name="process_error">Eroare de proces</string>
     <string name="internal_storage">Zip stocat în:\n[Stocare internă]%1$s</string>
     <string name="zip_download_title">Descărcare</string>
@@ -118,8 +117,6 @@
     <string name="settings_general_category">General</string>
     <string name="settings_dark_theme_title">Temă întunecată</string>
     <string name="settings_dark_theme_summary">Activare temă întunecată</string>
-    <string name="settings_notification_title">Notificare actualizare</string>
-    <string name="settings_notification_summary">Se afișează notificări de actualizare atunci când este disponibilă o nouă versiune</string>
     <string name="settings_clear_cache_title">Eliminare cache</string>
     <string name="settings_clear_cache_summary">Ștergeți informațiile memorate în cache, forțează actualizarea aplicației online</string>
     <string name="settings_hide_manager_title">Ascundeţi Magisk Manager</string>
@@ -129,6 +126,8 @@
     <string name="language">Limbă</string>
     <string name="system_default">(Implicit)</string>
     <string name="settings_update">Setări actualizare</string>
+    <string name="settings_check_update_title">Verificare actualizări</string>
+    <string name="settings_check_update_summary">Se verifică periodic în fundal dacă există actualizări</string>
     <string name="settings_update_channel_title">Canal de actualizare</string>
     <string name="settings_update_stable">Stabil</string>
     <string name="settings_update_beta">Beta</string>
@@ -177,6 +176,7 @@
     <string name="requester_summary">Sesiunile de root vor moșteni spațiul de nume al solicitantului</string>
     <string name="isolate_summary">Fiecare sesiune de root va avea propriul spațiu de nume izolat</string>
     <string name="android_o_not_support">Nu se acceptă pe Android 8.0+</string>
+    <string name="disable_fingerprint">Nu au fost setate amprente sau scanerul de apmrentă lipseşte</string>
 
     <!--Superuser-->
     <string name="su_request_title">Solicitare Superuser</string>
