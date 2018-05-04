@@ -7,7 +7,7 @@
     <string name="superuser">Supervartotojas</string>
     <string name="log">Įvykių sąrašas</string>
     <string name="settings">Nustatymai</string>
-    <string name="install">Instaliuo-ti</string>
+    <string name="install">Instaliuoti</string>
 
     <!--Status Fragment-->
     <string name="magisk_version_error">Magisk yra neinstaliuotas</string>
