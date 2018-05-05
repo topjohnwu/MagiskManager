@@ -33,8 +33,8 @@
     <string name="install_magisk_title">Dernière Magisk : %1$s</string>
     <string name="uninstall">Désinstaller</string>
     <string name="uninstall_magisk_title">Désinstaller Magisk</string>
-	<string name="uninstall_magisk_msg">Tous les modules seront désactivés/effacés. Le root sera enlevé et vos données seront potentiellement chiffrées si elles ne le sont pas actuellement</string>
-	<string name="update">Mise à jour %1$s</string>
+    <string name="uninstall_magisk_msg">Tous les modules seront désactivés/effacés. Le root sera enlevé et vos données seront potentiellement chiffrées si elles ne le sont pas actuellement</string>
+    <string name="update">Mise à jour %1$s</string>
 
     <!--Module Fragment-->
     <string name="no_info_provided">(Aucune information transmise)</string>
@@ -46,8 +46,8 @@
     <string name="disable_file_removed">Le module va être activé au prochain redémarrage</string>
     <string name="author">Créé par %1$s</string>
     <string name="reboot_recovery">Redémarrer en récupération</string>
-    <string name="reboot_bootloader">Redémarrer en chargement d\'image système</string>
-    <string name="reboot_download">Redémarrer en mode téléchargement</string>
+    <string name="reboot_bootloader">Redémarrer en chargement démarrage</string>
+    <string name="reboot_download">Redémarrer en téléchargement</string>
 
     <!--Repo Fragment-->
     <string name="update_available">Mise à jour disponible</string>
@@ -130,10 +130,8 @@
     <string name="settings_general_category">Général</string>
     <string name="settings_dark_theme_title">Thème sombre</string>
     <string name="settings_dark_theme_summary">Activer le thème sombre</string>
-    <string name="settings_notification_title">Notification de mise à jour</string>
-    <string name="settings_notification_summary">Afficher des notifications de mises à jour quand une nouvelle version est disponible</string>
-    <string name="settings_clear_cache_title">Effacer le cache du dépôt</string>
-    <string name="settings_clear_cache_summary">Effacer les informations en cache des dépôts distants, pour forcer une actualisation de l\'application</string>
+    <string name="settings_clear_cache_title">Effacer le cache du dépot</string>
+    <string name="settings_clear_cache_summary">Effacer les informations de cache pour les dépots en ligne, Forcer l\'appli à se rafraichir en ligne</string>
     <string name="settings_hide_manager_title">Masquer le Gestionnaire Magisk</string>
     <string name="settings_hide_manager_summary">Reconstruire le Gestionnaire Magisk avec un nom de paquet aléatoire</string>
     <string name="settings_restore_manager_title">Restaurer le Gestionnaire Magisk</string>
@@ -156,7 +154,7 @@
     <string name="settings_hosts_title">Hosts systemless</string>
     <string name="settings_hosts_summary">Support hosts systemless pour les applications type Adblock</string>
 
-    <string name="settings_su_app_adb">Applications et ADB</string>
+    <string name="settings_su_app_adb">Applis & ADB</string>
     <string name="settings_su_app">Applications uniquement</string>
     <string name="settings_su_adb">ADB uniquement</string>
     <string name="settings_su_disable">Désactivé</string>
@@ -220,7 +218,7 @@
     <string name="su_revoke_msg">Vous confirmez l\'annulation des droits pour %1$s ?</string>
     <string name="toast">Toast</string>
     <string name="none">Aucun</string>
-	<string name="auth_fail">Authentication Échouée</string>
+    <string name="auth_fail">Authentication Échouée</string>
 
     <!--Superuser logs-->
     <string name="pid">PID :\u0020</string>
