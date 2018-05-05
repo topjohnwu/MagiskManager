@@ -69,7 +69,7 @@ public class SettingsActivity extends Activity implements Topic.Subscriber {
     }
 
     @Override
-    public void onTopicPublished(Topic topic, Object result) {
+    public void onTopicPublished(Topic topic) {
         recreate();
     }
 
@@ -156,12 +156,10 @@ public class SettingsActivity extends Activity implements Topic.Subscriber {
                 fingerprint.setSummary(R.string.disable_fingerprint);
             }
 
-            if (mm.magiskVersionCode >= 1440) {
+            if (mm.magiskVersionCode >= Const.MAGISK_VER.MANAGER_HIDE) {
                 if (mm.getPackageName().equals(Const.ORIG_PKG_NAME)) {
                     hideManager.setOnPreferenceClickListener((pref) -> {
-                        Utils.runWithPermission(getActivity(),
-                                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                () -> new HideManager(getActivity()).exec());
+                        new HideManager(getActivity()).exec();
                         return true;
                     });
                     generalCatagory.removePreference(restoreManager);
@@ -188,18 +186,6 @@ public class SettingsActivity extends Activity implements Topic.Subscriber {
                 generalCatagory.removePreference(hideManager);
             }
 
-            if (mm.getPackageName().equals(Const.ORIG_PKG_NAME) && mm.magiskVersionCode >= 1440) {
-                hideManager.setOnPreferenceClickListener((pref) -> {
-                    Utils.runWithPermission(getActivity(),
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                            () -> new HideManager(getActivity()).exec());
-                    return true;
-                });
-                generalCatagory.removePreference(restoreManager);
-            } else {
-                generalCatagory.removePreference(hideManager);
-            }
-
             if (!Shell.rootAccess() || (Const.USER_ID > 0 &&
                     mm.multiuserMode == Const.Value.MULTIUSER_MODE_OWNER_MANAGED)) {
                 prefScreen.removePreference(suCategory);
@@ -208,7 +194,7 @@ public class SettingsActivity extends Activity implements Topic.Subscriber {
             if (!Shell.rootAccess()) {
                 prefScreen.removePreference(magiskCategory);
                 generalCatagory.removePreference(hideManager);
-            } else if (mm.magiskVersionCode < 1300) {
+            } else if (mm.magiskVersionCode < Const.MAGISK_VER.UNIFIED) {
                 prefScreen.removePreference(magiskCategory);
             }
         }
@@ -290,7 +276,7 @@ public class SettingsActivity extends Activity implements Topic.Subscriber {
                 case Const.Key.ROOT_ACCESS:
                 case Const.Key.SU_MULTIUSER_MODE:
                 case Const.Key.SU_MNT_NS:
-                    mm.suDB.setSettings(key, Utils.getPrefsInt(prefs, key));
+                    mm.mDB.setSettings(key, Utils.getPrefsInt(prefs, key));
                     break;
                 case Const.Key.LOCALE:
                     mm.setLocale();
@@ -325,7 +311,7 @@ public class SettingsActivity extends Activity implements Topic.Subscriber {
         }
 
         @Override
-        public void onTopicPublished(Topic topic, Object result) {
+        public void onTopicPublished(Topic topic) {
             setLocalePreference((ListPreference) findPreference(Const.Key.LOCALE));
         }
 

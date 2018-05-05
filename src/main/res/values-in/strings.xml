@@ -89,7 +89,6 @@
     <string name="settings_reboot_toast">Reboot untuk menerapkan pengaturan</string>
     <string name="release_notes">Catatan rilis</string>
     <string name="repo_cache_cleared">Cache repo dibersihkan</string>
-    <string name="safetyNet_hide_notice">Aplikasi ini menggunakan SafetyNet\nTelah ditangani oleh MagiskHide secara default</string>
     <string name="process_error">Kesalahan proses</string>
     <string name="internal_storage">Zip disimpan di:\n[Penyimpanan Internal]%1$s</string>
     <string name="zip_download_title">Mengunduh</string>
@@ -121,13 +120,13 @@
     <string name="proprietary_title">Unduh Kode Proprieter</string>
     <string name="proprietary_notice">Magisk Manager adalah aplikasi FOSS, yang tidak menyertakan kode API proprieter Google SafetyNet.\n\nApakah Anda mengizinkan Magisk Manager untuk mengunduh sebuah ekstensi (berisi GoogleApiClient) untuk pemeriksaan SafetyNet?</string>
     <string name="su_db_corrupt">Database SU rusak, akan membuat db baru</string>
+    <string name="cannot_check_sn_title">Tidak dapat memeriksa SafetyNet</string>
+    <string name="cannot_check_sn_notice">Karena beberapa perubahan dalam Layanan Google Play, adalah tidak mungkin untuk memeriksa SafetyNet di Magisk Manager yang dipak ulang</string>
 
     <!--Settings Activity -->
     <string name="settings_general_category">Umum</string>
     <string name="settings_dark_theme_title">Tema Gelap</string>
     <string name="settings_dark_theme_summary">Aktifkan tema gelap</string>
-    <string name="settings_notification_title">Notifikasi Pembaruan</string>
-    <string name="settings_notification_summary">Tampilkan notifikasi pembaruan bila versi baru tersedia</string>
     <string name="settings_clear_cache_title">Bersihkan Cache Repo</string>
     <string name="settings_clear_cache_summary">Bersihkan informasi ter-cache untuk repo online, memaksa apl untuk menyegarkan online</string>
     <string name="settings_hide_manager_title">Sembunyikan Magisk Manager</string>
@@ -185,6 +184,7 @@
     <string name="requester_summary">Sesi root akan mewarisi ruang nama pemintanya</string>
     <string name="isolate_summary">Setiap sesi root akan memiliki ruang nama tersendiri</string>
     <string name="android_o_not_support">Tidak mendukung Android 8.0+</string>
+    <string name="disable_fingerprint">Tidak ada sidik jari diatur atau tidak ada dukungan perangkat</string>
 
     <!--Superuser-->
     <string name="su_request_title">Permintaan Superuser</string>

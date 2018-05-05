@@ -1,7 +1,6 @@
 package com.topjohnwu.magisk;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -30,8 +29,8 @@ public class MainActivity extends Activity
         implements NavigationView.OnNavigationItemSelectedListener, Topic.Subscriber {
 
     private final Handler mDrawerHandler = new Handler();
-    private SharedPreferences prefs;
     private int mDrawerItem;
+    private boolean fromShortcut = true;
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.drawer_layout) DrawerLayout drawer;
@@ -48,7 +47,6 @@ public class MainActivity extends Activity
     protected void onCreate(final Bundle savedInstanceState) {
 
         MagiskManager mm = getMagiskManager();
-        prefs = mm.prefs;
 
         if (!mm.hasInit) {
             Intent intent = new Intent(this, SplashActivity.class);
@@ -95,7 +93,7 @@ public class MainActivity extends Activity
         navigationView.setNavigationItemSelectedListener(this);
 
         if (mm.prefs.getInt(Const.Key.APP_VER, -1) < BuildConfig.VERSION_CODE) {
-            prefs.edit().putInt(Const.Key.APP_VER, BuildConfig.VERSION_CODE).apply();
+            mm.prefs.edit().putInt(Const.Key.APP_VER, BuildConfig.VERSION_CODE).apply();
             new MarkDownWindow(this, getString(R.string.app_changelog),
                     getResources().openRawResource(R.raw.changelog)).exec();
         }
@@ -111,7 +109,7 @@ public class MainActivity extends Activity
     public void onBackPressed() {
         if (drawer.isDrawerOpen(navigationView)) {
             drawer.closeDrawer(navigationView);
-        } else if (mDrawerItem != R.id.magisk) {
+        } else if (mDrawerItem != R.id.magisk && !fromShortcut) {
             navigate(R.id.magisk);
         } else {
             finish();
@@ -127,7 +125,7 @@ public class MainActivity extends Activity
     }
 
     @Override
-    public void onTopicPublished(Topic topic, Object result) {
+    public void onTopicPublished(Topic topic) {
         recreate();
     }
 
@@ -140,8 +138,8 @@ public class MainActivity extends Activity
         MagiskManager mm = getMagiskManager();
         Menu menu = navigationView.getMenu();
         menu.findItem(R.id.magiskhide).setVisible(
-                Shell.rootAccess() && mm.magiskVersionCode >= 1300
-                        && prefs.getBoolean(Const.Key.MAGISKHIDE, false));
+                Shell.rootAccess() && mm.magiskVersionCode >= Const.MAGISK_VER.UNIFIED
+                        && mm.prefs.getBoolean(Const.Key.MAGISKHIDE, false));
         menu.findItem(R.id.modules).setVisible(!mm.prefs.getBoolean(Const.Key.COREONLY, false) &&
                 Shell.rootAccess() && mm.magiskVersionCode >= 0);
         menu.findItem(R.id.downloads).setVisible(!mm.prefs.getBoolean(Const.Key.COREONLY, false)
@@ -155,9 +153,6 @@ public class MainActivity extends Activity
         int itemId = R.id.magisk;
         if (item != null) {
             switch (item) {
-                case "magisk":
-                    itemId = R.id.magisk;
-                    break;
                 case "superuser":
                     itemId = R.id.superuser;
                     break;
@@ -190,22 +185,23 @@ public class MainActivity extends Activity
         navigationView.setCheckedItem(itemId);
         switch (itemId) {
             case R.id.magisk:
-                displayFragment(new MagiskFragment(), "magisk", true);
+                fromShortcut = false;
+                displayFragment(new MagiskFragment(), true);
                 break;
             case R.id.superuser:
-                displayFragment(new SuperuserFragment(), "superuser", true);
+                displayFragment(new SuperuserFragment(), true);
                 break;
             case R.id.modules:
-                displayFragment(new ModulesFragment(), "modules", true);
+                displayFragment(new ModulesFragment(), true);
                 break;
             case R.id.downloads:
-                displayFragment(new ReposFragment(), "downloads", true);
+                displayFragment(new ReposFragment(), true);
                 break;
             case R.id.magiskhide:
-                displayFragment(new MagiskHideFragment(), Const.Key.MAGISKHIDE, true);
+                displayFragment(new MagiskHideFragment(), true);
                 break;
             case R.id.log:
-                displayFragment(new LogFragment(), "log", false);
+                displayFragment(new LogFragment(), false);
                 break;
             case R.id.settings:
                 startActivity(new Intent(this, SettingsActivity.class));
@@ -218,12 +214,13 @@ public class MainActivity extends Activity
         }
     }
 
-    private void displayFragment(@NonNull Fragment navFragment, String tag, boolean setElevation) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+    private void displayFragment(@NonNull Fragment navFragment, boolean setElevation) {
         supportInvalidateOptionsMenu();
-        transaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
-        transaction.replace(R.id.content_frame, navFragment, tag).commitNow();
-        if (setElevation) toolbar.setElevation(toolbarElevation);
-        else toolbar.setElevation(0);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .replace(R.id.content_frame, navFragment)
+                .commitNow();
+        toolbar.setElevation(setElevation ? toolbarElevation : 0);
     }
 }

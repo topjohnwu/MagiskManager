@@ -11,14 +11,14 @@
 
     <!--Status Fragment-->
     <string name="magisk_version_error">Magisk no está instalado</string>
-    <string name="checking_for_updates">Comprobando actualizaciones…</string>
+    <string name="checking_for_updates">Comprobando Actualizaciones…</string>
     <string name="magisk_update_available">¡Disponible Magisk v%1$s!</string>
     <string name="invalid_update_channel">Canal de actualización inválido</string>
-    <string name="safetyNet_check_text">Toque para empezar la comprobación de SafetyNet</string>
+    <string name="safetyNet_check_text">Comprobar el estado de SafetyNet</string>
     <string name="checking_safetyNet_status">Comprobando estado de SafetyNet…</string>
-    <string name="safetyNet_check_success">La comprobación de SafetyNet fue exitosa</string>
+    <string name="safetyNet_check_success">La comprobación fue exitosa</string>
     <string name="safetyNet_api_error">Error en la API de SafetyNet</string>
-    <string name="safetyNet_network_loss">Conexión de red perdida</string>
+    <string name="safetyNet_network_loss">Red no Disponible</string>
     <string name="safetyNet_service_disconnected">Se ha detenido el servicio</string>
     <string name="safetyNet_res_invalid">La respuesta no es válida</string>
 
@@ -29,13 +29,13 @@
     <string name="current_magisk_title">Versión instalada: %1$s</string>
     <string name="install_magisk_title">Última versión: %1$s</string>
     <string name="uninstall">Desinstalar</string>
-    <string name="uninstall_magisk_msg">Todos los módulos serán desactivados / eliminados. El acceso Root se eliminará y, posiblemente, encriptará los datos si los datos no están cifrados actualmente.</string>
+    <string name="uninstall_magisk_msg">Todos los módulos serán desactivados / eliminados. El acceso Root se eliminará y, posiblemente, cifrará los datos si los datos no están cifrados actualmente.</string>
     <string name="uninstall_magisk_title">Desinstalar Magisk</string>
     <string name="update">Actualización %1$s</string>
     
     <!--Module Fragment-->
     <string name="no_info_provided">(No hay información)</string>
-    <string name="no_modules_found">No se han encontrado módulos</string>
+    <string name="no_modules_found">No se encontraron módulos</string>
     <string name="update_file_created">El módulo se actualizará en el siguiente reinicio</string>
     <string name="remove_file_created">El módulo se eliminará en el siguiente reinicio</string>
     <string name="remove_file_deleted">El módulo no se eliminará en el siguiente reinicio</string>
@@ -47,10 +47,10 @@
     <string name="reboot_download">Reiniciar en Modo Download</string>
 
     <!--Repo Fragment-->
-    <string name="update_available">Actualización disponible</string>
+    <string name="update_available">Actualización Disponible</string>
     <string name="installed">Instalado</string>
     <string name="not_installed">No Instalado</string>
-    <string name="updated_on">Actualizando en: %1$s</string>
+    <string name="updated_on">Actualizado el: %1$s</string>
     <string name="sorting_order">Orden de Clasificación</string>
     <string name="sort_by_name">Ordenar por nombre</string>
     <string name="sort_by_update">Ordenar según la última actualización</string>
@@ -84,17 +84,16 @@
     <string name="download">Descargar</string>
     <string name="download_file_error">Error descargando archivo</string>
     <string name="reboot">Reiniciar</string>
-    <string name="zip_process_msg">Procesando archivo zip …</string>
+    <string name="zip_process_msg">Procesando archivo zip…</string>
     <string name="downloading_toast">Descargando %1$s</string>
     <string name="magisk_update_title">¡Nueva actualización de Magisk disponible!</string>
     <string name="settings_reboot_toast">Reinicia para aplicar los ajustes</string>
     <string name="release_notes">Notas de lanzamiento</string>
     <string name="repo_cache_cleared">Caché del repositorio limpiada</string>
-    <string name="safetyNet_hide_notice">Esta aplicación usa SafetyNet\nYa manejado por defecto por MagiskHide</string>
     <string name="process_error">Error de proceso</string>
     <string name="internal_storage">El zip es almacenado en:\n[Internal Storage]%1$s</string>
     <string name="zip_download_title">Descargando</string>
-    <string name="zip_download_msg">Descargando el archivo zip (%1$d%%) …</string>
+    <string name="zip_download_msg">Descargando el archivo zip (%1$d%%)…</string>
     <string name="zip_process_title">Procesando</string>
     <string name="manager_update_title">Nueva actualización de Magisk Manager disponible!</string>
     <string name="manager_download_install">Pulse para descargar e instalar</string>
@@ -102,8 +101,8 @@
     <string name="dtbo_patched_reboot">Magisk Manager ha parcheado dtbo.img, por favor reinicia</string>
     <string name="magisk_updates">Actualización de Magisk</string>
     <string name="flashing">Flasheando</string>
-    <string name="hide_manager_toast">Ocultando Magisk Manager...</string>
-    <string name="hide_manager_toast2">Esto podría tomar un tiempo...</string>
+    <string name="hide_manager_toast">Ocultando Magisk Manager…</string>
+    <string name="hide_manager_toast2">Esto podría tomar un tiempo…</string>
     <string name="hide_manager_fail_toast">La Ocultación de Magisk Manager ha fallado…</string>
     <string name="download_zip_only">Descargar sólo el archivo ZIP</string>
     <string name="patch_boot_file">Parcheo de la imagen boot</string>
@@ -121,13 +120,14 @@
     <string name="proprietary_title">Descargar Código Propietario</string>
     <string name="proprietary_notice">Magisk Manager es un Software Libre por lo que no contiene el código API de SafetyNet (Código Propietario de Google).\n\n ¿Puede permitir que Magisk Manager descargue una extensión (contiene el GoogleApiClient) para la comprobación de SafetyNet?</string>
     <string name="su_db_corrupt">La base de datos SU está dañada, se creará nueva base de datos</string>
+    <string name="cannot_check_sn_title">No es posible verificar SafetyNet!</string>
+    <string name="cannot_check_sn_notice">Debido a algunos cambios en los Servicios de Google Play, no es posible verificar SafetyNet en la versión reempaquetada de Magisk Manager</string>
+ 
     
     <!--Settings Activity -->
     <string name="settings_general_category">General</string>
     <string name="settings_dark_theme_title">Tema oscuro</string>
     <string name="settings_dark_theme_summary">Habilitar el tema oscuro</string>
-    <string name="settings_notification_title">Notificar Actualización</string>
-    <string name="settings_notification_summary">Notificar cuando una nueva versión esté disponible</string>
     <string name="settings_clear_cache_title">Limpiar caché del repositorio</string>
     <string name="settings_clear_cache_summary">Limpiar la información en caché para los repositorios en línea, fuerza a la aplicación a actualizar en línea</string>
     <string name="settings_hide_manager_title">Ocultar Magisk Manager</string>
@@ -147,10 +147,10 @@
     <string name="settings_boot_format_title">Parchear imagen boot por tipo de formato</string>
     <string name="settings_boot_format_summary">Seleccionar el formato de salida para parchear la imagen boot.\nEscoja .img para flashear mediante fastboot/download mode; escoja .img.tar para flashear con ODIN.</string>
     
-    <string name="settings_core_only_summary">Habilitar sólo funciones principales, no se cargarán todos los módulos. MagiskSU, MagiskHide, y archivo hosts fuera de la partición de sistema seguirán habilitados</string>
+    <string name="settings_core_only_summary">Habilitar sólo funciones principales, no se cargarán todos los módulos. MagiskSU, MagiskHide, y Systemless Hosts seguirán habilitados</string>
     <string name="settings_magiskhide_summary">Ocultar Magisk de varias detecciones</string>
-    <string name="settings_hosts_title">Habilitar Systemless Hosts</string>
-    <string name="settings_hosts_summary">Soporte para aplicaciones de bloqueo de publicidad fuera de la partición de sistema</string>
+    <string name="settings_hosts_title">Systemless Hosts</string>
+    <string name="settings_hosts_summary">Soporte para aplicaciones Adblock fuera de la partición system</string>
 
     <string name="settings_su_app_adb">Aplicaciones y ADB</string>
     <string name="settings_su_app">Sólo aplicaciones</string>
@@ -167,8 +167,8 @@
     <string name="request_timeout_summary">%1$s segundos</string>
     <string name="settings_su_reauth_title">Re-autenticación</string>
     <string name="settings_su_reauth_summary">Pedir permisos de superusuario nuevamente si una aplicación es actualizada o reinstalada</string>
-    <string name="settings_su_fingerprint_title">Habilitar autenticación de Huella Dactilar</string>
-    <string name="settings_su_fingerprint_summary">Utilice el sensor de Huella Dactilar para permitir las solicitudes de superusuario</string>
+    <string name="settings_su_fingerprint_title">Autenticación por Huella Dactilar</string>
+    <string name="settings_su_fingerprint_summary">Utilizar el sensor de Huella Dactilar para permitir las solicitudes de superusuario</string>
  
     
     <string name="multiuser_mode">Modo MultiUsuario</string> 

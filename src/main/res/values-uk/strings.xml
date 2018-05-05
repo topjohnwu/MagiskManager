@@ -88,7 +88,6 @@
     <string name="settings_reboot_toast">Для застосування змін перезавантажте пристрій</string>
     <string name="release_notes">Особливості версії</string>
     <string name="repo_cache_cleared">Кеш репозиторію очищено</string>
-    <string name="safetyNet_hide_notice">Ця програма використовує SafetyNet.\nВже опрацьовано MagiskHide за замовчуванням</string>
     <string name="process_error">Помилка опрацювання</string>
     <string name="internal_storage">Архів розташований:\n[Внутрішнє Сховище]%1$s</string>
     <string name="zip_download_title">Завантаження</string>
@@ -120,13 +119,13 @@
     <string name="proprietary_title">Завантажити пропрієтарний код</string>
     <string name="proprietary_notice">Magisk Manager — це безкоштовний додаток з відкритим вихідним кодом, тому він не містить пропрієтарний код API SafetyNet від компанії Google.\n\nДозволити Magisk Manager завантажити розширення (яке містить GoogleApiClient) для перевірки SafetyNet?</string>
     <string name="su_db_corrupt">База даних SU пошкоджена, буде створено нову БД</string>
+    <string name="cannot_check_sn_title">Неможливо перевірити SafetyNet</string>
+    <string name="cannot_check_sn_notice">Через деякі зміни в Сервісах Google Play, неможливо перевірити статус SafetyNet на перепакованому Magisk Manager</string>
 
     <!--Settings Activity -->
     <string name="settings_general_category">Основні</string>
     <string name="settings_dark_theme_title">Темна тема</string>
     <string name="settings_dark_theme_summary">Увімкнути темне оформлення</string>
-    <string name="settings_notification_title">Сповіщення про оновлення</string>
-    <string name="settings_notification_summary">Показувати сповіщення про оновлення в Панелі сповіщень, коли доступна нова версія</string>
     <string name="settings_clear_cache_title">Очищення кешу</string>
     <string name="settings_clear_cache_summary">Очистити збережену інформацію про мережеві репозиторії, змушуючи програму примусово оновлюватися через Інтернет</string>
     <string name="settings_hide_manager_title">Приховати Magisk Manager</string>
