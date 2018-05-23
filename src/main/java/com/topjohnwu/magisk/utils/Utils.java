@@ -51,6 +51,10 @@ public class Utils {
         return ShellUtils.fastCmd(Shell.getShell(), cmd);
     }
 
+    public static boolean cmdResult(String cmd) {
+        return ShellUtils.fastCmdResult(Shell.getShell(), cmd);
+    }
+
     public static void uninstallPkg(String pkg) {
         Shell.Sync.su("db_clean " + Const.USER_ID, "pm uninstall " + pkg);
     }
@@ -287,5 +291,14 @@ public class Utils {
 
     public static String fmt(String fmt, Object... args) {
         return String.format(Locale.US, fmt, args);
+    }
+
+    public static String dos2unix(String s) {
+        String newString = s.replace("\r\n", "\n");
+        if(!newString.endsWith("\n")) {
+            return newString + "\n";
+        } else {
+            return newString;
+        }
     }
 }
