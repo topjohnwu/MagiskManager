@@ -20,6 +20,7 @@ import com.topjohnwu.magisk.SplashActivity;
 import com.topjohnwu.magisk.asyncs.InstallMagisk;
 import com.topjohnwu.magisk.asyncs.RestoreImages;
 import com.topjohnwu.magisk.components.AlertDialogBuilder;
+import com.topjohnwu.magisk.components.SnackbarMaker;
 import com.topjohnwu.magisk.receivers.DownloadReceiver;
 import com.topjohnwu.magisk.receivers.ManagerUpdate;
 import com.topjohnwu.magisk.receivers.RebootReceiver;
@@ -46,7 +47,7 @@ public class ShowUI {
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(mm, Const.ID.NOTIFICATION_CHANNEL);
-        builder.setSmallIcon(R.drawable.ic_magisk)
+        builder.setSmallIcon(R.drawable.ic_magisk_outline)
                 .setContentTitle(mm.getString(R.string.magisk_update_title))
                 .setContentText(mm.getString(R.string.magisk_update_available, mm.remoteMagiskVersionString))
                 .setVibrate(new long[]{0, 100, 100, 100})
@@ -70,7 +71,7 @@ public class ShowUI {
                 Const.ID.APK_UPDATE_NOTIFICATION_ID, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(mm, Const.ID.NOTIFICATION_CHANNEL);
-        builder.setSmallIcon(R.drawable.ic_magisk)
+        builder.setSmallIcon(R.drawable.ic_magisk_outline)
                 .setContentTitle(mm.getString(R.string.manager_update_title))
                 .setContentText(mm.getString(R.string.manager_download_install))
                 .setVibrate(new long[]{0, 100, 100, 100})
@@ -90,7 +91,7 @@ public class ShowUI {
                 Const.ID.DTBO_NOTIFICATION_ID, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(mm, Const.ID.NOTIFICATION_CHANNEL);
-        builder.setSmallIcon(R.drawable.ic_magisk)
+        builder.setSmallIcon(R.drawable.ic_magisk_outline)
                 .setContentTitle(mm.getString(R.string.dtbo_patched_title))
                 .setContentText(mm.getString(R.string.dtbo_patched_reboot))
                 .setVibrate(new long[]{0, 100, 100, 100})
@@ -136,7 +137,7 @@ public class ShowUI {
                 if (Shell.rootAccess()) {
                     options.add(mm.getString(R.string.direct_install));
                 }
-                String s = Utils.cmd("echo $SLOT");
+                String s = RootUtils.cmd("echo $SLOT");
                 if (s != null) {
                     options.add(mm.getString(R.string.install_second_slot));
                 }
@@ -185,7 +186,7 @@ public class ShowUI {
                                     receiver = new DownloadReceiver() {
                                         @Override
                                         public void onDownloadDone(Uri uri) {
-                                            Utils.showUriSnack(activity, uri);
+                                            SnackbarMaker.showUri(activity, uri);
                                         }
                                     };
                                     break;
@@ -210,7 +211,7 @@ public class ShowUI {
                                     if (slot[1] == 'a') slot[1] = 'b';
                                     else slot[1] = 'a';
                                     // Then find the boot image again
-                                    boot = Utils.cmd(
+                                    boot = RootUtils.cmd(
                                             "SLOT=" + String.valueOf(slot) +
                                             "; find_boot_image;" +
                                             "echo \"$BOOTIMAGE\""
@@ -254,7 +255,8 @@ public class ShowUI {
             .setMessage(mm.getString(R.string.repo_install_msg, filename))
             .setCancelable(true)
             .setPositiveButton(R.string.install, (d, i) -> {
-                Utils.runWithPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE, () -> {
+                Utils.runWithPermission(activity,
+                        new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE }, () -> {
                     Intent intent = new Intent(mm, ManagerUpdate.class);
                     intent.putExtra(Const.Key.INTENT_SET_LINK, mm.managerLink);
                     intent.putExtra(Const.Key.INTENT_SET_FILENAME, filename);
@@ -297,10 +299,10 @@ public class ShowUI {
                 } catch (IOException ignored) {}
 
                 MagiskManager.toast(R.string.uninstall_toast, Toast.LENGTH_LONG);
-                new Handler().postDelayed(() -> Utils.uninstallPkg(mm.getPackageName()), 5000);
+                new Handler().postDelayed(() -> RootUtils.uninstallPkg(mm.getPackageName()), 5000);
             })
             .setNeutralButton(R.string.restore_img, (d, i) -> new RestoreImages().exec())
-            .setNegativeButton(R.string.uninstall_app, (d, i) -> Utils.uninstallPkg(mm.getPackageName()))
+            .setNegativeButton(R.string.uninstall_app, (d, i) -> RootUtils.uninstallPkg(mm.getPackageName()))
             .show();
     }
 }

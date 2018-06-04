@@ -8,6 +8,7 @@ import android.support.v4.app.NotificationCompat;
 import com.topjohnwu.magisk.MagiskManager;
 import com.topjohnwu.magisk.R;
 import com.topjohnwu.magisk.utils.Const;
+import com.topjohnwu.magisk.utils.RootUtils;
 import com.topjohnwu.magisk.utils.Utils;
 import com.topjohnwu.superuser.Shell;
 
@@ -23,7 +24,7 @@ public class OnBootIntentService extends IntentService {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationCompat.Builder builder =
                     new NotificationCompat.Builder(this, Const.ID.NOTIFICATION_CHANNEL);
-            builder.setSmallIcon(R.drawable.ic_magisk)
+            builder.setSmallIcon(R.drawable.ic_magisk_outline)
                     .setContentTitle("onBoot")
                     .setContentText("Running onBoot operations...");
             startForeground(Const.ID.ONBOOT_NOTIFICATION_ID, builder.build());
@@ -43,7 +44,7 @@ public class OnBootIntentService extends IntentService {
         mm.loadMagiskInfo();
         mm.getDefaultInstallFlags();
         if (Shell.rootAccess()) {
-            Utils.patchDTBO();
+            RootUtils.patchDTBO();
         }
     }
 }
