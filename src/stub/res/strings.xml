@@ -1,4 +1,3 @@
-
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="upgrade_msg">Aggiorna al Magisk Manager completo per completare l\'installazione. Vuoi procedere al download e installazione?</string>
