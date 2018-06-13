@@ -203,6 +203,7 @@ public class MagiskDatabaseHelper {
     }
 
     public void addPolicy(Policy policy) {
+        deletePolicy(policy.packageName);
         db.replace(POLICY_TABLE, null, policy.getContentValues());
     }
 

@@ -29,6 +29,8 @@ public class Policy implements Comparable<Policy>{
 
     public Policy(Cursor c, PackageManager pm) throws PackageManager.NameNotFoundException {
         uid = c.getInt(c.getColumnIndex("uid"));
+        String[] pkgs = pm.getPackagesForUid(uid);
+        if (pkgs == null || pkgs.length == 0) throw new PackageManager.NameNotFoundException();
         packageName = c.getString(c.getColumnIndex("package_name"));
         policy = c.getInt(c.getColumnIndex("policy"));
         until = c.getLong(c.getColumnIndex("until"));
