@@ -131,16 +131,25 @@ public class ApplicationAdapter extends RecyclerView.Adapter<ApplicationAdapter.
 
         @Override
         protected Void doInBackground(Void... voids) {
+            mHideList = Shell.Sync.su("magiskhide --ls");
             mOriginalList = pm.getInstalledApplications(0);
+            List<ApplicationInfo> HideList = new ArrayList<>();
             for (Iterator<ApplicationInfo> i = mOriginalList.iterator(); i.hasNext(); ) {
                 ApplicationInfo info = i.next();
                 if (Const.HIDE_BLACKLIST.contains(info.packageName) || !info.enabled) {
                     i.remove();
+                    continue;
+                }
+                if (mHideList.contains(info.packageName)) {
+                    i.remove();
+                    HideList.add(info);
                 }
             }
             Collections.sort(mOriginalList, (a, b) -> a.loadLabel(pm).toString().toLowerCase()
                     .compareTo(b.loadLabel(pm).toString().toLowerCase()));
-            mHideList = Shell.Sync.su("magiskhide --ls");
+            Collections.sort(HideList, (a, b) -> a.loadLabel(pm).toString().toLowerCase()
+                    .compareTo(b.loadLabel(pm).toString().toLowerCase()));
+            mOriginalList.addAll(0, HideList);
             return null;
         }
 
