@@ -39,7 +39,38 @@ db_setup() {
 
 env_check() {
   for file in busybox magisk magiskboot magiskinit util_functions.sh boot_patch.sh; do
-    [ -e /data/adb/magisk/$file ] || return 1
+    [ -f /data/adb/magisk/$file ] || return 1
   done
   return 0
+}
+
+mm_patch_dtbo() {
+  if $KEEPVERITY; then
+    echo false
+  else
+    find_dtbo_image
+    patch_dtbo_image >/dev/null 2>&1 && echo true || echo false
+  fi
+}
+
+restore_imgs() {
+  SHA1=`cat /.backup/.sha1`
+  [ -z $SHA1 ] && SHA1=`grep_prop #STOCKSHA1`
+  [ -z $SHA1 ] && return 1
+  STOCKBOOT=/data/stock_boot_${SHA1}.img.gz
+  STOCKDTBO=/data/stock_dtbo.img.gz
+  [ -f $STOCKBOOT ] || return 1
+
+  find_boot_image
+  find_dtbo_image
+
+  magisk --unlock-blocks 2>/dev/null
+  if [ -b "$DTBOIMAGE" -a -f $STOCKDTBO ]; then
+    gzip -d < $STOCKDTBO > $DTBOIMAGE
+  fi
+  if [ -b "$BOOTIMAGE" -a -f $STOCKBOOT ]; then
+    gzip -d < $STOCKBOOT | cat - /dev/zero > $BOOTIMAGE 2>/dev/null
+    return 0
+  fi
+  return 1
 }

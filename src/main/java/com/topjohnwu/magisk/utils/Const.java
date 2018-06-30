@@ -17,8 +17,6 @@ public class Const {
     public static final String MAGISKHIDE_PROP = "persist.magisk.hide";
 
     // APK content
-    public static final String UNINSTALLER = "magisk_uninstaller.sh";
-    public static final String UTIL_FUNCTIONS= "util_functions.sh";
     public static final String ANDROID_MANIFEST = "AndroidManifest.xml";
 
     public static final String SU_KEYSTORE_KEY = "su_key";
@@ -27,6 +25,11 @@ public class Const {
     public static File MAGISK_PATH;
     public static File MAGISK_DISABLE_FILE;
     public static File MAGISK_HOST_FILE;
+
+    static {
+        /* Prevent crashing on unrooted devices */
+        MAGISK_PATH = MAGISK_DISABLE_FILE = MAGISK_HOST_FILE = new File("xxx");
+    }
 
     public static final String BUSYBOX_PATH = "/sbin/.core/busybox";
     public static final String TMP_FOLDER_PATH = "/dev/tmp";
@@ -153,6 +156,8 @@ public class Const {
         public static final String FLASH_ZIP = "flash";
         public static final String PATCH_BOOT = "patch";
         public static final String FLASH_MAGISK = "magisk";
+        public static final String FLASH_SECOND_SLOT = "slot";
+        public static final String UNINSTALL = "uninstall";
         public static final int[] timeoutList = {0, -1, 10, 20, 30, 60};
         public static final int ORDER_NAME = 0;
         public static final int ORDER_DATE = 1;

@@ -8,24 +8,18 @@ import com.topjohnwu.superuser.io.SuFile;
 public class RootUtils {
 
     public static void init() {
-        Const.MAGISK_DISABLE_FILE = new SuFile("/cache/.disable_magisk", true);
-        SuFile file = new SuFile("/sbin/.core/img", true);
-        if (file.exists()) {
-            Const.MAGISK_PATH = file;
-        } else if ((file = new SuFile("/dev/magisk/img", true)).exists()) {
-            Const.MAGISK_PATH = file;
-        } else {
-            Const.MAGISK_PATH = new SuFile("/magisk", true);
+        if (Shell.rootAccess()) {
+            Const.MAGISK_DISABLE_FILE = new SuFile("/cache/.disable_magisk");
+            SuFile file = new SuFile("/sbin/.core/img");
+            if (file.exists()) {
+                Const.MAGISK_PATH = file;
+            } else if ((file = new SuFile("/dev/magisk/img")).exists()) {
+                Const.MAGISK_PATH = file;
+            } else {
+                Const.MAGISK_PATH = new SuFile("/magisk");
+            }
+            Const.MAGISK_HOST_FILE = new SuFile(Const.MAGISK_PATH + "/.core/hosts");
         }
-        Const.MAGISK_HOST_FILE = new SuFile(Const.MAGISK_PATH + "/.core/hosts");
-    }
-
-    public static String cmd(String cmd) {
-        return ShellUtils.fastCmd(Shell.getShell(), cmd);
-    }
-
-    public static boolean cmdResult(String cmd) {
-        return ShellUtils.fastCmdResult(Shell.getShell(), cmd);
     }
 
     public static void uninstallPkg(String pkg) {
@@ -33,10 +27,11 @@ public class RootUtils {
     }
 
     public static void patchDTBO() {
-        MagiskManager mm = MagiskManager.get();
-        if (mm.magiskVersionCode >= Const.MAGISK_VER.DTBO_SUPPORT && !mm.keepVerity) {
-            if (ShellUtils.fastCmdResult(Shell.getShell(), "patch_dtbo_image")) {
-                ShowUI.dtboPatchedNotification();
+        if (Shell.rootAccess()) {
+            MagiskManager mm = MagiskManager.get();
+            if (mm.magiskVersionCode >= Const.MAGISK_VER.DTBO_SUPPORT) {
+                if (Boolean.parseBoolean(ShellUtils.fastCmd("mm_patch_dtbo")))
+                    ShowUI.dtboPatchedNotification();
             }
         }
     }

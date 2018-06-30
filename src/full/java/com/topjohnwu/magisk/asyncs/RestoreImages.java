@@ -1,31 +1,35 @@
 package com.topjohnwu.magisk.asyncs;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.widget.Toast;
 
 import com.topjohnwu.magisk.MagiskManager;
 import com.topjohnwu.magisk.R;
-import com.topjohnwu.magisk.utils.RootUtils;
-import com.topjohnwu.superuser.Shell;
 import com.topjohnwu.superuser.ShellUtils;
 
 public class RestoreImages extends ParallelTask<Void, Void, Boolean> {
 
+    private ProgressDialog dialog;
+
+    public RestoreImages(Activity activity) {
+        super(activity);
+    }
+
+    @Override
+    protected void onPreExecute() {
+        Activity a = getActivity();
+        dialog = ProgressDialog.show(a, a.getString(R.string.restore_img_title), a.getString(R.string.restore_img_msg));
+    }
+
     @Override
     protected Boolean doInBackground(Void... voids) {
-        String sha1;
-        sha1 = RootUtils.cmd("cat /.backup/.sha1");
-        if (sha1 == null) {
-            sha1 = RootUtils.cmd("cat /init.magisk.rc | grep STOCKSHA1");
-            if (sha1 == null)
-                return false;
-            sha1 = sha1.substring(sha1.indexOf('=') + 1);
-        }
-
-        return ShellUtils.fastCmdResult(Shell.getShell(), "restore_imgs " + sha1);
+        return ShellUtils.fastCmdResult("restore_imgs");
     }
 
     @Override
     protected void onPostExecute(Boolean result) {
+        dialog.cancel();
         if (result) {
             MagiskManager.toast(R.string.restore_done, Toast.LENGTH_SHORT);
         } else {

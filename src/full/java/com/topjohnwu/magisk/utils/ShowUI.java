@@ -7,10 +7,10 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.topjohnwu.magisk.FlashActivity;
@@ -27,9 +27,6 @@ import com.topjohnwu.magisk.receivers.RebootReceiver;
 import com.topjohnwu.superuser.Shell;
 import com.topjohnwu.superuser.ShellUtils;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -137,17 +134,15 @@ public class ShowUI {
                 if (Shell.rootAccess()) {
                     options.add(mm.getString(R.string.direct_install));
                 }
-                String s = RootUtils.cmd("echo $SLOT");
-                if (s != null) {
+                String s = ShellUtils.fastCmd("grep_prop ro.build.ab_update");
+                if (s != null && Boolean.parseBoolean(s)) {
                     options.add(mm.getString(R.string.install_second_slot));
                 }
-                char[] slot = s == null ? null : s.toCharArray();
                 new AlertDialog.Builder(activity)
                     .setTitle(R.string.select_method)
                     .setItems(
                         options.toArray(new String [0]),
                         (dialog, idx) -> {
-                            String boot;
                             DownloadReceiver receiver = null;
                             switch (idx) {
                                 case 1:
@@ -191,41 +186,23 @@ public class ShowUI {
                                     };
                                     break;
                                 case 2:
-                                    boot = mm.bootBlock;
-                                    if (boot == null)
-                                        return;
                                     receiver = new DownloadReceiver() {
                                         @Override
                                         public void onDownloadDone(Context context, Uri uri) {
                                             Intent intent = new Intent(mm, FlashActivity.class);
-                                            intent.setData(uri)
-                                                .putExtra(Const.Key.FLASH_SET_BOOT, boot)
-                                                .putExtra(Const.Key.FLASH_ACTION, Const.Value.FLASH_MAGISK);
+                                            intent.setData(uri).putExtra(Const.Key.FLASH_ACTION,
+                                                    Const.Value.FLASH_MAGISK);
                                             activity.startActivity(intent);
                                         }
                                     };
                                     break;
                                 case 3:
-                                    assert (slot != null);
-                                    // Choose the other slot
-                                    if (slot[1] == 'a') slot[1] = 'b';
-                                    else slot[1] = 'a';
-                                    // Then find the boot image again
-                                    boot = RootUtils.cmd(
-                                            "SLOT=" + String.valueOf(slot) +
-                                            "; find_boot_image;" +
-                                            "echo \"$BOOTIMAGE\""
-                                    );
-                                    Shell.Async.su("mount_partitions");
-                                    if (boot == null)
-                                        return;
                                     receiver = new DownloadReceiver() {
                                         @Override
                                         public void onDownloadDone(Context context, Uri uri) {
                                             Intent intent = new Intent(mm, FlashActivity.class);
-                                            intent.setData(uri)
-                                                    .putExtra(Const.Key.FLASH_SET_BOOT, boot)
-                                                    .putExtra(Const.Key.FLASH_ACTION, Const.Value.FLASH_MAGISK);
+                                            intent.setData(uri).putExtra(Const.Key.FLASH_ACTION,
+                                                    Const.Value.FLASH_SECOND_SLOT);
                                             activity.startActivity(intent);
                                         }
                                     };
@@ -269,40 +246,23 @@ public class ShowUI {
 
     public static void uninstallDialog(Activity activity) {
         MagiskManager mm = Utils.getMagiskManager(activity);
-        new AlertDialogBuilder(activity)
+        AlertDialog.Builder b = new AlertDialogBuilder(activity)
             .setTitle(R.string.uninstall_magisk_title)
             .setMessage(R.string.uninstall_magisk_msg)
-            .setPositiveButton(R.string.complete_uninstall, (d, i) -> {
-                ByteArrayOutputStream uninstaller = new ByteArrayOutputStream();
-                try (InputStream in = mm.getAssets().open(Const.UNINSTALLER)) {
-                    ShellUtils.pump(in, uninstaller);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    return;
-                }
-                ByteArrayOutputStream utils = new ByteArrayOutputStream();
-                try (InputStream in = mm.getAssets().open(Const.UTIL_FUNCTIONS)) {
-                    ShellUtils.pump(in, utils);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    return;
-                }
-
-                Shell.Sync.su(
-                        Utils.fmt("echo '%s' > /cache/%s", uninstaller.toString().replace("'", "'\\''"), Const.UNINSTALLER),
-                        Utils.fmt("echo '%s' > %s/%s", utils.toString().replace("'", "'\\''"),
-                                mm.magiskVersionCode >= Const.MAGISK_VER.HIDDEN_PATH ? "/data/adb/magisk" : "/data/magisk", Const.UTIL_FUNCTIONS)
-                );
-                try {
-                    uninstaller.close();
-                    utils.close();
-                } catch (IOException ignored) {}
-
-                MagiskManager.toast(R.string.uninstall_toast, Toast.LENGTH_LONG);
-                new Handler().postDelayed(() -> RootUtils.uninstallPkg(mm.getPackageName()), 5000);
-            })
-            .setNeutralButton(R.string.restore_img, (d, i) -> new RestoreImages().exec())
-            .setNegativeButton(R.string.uninstall_app, (d, i) -> RootUtils.uninstallPkg(mm.getPackageName()))
-            .show();
+            .setNeutralButton(R.string.restore_img, (d, i) -> new RestoreImages(activity).exec());
+        if (!TextUtils.isEmpty(mm.uninstallerLink)) {
+            b.setPositiveButton(R.string.complete_uninstall, (d, i) ->
+                    Utils.dlAndReceive(activity, new DownloadReceiver() {
+                        @Override
+                        public void onDownloadDone(Context context, Uri uri) {
+                            Intent intent = new Intent(context, FlashActivity.class)
+                                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                    .setData(uri)
+                                    .putExtra(Const.Key.FLASH_ACTION, Const.Value.UNINSTALL);
+                            context.startActivity(intent);
+                        }
+                    }, mm.uninstallerLink, "magisk-uninstaller.zip"));
+        }
+        b.show();
     }
 }
