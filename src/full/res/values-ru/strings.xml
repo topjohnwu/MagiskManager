@@ -133,6 +133,7 @@
     <string name="settings_restore_manager_title">Восстановление Magisk Manager</string>
     <string name="settings_restore_manager_summary">Восстановить Magisk Manager с исходным именем пакета</string>
     <string name="language">Язык</string>
+    <string name="system_default">По умолчанию (Системный)</string>
     <string name="settings_update">Настройки обновлений</string>
     <string name="settings_check_update_title">Проверка обновлений</string>
     <string name="settings_check_update_summary">Периодически проверять обновления в фоне</string>
