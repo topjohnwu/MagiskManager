@@ -2,8 +2,8 @@
   "app": {
     "version": "5.7.0",
     "versionCode": "115",
-    "link": "https://github.com/topjohnwu/MagiskManager/releases/download/v5.7.0/MagiskManager-v5.7.0.apk",
-    "note": ""
+    "link": "https://github.com/topjohnwu/MagiskManager/releases/download/v5.8.0/MagiskManager-v5.8.0.apk",
+    "note": "https://raw.githubusercontent.com/topjohnwu/MagiskManager/b885ccbd632eddcabc13781a10d3fec4a4215b39/src/full/res/raw/changelog.md"
   },
   "magisk": {
     "version": "16.0",
@@ -12,6 +12,6 @@
     "note": "https://forum.xda-developers.com/showpost.php?p=75648916&postcount=39"
   },
   "uninstaller": {
-    "link": "https://github.com/topjohnwu/Magisk/releases/download/v16.4/Magisk-uninstaller-20180627.zip"
+    "link": "https://github.com/topjohnwu/Magisk/releases/download/v16.6/Magisk-uninstaller-20180708.zip"
   }
 }

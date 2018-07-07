@@ -2,16 +2,16 @@
   "app": {
     "version": "5.7.0",
     "versionCode": "115",
-    "link": "https://github.com/topjohnwu/MagiskManager/releases/download/v5.7.0/MagiskManager-v5.7.0.apk",
-    "note": ""
+    "link": "https://github.com/topjohnwu/MagiskManager/releases/download/v5.8.0/MagiskManager-v5.8.0.apk",
+    "note": "https://raw.githubusercontent.com/topjohnwu/MagiskManager/b885ccbd632eddcabc13781a10d3fec4a4215b39/src/full/res/raw/changelog.md"
   },
   "magisk": {
-    "version": "16.4",
-    "versionCode": "1642",
-    "link": "https://github.com/topjohnwu/Magisk/releases/download/v16.4/Magisk-v16.4.zip",
-    "note": "https://forum.xda-developers.com/showpost.php?p=76371726&postcount=42"
+    "version": "16.6",
+    "versionCode": "1662",
+    "link": "https://github.com/topjohnwu/Magisk/releases/download/v16.6/Magisk-v16.6.zip",
+    "note": "https://raw.githubusercontent.com/topjohnwu/MagiskManager/ce0ab45597719a10fd68222f3630236bc65b5550/notes.md"
   },
   "uninstaller": {
-    "link": "https://github.com/topjohnwu/Magisk/releases/download/v16.4/Magisk-uninstaller-20180627.zip"
+    "link": "https://github.com/topjohnwu/Magisk/releases/download/v16.6/Magisk-uninstaller-20180708.zip"
   }
 }
