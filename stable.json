@@ -1,9 +1,9 @@
 {
   "app": {
-    "version": "5.8.1",
-    "versionCode": "127",
-    "link": "https://github.com/topjohnwu/MagiskManager/releases/download/v5.8.1/MagiskManager-v5.8.1.apk",
-    "note": "https://raw.githubusercontent.com/topjohnwu/MagiskManager/6ad33d60f711add3dd7ba536bcf30863d2c15b7e/src/full/res/raw/changelog.md"
+    "version": "5.8.2",
+    "versionCode": "128",
+    "link": "https://github.com/topjohnwu/Magisk/releases/download/manager-v5.8.2/MagiskManager-v5.8.2.apk",
+    "note": "https://raw.githubusercontent.com/topjohnwu/Magisk/4b6285e5c2e942bfcbacdafa565515c6a95e75e1/app/src/full/res/raw/changelog.md"
   },
   "magisk": {
     "version": "16.0",
